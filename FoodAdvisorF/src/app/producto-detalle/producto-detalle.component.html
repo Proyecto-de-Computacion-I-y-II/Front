@@ -1,0 +1,45 @@
+<div class="titulo">
+    <h2 class="title-text">{{ product?.nombre }}</h2>
+    <!-- <p class="categoria">{{ product?.categoria }} > {{ product?.subcategoria }} > {{ product?.subsubcategoria }}</p> -->
+</div>
+
+<div class="grid-container">
+    <!-- Columna de la imagen -->
+    <div class="grid-item image-container">
+        <img [src]="product?.imagen" [alt]="product?.nombre" class="img-fluid w-75" />
+    </div>
+
+    <!-- Columna de la información -->
+    <div class="grid-item info-container">
+        <h3>Datos del Producto</h3>
+        <div class="product-details">
+            <p><strong>Precio:</strong> €</p>
+            <p><strong>Supermercado:</strong> {{ product?.idSuper }}</p>
+        </div>
+
+        <hr>
+
+        <h3>Valor Nutricional</h3>
+        <div class="nutrition-table">
+            <p><strong>Grasas:</strong> {{ product?.grasas }} </p>
+            <p> <strong>Azúcares:</strong> {{ product?.azucares }} </p>
+            <p><strong>Ácidos-grasos:</strong> {{ product?.acidos_grasos }} </p>
+            <p> <strong>Sal:</strong> {{ product?.sal }}</p>
+            <p><strong>Hidratos-carbono:</strong> {{ product?.hidratos_carbono }} </p>
+            <p><strong>Proteínas:</strong> {{ product?.proteinas }} </p>
+        </div>
+
+        <hr>
+
+        <h3>Compra</h3>
+        <div class="purchase-container">
+            <div class="cantidad">
+            <button class="btn btn-dark" (click)="restarCantidad()">-</button>
+            <span class="quantity">{{ cantidad }}</span>
+            <button class="btn btn-dark" (click)="sumarCantidad()">+</button>
+        </div>
+        <div class="carrito">
+            <button class="btn btn-success" (click)="agregarAlCarrito()">Añadir al carrito</button>
+        </div>      
+    </div>
+</div>

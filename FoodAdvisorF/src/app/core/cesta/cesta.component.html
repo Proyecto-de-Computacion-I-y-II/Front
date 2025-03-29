@@ -1,0 +1,32 @@
+<div class="titulo">
+    <span class="title-text">Mi carrito de la compra</span>
+</div>
+<div *ngIf="productosEnCesta.length > 0; else cestaVacia">
+    <div *ngFor="let producto of productosEnCesta">
+        <div class="grid-container">
+            <div class="grid-item">{{producto.imagen}}</div>
+            <div class="grid-item">{{producto.nombre}}</div>
+            <div class="grid-item">Supermercado: {{producto.idSuper}}</div>
+            <div class="grid-item">{{producto.cantidad}} unidades</div>
+            <div class="grid-item">{{producto.cantidad * producto.precio}}</div>
+          </div>
+    </div>
+
+    <hr>
+
+    <div class="purchase-container">
+      <div class="compra">
+        <button class="btn btn-success"> Realizar compra </button>
+     </div> 
+
+      <div class="porcentaje">
+        <button class="btn btn-warning"> Mostrar porcentaje alimenticio </button>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #cestaVacia>
+    <div class="container">
+        <h1>No se encontraron productos en su cesta. ¡Agregue alguno para realizar una compra!</h1>
+    </div>  
+  </ng-template>

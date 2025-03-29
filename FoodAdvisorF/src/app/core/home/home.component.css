@@ -1,0 +1,260 @@
+.menu-title {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 10px; /* Margen de 10px solo al botón */
+}
+
+.menu-title .title-text {
+  font-weight: bold; /* Título en negrita */
+  margin-left: 8px; /* Espacio entre el icono y el texto */
+  font-size: 16px; /* Ajustamos el tamaño de la fuente */
+}
+
+mat-icon {
+  font-size: 24px; /* Tamaño del icono */
+  color: black; /* Color negro para el icono */
+}
+
+.menu-content {
+  margin-left: 100px;
+  margin-right: 100px;
+  padding: 10px;
+  background-color: #ffffff;
+}
+
+.columns-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* Espacio entre las dos columnas */
+}
+
+.left-column, .right-column {
+  width: 45%; /* Ajustamos el ancho de cada columna */
+}
+
+.form-group {
+  margin-bottom: 5px; /* Espacio entre los elementos del formulario */
+}
+
+.form-group2 {
+  margin-bottom: 5px; /* Espacio entre los elementos del formulario */
+}
+
+
+label {
+  display: block;
+  margin-bottom: 5px; /* Espacio entre la etiqueta y el select */
+  font-weight: bold;
+}
+
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.separator {
+  border-left: 2px solid #eae8e8; /* Línea divisoria entre las columnas */
+  height: auto;
+}
+
+.menu-content p {
+  margin-top: 10px;
+}
+
+.form-group label {
+  font-weight: lighter; /* Título en negrita */
+
+  font-size: 13px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+
+
+/* Estilo para los mat-select */
+mat-select {
+  border-radius: 8px;
+  background-color: #F3F3F3; /* Fondo gris claro */
+  width: 100%;
+  max-width: 360px;
+  font-size: 12px;
+  padding: 6px;
+}
+
+mat-select .mat-select-trigger {
+  padding: 0px; /* Un poco de espacio dentro del selector */
+  font-size: 10px;
+
+}
+
+mat-select .mat-select-arrow {
+  color: black;
+}
+
+
+
+mat-option {
+  font-size: 14px;
+}
+
+
+.slider-num {
+  display: flex;               /* Utilizamos flexbox para alinear los elementos */
+  align-items: center;         /* Centrar verticalmente los elementos */
+  gap: 30px;
+  width: auto;/* Espacio entre los elementos */
+}
+
+.custom-slider{
+  width: 250px;
+}
+.form-group2 label {
+  margin-top: 10px;
+}
+
+
+
+span {
+  white-space: nowrap;         /* Evita que el texto se divida */
+}
+
+
+.form-group2 label {
+  font-weight: lighter; /* Título en negrita */
+
+  font-size: 13px;
+}
+
+.form-group2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0px;
+}
+
+.slider-container {
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+  max-width: 200px;
+}
+
+.slider-container mat-slider {
+  max-width: 200px;
+}
+
+.slider-num {
+  margin: 0px;
+}
+
+.fixed-width {
+  display: inline-block; /* Para que respete el ancho mínimo */
+  min-width: 4ch; /* Ocupa el espacio de 4 caracteres */
+  text-align: center; /* Centra el número dentro del span */
+}
+
+.btn-aplicar {
+  background-color: #88CB74 !important;
+  color: white !important;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  display: block;
+  margin: 40px auto;
+}
+
+.btn-aplicar:hover {
+  background-color: #88CB74 !important;
+}
+
+.menu-title-2 .title-text {
+  font-weight: bold;
+  margin-left: 8px;
+  font-size: 20px;
+
+}
+
+.menu-title-2 {
+  margin: 20px;
+}
+
+
+
+
+
+
+/* PRODUCTOS */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 40px;
+  padding: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.product-card {
+  background: #F3F3F3 !important;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.product-card img {
+
+  width: 100%;
+  object-fit: contain;
+  margin-bottom: 10px;
+
+}
+
+.product-info {
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px;
+  gap: 10px;
+}
+
+.product-details {
+  text-align: left;
+}
+
+.product-name {
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.product-supermarket {
+  font-size: 10px;
+  color: gray;
+  margin: 0;
+}
+
+.product-price {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #2c9f51;
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,40 @@
+<div class="profile-up">
+  <mat-card-title class="name"> <b>{{ userData?.usuario.nombre }} {{ userData?.usuario.apellidos }}</b> </mat-card-title>
+  <mat-card-title class="id"> <b>Identificador:</b> {{userData?.usuario.ID_user}}</mat-card-title>
+</div>
+<div class="profile-container">
+      <img [src]= avatar alt="Foto de perfil" class="profile-avatar">
+      <div class="profile-content">
+        <div class="profile-table">
+          <mat-card-title class="title"> <b>Mis datos:</b> </mat-card-title>
+          <div class="title-sub">
+            <p> <b>Correo asociado:</b> </p>
+            <p> <b>Rol:</b></p>
+            <p> <b>Creación de la Cuenta:</b></p>
+          </div>
+
+          <div class="subtitle">
+            <p>{{userData?.usuario.correo}}</p>
+            <p> {{userData?.usuario.rol}}</p>
+            <p>{{userData?.usuario.created_at}}</p>
+          </div>
+
+          <hr class="separator1">
+          <hr class="separator2">
+
+          <mat-card-title class="title"> <b>Actividad de la aplicación:</b> </mat-card-title>
+          <div class="title-sub">
+            <p> <b>Cantidad de pedidos:</b> </p>
+          </div>
+
+          <div class="subtitle">
+            <p>32</p>
+          </div>
+        </div>
+          <div class="profile-buttons">
+            <button (click)="historialCompras()" class="compras">Ver Historial de Compras</button>
+            <button (click)="cerrarSesion()" class="cerrar-sesion">Cerrar Sesión</button>
+          </div>
+        </div>
+  </div>
+  

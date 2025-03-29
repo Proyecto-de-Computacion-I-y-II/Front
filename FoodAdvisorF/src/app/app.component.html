@@ -1,0 +1,36 @@
+<mat-toolbar class="custom-toolbar" *ngIf="showHeader">
+  <div class="toolbar-left">
+    <img src="logo.png" alt="Food Advisor Logo" class="logo" [routerLink]="['/home']"/>
+
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Introduzca el nombre del producto"
+        class="search-input"
+        [(ngModel)]="searchQuery"
+      />
+      <button class="search-button">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+  </div>
+  <div class="toolbar-right">
+    <ng-container *ngIf="showProfile; else elseTemplate">
+      <button mat-icon-button class="cart-button" [routerLink]="['/cesta']">
+        <mat-icon>shopping_cart</mat-icon>
+      </button>
+      <img src="avatar.png" alt="User Avatar" class="user-avatar" [routerLink]="['/profile']"/>
+      <span class="user-name">{{ userName }}</span>
+    </ng-container>
+    <ng-template #elseTemplate>
+      <button mat-flat-button style="background-color: #FFAD71;" [routerLink]="['/login']">Iniciar Sesión</button>
+    </ng-template>
+  </div>
+</mat-toolbar>
+
+<router-outlet />
+
+
+<mat-toolbar color="primary" class="footer">
+  <span class="footer-text">© Copyright | Foodadvisor</span>
+</mat-toolbar>

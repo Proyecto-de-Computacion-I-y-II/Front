@@ -1,0 +1,14 @@
+<div class="center">
+  <img src="logo.png" alt="Food Advisor Logo" class="logo"/>
+  <h3 style="margin: 20px 0">Inicio de Sesión</h3>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic" style="margin-bottom: 20px">
+    <mat-label>Email</mat-label>
+    <input matInput [(ngModel)]="user.email">
+  </mat-form-field>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic" style="margin-bottom: 20px">
+    <mat-label>Contraseña</mat-label>
+    <input matInput [type]="'password'" [(ngModel)]="user.password">
+  </mat-form-field>
+  <button mat-flat-button style="background-color: #37C666; margin-bottom: 20px" (click)="onSubmit()">Iniciar Sesión</button>
+  <button mat-flat-button style="background-color: #FFAD71;" [routerLink]="['/register']">Crear Cuenta</button>
+</div>

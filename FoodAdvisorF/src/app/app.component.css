@@ -1,0 +1,96 @@
+.custom-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 30px 30px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.logo {
+  height: 70px;
+  cursor: pointer;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color: #F3F3F3; /* Fondo del buscador */
+  border-radius: 5px; /* Esquinas curveadas */
+  padding: 8px 15px;
+  width: 400px; /* Más ancho */
+}
+
+.search-input {
+  border: none;
+  background: transparent;
+  outline: none;
+  flex-grow: 1;
+  font-size: 16px;
+  color: black; /* Texto negro */
+}
+
+.search-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: black;
+  display: flex;
+  align-items: center;
+}
+
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.cart-button {
+  background-color: #88CB74;
+  border-radius: 50%;
+  width: 45px; /* Ajusta el tamaño del círculo */
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none; /* Elimina bordes extras */
+}
+
+.cart-button mat-icon {
+  font-size: 24px; /* Ajusta el tamaño del icono si es necesario */
+  color: black;
+}
+
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #d3d3d3;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.user-name {
+  font-weight: bold;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  font-size: 14px;
+}
+

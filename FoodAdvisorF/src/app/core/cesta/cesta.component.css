@@ -1,0 +1,43 @@
+.titulo .title-text{
+font-weight: bold;
+margin-left: 8px;
+font-size: 20px;
+}
+
+.titulo{
+margin: 20px;
+}
+
+.container {
+    width: 100%;  
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 20px;
+  }
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Crea 5 columnas de igual tamaño */
+    gap: 10px; /* Espacio entre las columnas */
+  }
+  
+  .grid-item {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .purchase-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+    gap: 10px;
+}
+
+
+  .compra, .porcentaje {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+  

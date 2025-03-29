@@ -1,0 +1,77 @@
+/* Estilos generales */
+.titulo {
+    margin-left: 20px;
+}
+
+.title-text {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.categoria {
+    font-size: 14px;
+    color: gray;
+}
+
+.cantidad, .carrito {
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+/* GRID PRINCIPAL */
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Imagen 1 parte, info 2 partes */
+    gap: 40px;
+    align-items: center;
+}
+
+/* COLUMNA DE LA IMAGEN */
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* COLUMNA DE INFORMACIÓN */
+.info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.product-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+    gap: 10px;
+}
+
+.nutrition-table {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas iguales */
+    gap: 10px;
+}
+
+.nutrition-table p {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+}
+
+/* Botones de compra */
+.purchase-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+    gap: 10px;
+}
+
+.quantity {
+    background-color: #f1f1f1;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+}
