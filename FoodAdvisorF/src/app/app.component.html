@@ -2,7 +2,8 @@
   <div class="toolbar-left">
     <img src="logo.png" alt="Food Advisor Logo" class="logo" [routerLink]="['/home']"/>
 
-    <div class="search-container">
+    <!-- Barra de búsqueda solo visible si no estamos en '/login' o '/register' -->
+    <div *ngIf="!hideSearch" class="search-container">
       <input
         type="text"
         placeholder="Introduzca el nombre del producto"
@@ -14,6 +15,13 @@
       </button>
     </div>
   </div>
+
+  <nav>
+    <a mat-button [routerLink]="['/']" routerLinkActive="active">Inicio</a>
+    <a mat-button [routerLink]="['/home']" routerLinkActive="active">Productos</a>
+    <a mat-button [routerLink]="['/login']" routerLinkActive="active">Productos de temporada</a>
+  </nav>
+
   <div class="toolbar-right">
     <ng-container *ngIf="showProfile; else elseTemplate">
       <button mat-icon-button class="cart-button" [routerLink]="['/cesta']">
@@ -22,14 +30,17 @@
       <img src="avatar.png" alt="User Avatar" class="user-avatar" [routerLink]="['/profile']"/>
       <span class="user-name">{{ userName }}</span>
     </ng-container>
+
+    <!-- Mostrar el botón de iniciar sesión solo si no estamos en '/login' o '/register' -->
     <ng-template #elseTemplate>
-      <button mat-flat-button style="background-color: #FFAD71;" [routerLink]="['/login']">Iniciar Sesión</button>
+      <button *ngIf="!hideLoginButton" mat-flat-button style="background-color: #FFAD71;" [routerLink]="['/login']">
+        Iniciar Sesión
+      </button>
     </ng-template>
   </div>
 </mat-toolbar>
 
-<router-outlet />
-
+<router-outlet/>
 
 <mat-toolbar color="primary" class="footer">
   <span class="footer-text">© Copyright | Foodadvisor</span>
