@@ -8,6 +8,7 @@
   font-size: 16px;
   margin-top: 30px;
   margin-bottom: 20px;
+  border-bottom: 2px solid #ccc;
 }
 
 .toolbar-left {
@@ -19,6 +20,7 @@
 .logo {
   height: 70px;
   cursor: pointer;
+  margin-bottom: 15px;
 }
 
 .search-container {
