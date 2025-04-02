@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     if (localStorage.getItem('token')) {
       this.router.navigate(['/home']).then();
     } else {
-      this.communicationService.showHeaderChange({ showHeader: false, logged: false });
+      this.communicationService.showHeaderChange({ showHeader: true, logged: false });
     }
   }
 
