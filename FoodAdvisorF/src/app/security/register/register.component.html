@@ -25,8 +25,9 @@
         <mat-label>Confirmar Contraseña</mat-label>
         <input matInput [type]="'password'" [(ngModel)]="passwordValidator">
       </mat-form-field>
-      <div style="text-align: center">
-        <button mat-flat-button style="background-color: #37C666" (click)="register()"><mat-icon>shopping_cart</mat-icon>¡Crear y Comprar!</button>
+      <div class="botones">
+        <button mat-flat-button class="registro" style="background-color: #37C666" (click)="register()"><mat-icon>shopping_cart</mat-icon>¡Crear y Comprar!</button>
+        <button mat-flat-button class="cancelaar" [routerLink]="['/login']">Cancelar</button>
       </div>
     </div>
   </div>

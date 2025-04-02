@@ -5,3 +5,14 @@
   justify-content: center;
   align-items: center;
 }
+
+.botones{
+  text-align: center; 
+  display: grid;
+   grid-template-rows: repeat(2, 1fr);
+   gap: 10px;
+}
+
+.cancelar{
+  background-color: red;
+}

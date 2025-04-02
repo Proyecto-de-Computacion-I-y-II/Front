@@ -10,5 +10,6 @@
     <input matInput [type]="'password'" [(ngModel)]="user.password">
   </mat-form-field>
   <button mat-flat-button style="background-color: #37C666; margin-bottom: 20px" (click)="onSubmit()">Iniciar Sesión</button>
-  <button mat-flat-button style="background-color: #FFAD71;" [routerLink]="['/register']">Crear Cuenta</button>
+  <button mat-flat-button style="background-color: #FFAD71; margin-bottom: 20px" [routerLink]="['/register']">Crear Cuenta</button>
+  <button mat-flat-button [routerLink]="['/home']">Inicio</button>
 </div>
