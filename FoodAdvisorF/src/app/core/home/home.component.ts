@@ -85,6 +85,12 @@ export class HomeComponent implements OnInit {
 
 
   products: Product[] = [];
+  currentPage = 1;
+  totalPages =487;
+
+  maxVisiblePages = 5;
+  visiblePages: number[] = [];
+
 
   constructor(private communicationService: CommunicationService, private productService: ProductService, private router: Router) {
   }
@@ -96,11 +102,13 @@ export class HomeComponent implements OnInit {
     }
     this.communicationService.showHeaderChange({ showHeader: true , logged: loggedIn });
 
-    this.productService.getAllProducts().subscribe((response:any)=> {
+    this.productService.getAllProducts(this.currentPage).subscribe((response:any)=> {
       this.products = response.data;
       console.log('Productos cargados:', this.products);
 
     });
+
+    this.updateVisiblePages();
 
 
   }
@@ -113,5 +121,67 @@ export class HomeComponent implements OnInit {
   goToProductDetail(productId: number) {
     console.log('Navegando a producto con ID:', productId);
     this.router.navigate(['/producto-detalle', productId]);
-  }  
+  }
+
+
+
+
+  changePage(page: number) {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.updatePagedProducts();
+    }
+  }
+
+  updatePagedProducts() {
+    this.productService.getAllProducts(this.currentPage).subscribe((response:any)=> {
+      this.products = response.data;
+      console.log('Productos cargados:', this.products);
+
+    });
+    this.updateVisiblePages();
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.changePage(this.currentPage - 1);
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.changePage(this.currentPage + 1);
+    }
+  }
+
+  initPage() {
+    if (this.currentPage > 1) {
+      this.changePage(1);
+    }
+  }
+
+  lastPage() {
+    if (this.currentPage < this.totalPages) {
+      this.changePage(this.totalPages);
+    }
+  }
+
+  updateVisiblePages() {
+    const half = Math.floor(this.maxVisiblePages / 2);
+    let start = Math.max(1, this.currentPage - half);
+    let end = Math.min(this.totalPages, start + this.maxVisiblePages - 1);
+
+    if (end - start + 1 < this.maxVisiblePages) {
+      start = Math.max(1, end - this.maxVisiblePages + 1);
+    }
+
+    this.visiblePages = Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  }
+
+  getSupermercado(productId: number) {
+
+  }
+
+
+
 }

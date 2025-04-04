@@ -22,6 +22,7 @@ import {MatButtonToggleGroup} from '@angular/material/button-toggle';
 import { ProfileComponent } from './core/profile/profile.component';
 import { CestaComponent } from './core/cesta/cesta.component';
 import { ProductoDetalleComponent } from './producto-detalle/producto-detalle.component';
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -32,24 +33,25 @@ import { ProductoDetalleComponent } from './producto-detalle/producto-detalle.co
     ProfileComponent,
     CestaComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatFormField,
-    FormsModule,
-    MatSelect,
-    MatOption,
-    MatSlider,
-    MatInputModule,
-    MatButtonModule,
-    MatSnackBarModule,
-    MatSliderRangeThumb,
-    MatCardModule,
-    MatButtonToggleGroup,
-    ProductoDetalleComponent
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        MatToolbarModule,
+        MatIconModule,
+        MatFormField,
+        FormsModule,
+        MatSelect,
+        MatOption,
+        MatSlider,
+        MatInputModule,
+        MatButtonModule,
+        MatSnackBarModule,
+        MatSliderRangeThumb,
+        MatCardModule,
+        MatButtonToggleGroup,
+        ProductoDetalleComponent,
+        NgxPaginationModule
+    ],
   providers: [
     provideHttpClient()
 

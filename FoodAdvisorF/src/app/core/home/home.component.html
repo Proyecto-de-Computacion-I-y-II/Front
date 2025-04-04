@@ -182,9 +182,12 @@
   <span class="title-text">Productos</span>
 </div>
 
+
+
 <div class="product-grid">
   <div class="product-card" *ngFor="let product of products" (click)="goToProductDetail(product.ID_prod)">
-    <img [src]="product.imagen" [alt]="product.nombre">
+    <img [src]="product.imagen || 'logo_fondo.png'" [alt]="product.nombre">
+
     <div class="product-info">
       <div class="product-details">
         <h3 class="product-name">{{ product.nombre }}</h3>
@@ -195,4 +198,24 @@
       </div>
     </div>
   </div>
+
+
 </div>
+
+<div class="pagination">
+  <button (click)="initPage()" [disabled]="currentPage === 1">««</button>
+
+  <button (click)="prevPage()" [disabled]="currentPage === 1">«</button>
+
+  <button *ngFor="let page of visiblePages"
+          (click)="changePage(page)"
+          [class.active]="currentPage === page">
+    {{ page }}
+  </button>
+
+  <button (click)="nextPage()" [disabled]="currentPage === totalPages">»</button>
+
+  <button (click)="lastPage()" [disabled]="currentPage === totalPages">»»</button>
+
+</div>
+
