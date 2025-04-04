@@ -1,9 +1,9 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {BaseService} from '../../../shared/services/base/base.service';
-import {UserDTO} from '../../../security/models/user-dto';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {catchError, Observable} from 'rxjs';
-import {User} from '../../../security/models/user';
+import { catchError, Observable } from 'rxjs';
+import { User } from '../../../security/models/user';
+import { UserDTO } from '../../../security/models/user-dto';
+import { BaseService } from '../../../shared/services/base/base.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,7 @@ export class UserService extends BaseService<UserDTO>{
       })
     }).pipe(catchError(this.handleError));
   }
+
 
   register(body: User): Observable<UserDTO> {
     return this.http.post<UserDTO>(`${this.basePath}/register`, { nombre: body.name, apellidos: body.lastName, correo: body.email, contrasenia: body.password, rol: "admin"}, {
