@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Router, NavigationEnd } from '@angular/router';
 import { CommunicationService } from './shared/services/communicacion/communication.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   showProfile: boolean;
   titleChangedSubscription: Subscription;
   searchQuery: string = ''; // Guarda la búsqueda en esta variable
-  userName: string = 'Andrés Ramos García';
+  userName: string = 'Andres ramos garcía';
   hideSearch: boolean = false; // Variable para controlar la visibilidad de la barra de búsqueda
   hideLoginButton: boolean = false; // Variable para controlar la visibilidad del botón de Iniciar Sesión
 
