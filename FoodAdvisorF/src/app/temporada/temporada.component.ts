@@ -14,13 +14,14 @@ export class TemporadaComponent {
   meses = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   currentMonth: string = ''; // Variable para almacenar el mes actual
   productosFiltrados: ProductoTemporada[] = [];
+  productosSaliendo: ProductoTemporada[] = []; // Arreglo para productos que salen
 
   constructor(private productoTempService: ProductoTempService) { }
 
   ngOnInit(): void {
     // Obtener el mes actual
-    const monthIndex = new Date().getMonth(); // Obtiene el mes actual (0 - 11)
-    this.currentMonth = this.meses[monthIndex]; // Asigna el nombre del mes actual
+    const mesIndex = new Date().getMonth(); // Obtiene el mes actual (0 - 11)
+    this.currentMonth = this.meses[mesIndex]; // Asigna el nombre del mes actual
 
     this.productoTempService.getAllProductosTemp().subscribe(
       (data: any) => {
@@ -29,9 +30,14 @@ export class TemporadaComponent {
         this.products = Array.isArray(data.productos) ? data.productos : [];  
         console.log('Productos:', this.products);  // Verifica que ahora sea un arreglo
 
-        // Filtra los productos que tienen un 1 en el mes actual
+        // Filtra los productos que tienen un 1 en el mes actual (productos disponibles)
         this.productosFiltrados = this.products.filter(producto =>
           producto[this.currentMonth] === 1
+        );
+
+        // Filtra los productos que tienen un 0 en el mes actual (productos que salen)
+        this.productosSaliendo = this.products.filter(producto =>
+          producto[this.currentMonth] === 0
         );
       },
       (error) => {

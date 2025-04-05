@@ -6,4 +6,11 @@
         <div>{{ product.producto }}</div>
       </div>
     </div>
+
+    <h4> Saliendo o entrando de temporada: </h4>
+    <div class="product-grid">
+        <div *ngFor="let product of productosSaliendo">
+          <div>{{ product.producto }}</div>
+        </div>
+      </div>
   </div>  
