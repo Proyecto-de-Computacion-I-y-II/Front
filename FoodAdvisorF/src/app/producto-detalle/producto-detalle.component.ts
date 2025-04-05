@@ -52,4 +52,12 @@ export class ProductoDetalleComponent implements OnInit {
       this.router.navigate(['/cesta']);  // Redirige a la página de cesta
     }
   }
+
+  getSupermercadoNombre(idSuper: number | undefined): string {
+    if (idSuper !== undefined) {
+      return ProductService.getSupermercadoNombre(idSuper);  // Si idSuper no es undefined, se llama al método
+    } else {
+      return 'Desconocido';  // O cualquier valor predeterminado que quieras mostrar
+    }
+  }  
 }

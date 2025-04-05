@@ -24,4 +24,16 @@ export class ProductService {
   getProductById(id: string): Observable<Product> {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
   }
+
+  static supermercadoDiccionario: Record<number, string> = {
+    1: 'Eroski',
+    2: 'Carrefour',
+    3: 'Dia',
+    4: 'Mercadona'
+  };
+
+  // Método estático para obtener el nombre del supermercado
+  static getSupermercadoNombre(idSuper: number): string {
+    return ProductService.supermercadoDiccionario[idSuper] || 'Desconocido';
+  }
 }
