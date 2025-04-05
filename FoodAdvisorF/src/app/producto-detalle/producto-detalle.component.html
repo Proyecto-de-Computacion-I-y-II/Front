@@ -13,7 +13,7 @@
     <div class="grid-item info-container">
         <h3>Datos del Producto</h3>
         <div class="product-details">
-            <p><strong>Precio:</strong> €</p>
+            <p><strong>Precio:</strong> {{ product?.grasas + '€' || 'No se dispone de datos' }}</p>
             <p><strong>Supermercado:</strong> {{ getSupermercadoNombre(product?.idSuper) }}</p>
         </div>
 
@@ -21,12 +21,12 @@
 
         <h3>Valor Nutricional</h3>
         <div class="nutrition-table">
-            <p><strong>Grasas:</strong> {{ product?.grasas }} </p>
-            <p> <strong>Azúcares:</strong> {{ product?.azucares }} </p>
-            <p><strong>Ácidos-grasos:</strong> {{ product?.acidos_grasos }} </p>
-            <p> <strong>Sal:</strong> {{ product?.sal }}</p>
-            <p><strong>Hidratos-carbono:</strong> {{ product?.hidratos_carbono }} </p>
-            <p><strong>Proteínas:</strong> {{ product?.proteinas }} </p>
+            <p><strong>Grasas:</strong> {{ product?.grasas  || 'No se dispone de datos' }} </p>
+            <p> <strong>Azúcares:</strong> {{ product?.azucares || 'No se dispone de datos' }} </p>
+            <p><strong>Ácidos-grasos:</strong> {{ product?.acidos_grasos  || 'No se dispone de datos' }} </p>
+            <p> <strong>Sal:</strong> {{ product?.sal  || 'No se dispone de datos'}}</p>
+            <p><strong>Hidratos-carbono:</strong> {{ product?.hidratos_carbono  || 'No se dispone de datos'}} </p>
+            <p><strong>Proteínas:</strong> {{ product?.proteinas  || 'No se dispone de datos'}} </p>
         </div>
 
         <hr>
