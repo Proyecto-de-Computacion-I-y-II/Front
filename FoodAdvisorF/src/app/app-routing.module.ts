@@ -6,6 +6,7 @@ import {RegisterComponent} from './security/register/register.component';
 import {ProfileComponent} from './core/profile/profile.component';
 import { CestaComponent } from './core/cesta/cesta.component';
 import { ProductoDetalleComponent } from './producto-detalle/producto-detalle.component';
+import { TemporadaComponent } from './temporada/temporada.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent},
   { path: 'cesta', component: CestaComponent},
   { path: 'producto-detalle/:id', component: ProductoDetalleComponent},
+  { path: 'temporada', component: TemporadaComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full'},
   { path: '**', redirectTo: 'home'}
 ];

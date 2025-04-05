@@ -21,6 +21,7 @@ import { ProductoDetalleComponent } from './producto-detalle/producto-detalle.co
 import { LoginComponent } from './security/login/login.component';
 import { RegisterComponent } from './security/register/register.component';
 import { AuthInterceptor } from './shared/services/interceptor/auth.interceptor';
+import { TemporadaComponent } from './temporada/temporada.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { AuthInterceptor } from './shared/services/interceptor/auth.interceptor'
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    CestaComponent
+    CestaComponent,
+    TemporadaComponent
   ],
   imports: [
     BrowserModule,

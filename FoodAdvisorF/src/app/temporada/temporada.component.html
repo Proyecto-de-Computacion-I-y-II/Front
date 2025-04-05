@@ -1,0 +1,9 @@
+<div class="productos-temporada">
+    <h2>Productos de Temporada: {{ currentMonth }}</h2>
+  
+    <div class="product-grid">
+      <div *ngFor="let product of productosFiltrados">
+        <div>{{ product.producto }}</div>
+      </div>
+    </div>
+  </div>  
