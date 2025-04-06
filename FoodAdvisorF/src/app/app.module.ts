@@ -1,5 +1,7 @@
-import { HTTP_INTERCEPTORS, provideHttpClient } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { provideHttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleGroup } from '@angular/material/button-toggle';
@@ -11,7 +13,6 @@ import { MatOption, MatSelect } from '@angular/material/select';
 import { MatSlider, MatSliderRangeThumb } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CestaComponent } from './core/cesta/cesta.component';
@@ -20,9 +21,6 @@ import { ProfileComponent } from './core/profile/profile.component';
 import { ProductoDetalleComponent } from './producto-detalle/producto-detalle.component';
 import { LoginComponent } from './security/login/login.component';
 import { RegisterComponent } from './security/register/register.component';
-import { AuthInterceptor } from './shared/services/interceptor/auth.interceptor';
-import { TemporadaComponent } from './temporada/temporada.component';
-
 
 @NgModule({
   declarations: [
@@ -31,8 +29,7 @@ import { TemporadaComponent } from './temporada/temporada.component';
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
-    CestaComponent,
-    TemporadaComponent
+    CestaComponent
   ],
   imports: [
     BrowserModule,
@@ -53,12 +50,8 @@ import { TemporadaComponent } from './temporada/temporada.component';
     ProductoDetalleComponent
   ],
   providers: [
-    provideHttpClient(),
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
+    provideHttpClient()
+
   ],
   bootstrap: [AppComponent]
 })
