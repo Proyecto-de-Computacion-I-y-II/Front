@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {CommunicationService} from '../../shared/services/communicacion/communication.service';
-import {ProductService} from '../services/product/product.service';
-import {Product} from '../../security/models/product';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Product } from '../../security/models/product';
+import { CommunicationService } from '../../shared/services/communicacion/communication.service';
+import { ProductService } from '../services/product/product.service';
 
 @Component({
   selector: 'app-home',
@@ -101,8 +101,6 @@ export class HomeComponent implements OnInit {
       console.log('Productos cargados:', this.products);
 
     });
-
-
   }
 
   toggleMenu() {
