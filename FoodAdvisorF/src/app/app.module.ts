@@ -22,6 +22,7 @@ import { ProductoDetalleComponent } from './producto-detalle/producto-detalle.co
 import { LoginComponent } from './security/login/login.component';
 import { RegisterComponent } from './security/register/register.component';
 import { CestasComponent } from './core/cestas/cestas.component';
+import { InicioComponent } from './inicio/inicio.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { CestasComponent } from './core/cestas/cestas.component';
     RegisterComponent,
     ProfileComponent,
     CestaComponent,
-    CestasComponent
+    CestasComponent,
+    InicioComponent
   ],
   imports: [
     BrowserModule,
