@@ -17,14 +17,13 @@
     <div *ngIf="!loading && !error && cestasCompra && cestasCompra.length > 0; else cestaVacia" class="cestas-list">
       <div *ngFor="let cesta of cestasCompra" class="cesta-item">
         <div class="cesta-header">
-          <h3>Cesta #{{ cesta.ID_cesta }}</h3>
+          <h3>Cesta {{ cesta.ID_cesta }}</h3>
           <span class="cesta-fecha">Fecha de compra: {{ cesta.fecha_compra | date }}</span>
         </div>
         
         <div class="cesta-info">
           <p>Usuario ID: {{ cesta.ID_user }}</p>
-          <p>Creada: {{ formatDate(cesta.created_at) }}</p>
-          <p>Actualizada: {{ formatDate(cesta.updated_at) }}</p>
+          <p>Número de productos: {{ cesta.totalProductos || 0 }}</p>
         </div>
         
         <div class="cesta-footer">
