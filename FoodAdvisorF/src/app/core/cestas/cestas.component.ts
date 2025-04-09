@@ -1,6 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { forkJoin, of } from 'rxjs';
+import { catchError, switchMap } from 'rxjs/operators';
+
+interface Producto {
+  ID_prod: number;
+  cantidad: number;
+  recomendado: boolean;
+  comprado: boolean;
+  deleted_at: string | null;
+}
 
 interface Cesta {
   ID_cesta: number;
@@ -9,6 +20,8 @@ interface Cesta {
   created_at: string;
   updated_at: string;
   deleted_at: null | string;
+  productos?: Producto[];
+  totalProductos?: number;
 }
 
 @Component({
@@ -24,9 +37,11 @@ export class CestasComponent implements OnInit {
   error: string | null = null;
   
   private apiUrl = environment.apiUrl;
-  router: any;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadCestasCompra();
@@ -35,9 +50,33 @@ export class CestasComponent implements OnInit {
   loadCestasCompra(): void {
     this.loading = true;
     this.http.get<Cesta[]>(`${this.apiUrl}/cestas-compra`)
+      .pipe(
+        switchMap(cestas => {
+          const productRequests = cestas.map(cesta => 
+            this.http.get<Producto[]>(`${this.apiUrl}/cestas-compra/${cesta.ID_cesta}/productos`)
+              .pipe(
+                catchError(error => {
+                  console.error(`Error al cargar productos para cesta ${cesta.ID_cesta}`, error);
+                  return of([]);
+                })
+              )
+          );
+          
+          return forkJoin(productRequests).pipe(
+            switchMap(productosArray => {
+              // Asignar productos a cada cesta
+              cestas.forEach((cesta, index) => {
+                cesta.productos = productosArray[index];
+                cesta.totalProductos = productosArray[index].length;
+              });
+              return of(cestas);
+            })
+          );
+        })
+      )
       .subscribe({
-        next: (response) => {
-          this.cestasCompra = response;
+        next: (cestas) => {
+          this.cestasCompra = cestas;
           this.loading = false;
         },
         error: (err) => {
@@ -54,6 +93,20 @@ export class CestasComponent implements OnInit {
   }
 
   verDetallesCesta(idCesta: number) {
-    this.router.navigate(['/cestas', idCesta]);
+    this.router.navigate(['/cesta', idCesta]);
+  }
+
+  // Método para obtener detalles de una cesta específica
+  getCestaDetails(idCesta: number): void {
+    this.http.get<Cesta>(`${this.apiUrl}/cestas-compra/${idCesta}`)
+      .subscribe({
+        next: (cesta) => {
+          console.log('Detalles de la cesta:', cesta);
+          // Aquí puedes hacer algo con los detalles de la cesta
+        },
+        error: (err) => {
+          console.error(`Error al obtener detalles de la cesta ${idCesta}`, err);
+        }
+      });
   }
 }
