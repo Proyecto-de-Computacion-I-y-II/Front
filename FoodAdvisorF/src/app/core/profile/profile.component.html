@@ -1,40 +1,31 @@
-<div class="profile-up">
-  <mat-card-title class="name"> <b>{{ userData?.usuario.nombre }} {{ userData?.usuario.apellidos }}</b> </mat-card-title>
-  <mat-card-title class="id"> <b>Identificador:</b> {{userData?.usuario.ID_user}}</mat-card-title>
-</div>
 <div class="profile-container">
-      <img [src]= avatar alt="Foto de perfil" class="profile-avatar">
-      <div class="profile-content">
-        <div class="profile-table">
-          <mat-card-title class="title"> <b>Mis datos:</b> </mat-card-title>
-          <div class="title-sub">
-            <p> <b>Correo asociado:</b> </p>
-            <p> <b>Rol:</b></p>
-            <p> <b>Creación de la Cuenta:</b></p>
-          </div>
-
-          <div class="subtitle">
-            <p>{{userData?.usuario.correo}}</p>
-            <p> {{userData?.usuario.rol}}</p>
-            <p>{{userData?.usuario.created_at}}</p>
-          </div>
-
-          <hr class="separator1">
-          <hr class="separator2">
-
-          <mat-card-title class="title"> <b>Actividad de la aplicación:</b> </mat-card-title>
-          <div class="title-sub">
-            <p> <b>Cantidad de pedidos:</b> </p>
-          </div>
-
-          <div class="subtitle">
-            <p>{{prodUser}}</p>
-          </div>
-        </div>
-          <div class="profile-buttons">
-            <button (click)="historialCompras()" class="compras">Ver Historial de Compras</button>
-            <button (click)="cerrarSesion()" class="cerrar-sesion">Cerrar Sesión</button>
-          </div>
-        </div>
+  <div class="profile-up">
+    <img [src]="avatar" alt="avatar">
+    <div class="name">{{ userData?.usuario.nombre }} {{ userData?.usuario.apellidos }}</div>
   </div>
-  
+
+  <div class="profile-content">
+    <div class="title">Mis datos:</div>
+    <div class="profile-table">
+      <div class="title-sub">Correo asociado:</div>
+      <div class="subtitle">{{ userData?.usuario.correo }}</div>
+      <div class="title-sub">Rol:</div>
+      <div class="subtitle">{{ userData?.usuario.rol }}</div>
+      <div class="title-sub">Creación de la Cuenta:</div>
+      <div class="subtitle">{{ userData?.usuario.created_at | date }}</div>
+    </div>
+
+    <hr class="separator1 separator2">
+
+    <div class="title">Actividad de la aplicación:</div>
+    <div class="profile-table">
+      <div class="title-sub">Cantidad de pedidos:</div>
+      <div class="subtitle">{{ prodUser }}</div>
+    </div>
+
+    <div class="profile-buttons">
+      <button class="compras" (click)="historialCompras()">Ver Historial de Compras</button>
+      <button class="cerrar-sesion" (click)="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+  </div>
+</div>

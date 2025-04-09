@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
 export class ProfileComponent {
   userData: any = null;
   prodUser: number = 0;
-  avatar:string = 'https://i.pravatar.cc/150?img=3'
+  avatar:string = 'https://ui-avatars.com/api/?name=${{this.userData?.nombre}}+${{this.userData?.apellidos}}&background=random&color=fff'
 
   constructor(private router: Router, private communicationService: CommunicationService, private http: HttpClient) {}
 
@@ -32,19 +32,22 @@ export class ProfileComponent {
   }
 
   loadUserData() {
-    const token = localStorage.getItem('token'); // Obtener el ID del usuario
-
+    const token = localStorage.getItem('token');
+  
     if (token) {
-      const apiUrl = `http://127.0.0.1:8000/api/usuario/${token}`; // URL de la API
-
+      const apiUrl = `http://127.0.0.1:8000/api/usuario/${token}`;
+  
       this.http.get(apiUrl).subscribe({
-        next: (data) => {
-          this.userData = data; // Guardar datos del usuario
+        next: (data: any) => {
+          this.userData = data;
+  
+          this.avatar = `https://ui-avatars.com/api/?name=${this.userData.usuario.nombre}+${this.userData.usuario.apellidos}&background=random&color=fff`;
         },
         error: (err) => console.error('Error al obtener el usuario:', err)
       });
     }
   }
+  
 
   loadBuyProducts() {
     const token = localStorage.getItem('token');
