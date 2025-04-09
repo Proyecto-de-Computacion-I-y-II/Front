@@ -190,8 +190,8 @@
 
     <div class="product-info">
       <div class="product-details">
-        <h3 class="product-name">{{ product.nombre }}</h3>
-        <p class="product-supermarket">{{ "Mercadona" }}</p>
+        <h3 class="product-name">{{  keepLastTwoWordsTogether(product.nombre) }}</h3>
+
       </div>
       <div class="product-price">
         {{ product.precio }}€

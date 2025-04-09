@@ -123,7 +123,9 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/producto-detalle', productId]);
   }
 
-
+  keepLastTwoWordsTogether(text: string) {
+    return text.replace(/\s(?=\S+$)/, '\u00A0');
+  }
 
 
   changePage(page: number) {
@@ -178,9 +180,7 @@ export class HomeComponent implements OnInit {
     this.visiblePages = Array.from({ length: end - start + 1 }, (_, i) => start + i);
   }
 
-  getSupermercado(productId: number) {
 
-  }
 
 
 

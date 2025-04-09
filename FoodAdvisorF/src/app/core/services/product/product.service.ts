@@ -36,4 +36,9 @@ export class ProductService {
   static getSupermercadoNombre(idSuper: number): string {
     return ProductService.supermercadoDiccionario[idSuper] || 'Desconocido';
   }
+
+  getSuperByProductId(id: number): Observable<{ supermercado: string }> {
+    return this.http.get<{ supermercado: string }>(`${this.apiUrl}/${id}/super`);
+  }
+
 }
