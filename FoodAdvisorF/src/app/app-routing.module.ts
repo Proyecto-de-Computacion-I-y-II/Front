@@ -7,6 +7,7 @@ import {ProfileComponent} from './core/profile/profile.component';
 import { CestaComponent } from './core/cesta/cesta.component';
 import { ProductoDetalleComponent } from './producto-detalle/producto-detalle.component';
 import { TemporadaComponent } from './temporada/temporada.component';
+import { CestasComponent } from './core/cestas/cestas.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent},
   { path: 'profile', component: ProfileComponent},
   { path: 'cesta', component: CestaComponent},
+  { path: 'cestas', component: CestasComponent},
   { path: 'producto-detalle/:id', component: ProductoDetalleComponent},
   { path: 'temporada', component: TemporadaComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full'},
