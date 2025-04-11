@@ -76,7 +76,8 @@ export class CestasComponent implements OnInit {
       )
       .subscribe({
         next: (cestas) => {
-          this.cestasCompra = cestas;
+          // Ordenar las cestas por ID_cesta antes de asignarlas
+          this.cestasCompra = cestas.sort((a, b) => a.ID_cesta - b.ID_cesta);
           this.loading = false;
         },
         error: (err) => {
