@@ -94,12 +94,11 @@ export class HomeComponent implements OnInit {
     if (localStorage.getItem('token')) {
       loggedIn = true;
     }
+
     this.communicationService.showHeaderChange({ showHeader: true , logged: loggedIn });
 
     this.productService.getAllProducts().subscribe((response:any)=> {
       this.products = response.data;
-      console.log('Productos cargados:', this.products);
-
     });
   }
 
@@ -111,5 +110,5 @@ export class HomeComponent implements OnInit {
   goToProductDetail(productId: number) {
     console.log('Navegando a producto con ID:', productId);
     this.router.navigate(['/producto-detalle', productId]);
-  }  
+  }
 }

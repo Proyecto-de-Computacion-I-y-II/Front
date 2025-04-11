@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CommunicationService } from './shared/services/communicacion/communication.service';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -44,5 +45,13 @@ export class AppComponent implements OnInit {
         this.hideLoginButton = currentUrl === '/login' || currentUrl === '/register';
       }
     });
+  }
+
+  goToCesta(): void{
+    if (localStorage.getItem('token')) {
+
+    }else{
+      this.router.navigate(['/login']);
+    }
   }
 }

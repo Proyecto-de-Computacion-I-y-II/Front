@@ -16,7 +16,6 @@ export class ProductService {
   // Método para obtener todos los productos
   getAllProducts(): Observable<any> {
     const token = localStorage.getItem('token');
-    console.log(token);
 
     // Set the Authorization header with the token
     const headers = new HttpHeaders({
