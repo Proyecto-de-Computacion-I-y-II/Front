@@ -22,6 +22,8 @@ import { ProductoDetalleComponent } from './producto-detalle/producto-detalle.co
 import { LoginComponent } from './security/login/login.component';
 import { RegisterComponent } from './security/register/register.component';
 import { CestasComponent } from './core/cestas/cestas.component';
+import { CommonModule } from '@angular/common';
+import { TemporadaComponent } from './temporada/temporada.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { CestasComponent } from './core/cestas/cestas.component';
     RegisterComponent,
     ProfileComponent,
     CestaComponent,
-    CestasComponent
+    CestasComponent,
+    TemporadaComponent
   ],
   imports: [
     BrowserModule,
