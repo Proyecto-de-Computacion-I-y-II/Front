@@ -24,6 +24,7 @@ import { RegisterComponent } from './security/register/register.component';
 import { CestasComponent } from './core/cestas/cestas.component';
 import { CommonModule } from '@angular/common';
 import { TemporadaComponent } from './temporada/temporada.component';
+import { InicioComponent } from './inicio/inicio.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { TemporadaComponent } from './temporada/temporada.component';
     ProfileComponent,
     CestaComponent,
     CestasComponent,
-    TemporadaComponent
+    TemporadaComponent,
+    InicioComponent
   ],
   imports: [
     BrowserModule,
