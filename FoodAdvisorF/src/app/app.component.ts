@@ -2,6 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CommunicationService } from './shared/services/communicacion/communication.service';
+import {UserService} from './core/services/user/user.service';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class AppComponent implements OnInit {
   hideLoginButton: boolean = false; // Variable para controlar la visibilidad del botón de Iniciar Sesión
 
   constructor(
+    private userService: UserService,
     private communicationService: CommunicationService,
     private cdr: ChangeDetectorRef,
     private router: Router // Inyectamos el router
