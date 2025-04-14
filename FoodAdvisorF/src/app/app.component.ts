@@ -2,6 +2,8 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CommunicationService } from './shared/services/communicacion/communication.service';
+import {UserService} from './core/services/user/user.service';
+
 
 @Component({
   selector: 'app-root',
@@ -19,6 +21,7 @@ export class AppComponent implements OnInit {
   hideLoginButton: boolean = false; // Variable para controlar la visibilidad del botón de Iniciar Sesión
 
   constructor(
+    private userService: UserService,
     private communicationService: CommunicationService,
     private cdr: ChangeDetectorRef,
     private router: Router // Inyectamos el router
@@ -44,5 +47,13 @@ export class AppComponent implements OnInit {
         this.hideLoginButton = currentUrl === '/login' || currentUrl === '/register';
       }
     });
+  }
+
+  goToCesta(): void{
+    if (localStorage.getItem('token')) {
+
+    }else{
+      this.router.navigate(['/login']);
+    }
   }
 }
