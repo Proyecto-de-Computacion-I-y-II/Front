@@ -1,8 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {BaseService} from '../../../shared/services/base/base.service';
+import {UserDTO} from '../../../security/models/user-dto';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {catchError, Observable, retry} from 'rxjs';
+import {Product} from '../../../security/models/product';
 import { environment } from '../../../../environments/environment';
-import { Product } from '../../../security/models/product';
 
 @Injectable({
   providedIn: 'root'

@@ -29,12 +29,4 @@ export class UserService extends BaseService<UserDTO>{
       })
     }).pipe(catchError(this.handleError));
   }
-
-  getCestas(body: User): Observable<UserDTO>{
-    return this.http.post<UserDTO>(`${this.basePath}/register`, { nombre: body.name, apellidos: body.lastName, correo: body.email, contrasenia: body.password, rol: "admin"}, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    }).pipe(catchError(this.handleError));
-  }
 }

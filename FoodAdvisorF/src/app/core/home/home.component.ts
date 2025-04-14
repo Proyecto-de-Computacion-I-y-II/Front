@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {CommunicationService} from '../../shared/services/communicacion/communication.service';
+import {ProductService} from '../services/product/product.service';
+import {Product} from '../../security/models/product';
 import { Router } from '@angular/router';
-import { Product } from '../../security/models/product';
-import { CommunicationService } from '../../shared/services/communicacion/communication.service';
-import { ProductService } from '../services/product/product.service';
 
 @Component({
   selector: 'app-home',
@@ -100,13 +100,16 @@ export class HomeComponent implements OnInit {
     if (localStorage.getItem('token')) {
       loggedIn = true;
     }
-
     this.communicationService.showHeaderChange({ showHeader: true , logged: loggedIn });
 
     this.productService.getAllProducts(this.currentPage).subscribe((response:any)=> {
       this.products = response.data;
+      console.log('Productos cargados:', this.products);
+
     });
+
     this.updateVisiblePages();
+
 
   }
 
@@ -176,4 +179,9 @@ export class HomeComponent implements OnInit {
 
     this.visiblePages = Array.from({ length: end - start + 1 }, (_, i) => start + i);
   }
+
+
+
+
+
 }
