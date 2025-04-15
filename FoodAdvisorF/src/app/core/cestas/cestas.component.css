@@ -9,6 +9,24 @@
   margin: 20px;
 }
 
+.cesta-actual{
+  display: inline-block;
+  color: #f58634;
+  border:2px solid #69b550;
+  border-radius: 5px;
+  padding: 0.25em;
+  height: 15%;
+  align-self: flex-end;
+  text-align: right;
+  width: auto;
+}
+
+.cesta-actual-placeholder {
+  display: inline-block;
+  height: 15%;
+  margin-left: 8px;
+  visibility: hidden;
+}
 .container {
   width: 100%;  
   text-align: center;
@@ -73,6 +91,8 @@ h1 {
 }
 
 .cesta-item {
+  display: flex;
+  flex-direction: column;
   border: none;
   border-radius: 12px;
   padding: 28px;

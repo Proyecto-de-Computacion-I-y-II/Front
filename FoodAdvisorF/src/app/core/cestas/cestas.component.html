@@ -17,10 +17,13 @@
     <div *ngIf="!loading && !error && cestasCompra && cestasCompra.length > 0; else cestaVacia" class="cestas-list">
       <div *ngFor="let cesta of cestasCompra" class="cesta-item">
         <div class="cesta-header">
-          <h3>Cesta {{ cesta.ID_cesta }}</h3>
+          <h3>Cesta {{ cesta.localCounter }}</h3>
           <span class="cesta-fecha">Fecha de compra: {{ cesta.fecha_compra | date }}</span>
         </div>
-        
+        <span *ngIf="cesta.localCounter === 1;else emptySpan" class="cesta-actual">Cesta actual</span>
+        <ng-template #emptySpan>
+          <span class="cesta-actual-placeholder"></span>
+        </ng-template>
         <div class="cesta-info">
           <p>Usuario ID: {{ cesta.ID_user }}</p>
           <p>Número de productos: {{ cesta.totalProductos || 0 }}</p>

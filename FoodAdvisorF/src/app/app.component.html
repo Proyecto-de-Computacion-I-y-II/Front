@@ -36,7 +36,7 @@
     </button>
     
     <ng-container *ngIf="showProfile; else elseTemplate">
-      <button mat-icon-button class="cart-button" (click)="goToCesta()">
+      <button mat-icon-button class="cart-button" [routerLink]="['/cestas']">
         <mat-icon>shopping_cart</mat-icon>
       </button>
       <img src="avatar.png" alt="User Avatar" class="user-avatar" [routerLink]="['/profile']"/>
