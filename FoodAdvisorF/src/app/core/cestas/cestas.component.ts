@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
 import { forkJoin, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 interface Producto {
   ID_prod: number;
@@ -52,7 +52,7 @@ export class CestasComponent implements OnInit {
     this.http.get<Cesta[]>(`${this.apiUrl}/cestas-compra`)
       .pipe(
         switchMap(cestas => {
-          const productRequests = cestas.map(cesta => 
+          const productRequests = cestas.map(cesta =>
             this.http.get<Producto[]>(`${this.apiUrl}/cestas-compra/${cesta.ID_cesta}/productos`)
               .pipe(
                 catchError(error => {
