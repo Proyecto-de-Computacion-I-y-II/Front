@@ -1,9 +1,8 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, HostListener } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CommunicationService } from './shared/services/communicacion/communication.service';
-import {UserService} from './core/services/user/user.service';
-
+import { UserService } from './core/services/user/user.service';
 
 @Component({
   selector: 'app-root',
@@ -15,21 +14,23 @@ export class AppComponent implements OnInit {
   showHeader: boolean;
   showProfile: boolean;
   titleChangedSubscription: Subscription;
-  searchQuery: string = ''; // Guarda la búsqueda en esta variable
+  searchQuery: string = '';
   userName: string = 'Food-Advisor';
-  hideSearch: boolean = false; // Variable para controlar la visibilidad de la barra de búsqueda
-  hideLoginButton: boolean = false; // Variable para controlar la visibilidad del botón de Iniciar Sesión
+  hideSearch: boolean = false;
+  hideLoginButton: boolean = false;
+  showMobileMenu: boolean = false;
+  showSearchBar: boolean = false;
+  isMobileView: boolean = false;
 
   constructor(
     private userService: UserService,
     private communicationService: CommunicationService,
     private cdr: ChangeDetectorRef,
-    private router: Router // Inyectamos el router
+    private router: Router
   ) {
     this.showHeader = true;
     this.showProfile = true;
 
-    // Suscripción a cambios en el estado del header
     this.titleChangedSubscription = this.communicationService.headerShowed.subscribe((value) => {
       this.showHeader = value.showHeader;
       this.showProfile = value.logged;
@@ -38,22 +39,91 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Detectamos la navegación y verificamos si estamos en '/login' o '/register'
+    this.checkScreenSize();
+    
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const currentUrl = this.router.url;
-        // Si estamos en '/login' o '/register', ocultamos el search-container y el botón de iniciar sesión
         this.hideSearch = currentUrl === '/login' || currentUrl === '/register' || currentUrl === '/inicio';
         this.hideLoginButton = currentUrl === '/login' || currentUrl === '/register';
+        
+        // Cerrar menús al navegar
+        this.closeMobileMenu();
+        this.closeSearchBar();
       }
     });
   }
 
-  goToCesta(): void{
-    if (localStorage.getItem('token')) {
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.checkScreenSize();
+  }
 
-    }else{
+  checkScreenSize() {
+    this.isMobileView = window.innerWidth < 768;
+    if (!this.isMobileView) {
+      this.closeMobileMenu();
+      this.closeSearchBar();
+    }
+  }
+
+  toggleMobileMenu() {
+    this.showMobileMenu = !this.showMobileMenu;
+    if (this.showMobileMenu) {
+      this.closeSearchBar();
+    }
+  }
+
+  closeMobileMenu() {
+    this.showMobileMenu = false;
+  }
+
+  toggleSearchBar() {
+    this.showSearchBar = !this.showSearchBar;
+    if (this.showSearchBar) {
+      this.closeMobileMenu();
+      // Enfocar el input de búsqueda cuando se muestra
+      setTimeout(() => {
+        const searchInput = document.querySelector('.search-input') as HTMLInputElement;
+        if (searchInput) {
+          searchInput.focus();
+        }
+      }, 100);
+    }
+  }
+
+  closeSearchBar() {
+    this.showSearchBar = false;
+  }
+
+  handleSearch() {
+    if (this.searchQuery.trim()) {
+      this.router.navigate(['/productos'], { 
+        queryParams: { search: this.searchQuery } 
+      });
+      this.closeSearchBar();
+    }
+  }
+
+  onSearchKeyUp(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this.handleSearch();
+    } else if (event.key === 'Escape') {
+      this.closeSearchBar();
+    }
+  }
+
+  goToCesta(): void {
+    if (localStorage.getItem('token')) {
+      this.router.navigate(['/cesta']);
+    } else {
       this.router.navigate(['/login']);
+    }
+  }
+  
+  ngOnDestroy() {
+    if (this.titleChangedSubscription) {
+      this.titleChangedSubscription.unsubscribe();
     }
   }
 }
