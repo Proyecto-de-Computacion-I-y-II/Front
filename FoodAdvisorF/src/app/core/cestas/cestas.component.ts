@@ -75,7 +75,7 @@ export class CestasComponent implements OnInit {
   }
 
   verDetallesCesta(idCesta: number) {
-    this.router.navigate(['/cesta', idCesta]);
+    this.router.navigate(['/cestas', idCesta]);
   }
 
   // Método para obtener detalles de una cesta específica

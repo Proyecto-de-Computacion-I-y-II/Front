@@ -1,8 +1,8 @@
-import { ChangeDetectorRef, Component, OnInit, HostListener } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { CommunicationService } from './shared/services/communicacion/communication.service';
 import { UserService } from './core/services/user/user.service';
+import { CommunicationService } from './shared/services/communicacion/communication.service';
 
 @Component({
   selector: 'app-root',
@@ -52,6 +52,12 @@ export class AppComponent implements OnInit {
         this.closeSearchBar();
       }
     });
+
+
+    if(!localStorage.getItem('token')){
+      this.showProfile = false;
+    }
+
   }
 
   @HostListener('window:resize', ['$event'])
@@ -98,7 +104,7 @@ export class AppComponent implements OnInit {
 
   handleSearch() {
     if (this.searchQuery.trim()) {
-      this.router.navigate(['/productos'], { 
+      this.router.navigate(['/home'], { 
         queryParams: { search: this.searchQuery } 
       });
       this.closeSearchBar();

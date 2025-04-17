@@ -3,7 +3,7 @@
     <img src="logo.png" alt="Food Advisor Logo" class="logo" [routerLink]="['/home']"/>
     
     <!-- Barra de búsqueda oculta en móvil -->
-    <div *ngIf="!hideSearch" class="search-container" [ngClass]="{'show-search': showSearchBar}">
+    <div class="search-container"   [ngClass]="(hideSearch || isMobileView) ? 'search-container-hidden' : 'search-container-show'">
       <input
         type="text"
         placeholder="Introduzca el nombre del producto"
@@ -20,7 +20,7 @@
   <!-- Navegación normal -->
   <nav class="desktop-nav">
     <a mat-button [routerLink]="['/inicio']" routerLinkActive="active">Inicio</a>
-    <a mat-button [routerLink]="['/productos']" routerLinkActive="active">Productos</a>
+    <a mat-button [routerLink]="['/home']" routerLinkActive="active">Productos</a>
     <a mat-button [routerLink]="['/temporada']" routerLinkActive="active">Productos de temporada</a>
   </nav>
 
@@ -54,7 +54,7 @@
 <!-- Menú móvil desplegable -->
 <div class="mobile-nav" [ngClass]="{'show-mobile-menu': showMobileMenu}">
   <a mat-button [routerLink]="['/inicio']" routerLinkActive="active" (click)="closeMobileMenu()">Inicio</a>
-  <a mat-button [routerLink]="['/productos']" routerLinkActive="active" (click)="closeMobileMenu()">Productos</a>
+  <a mat-button [routerLink]="['/home']" routerLinkActive="active" (click)="closeMobileMenu()">Productos</a>
   <a mat-button [routerLink]="['/temporada']" routerLinkActive="active" (click)="closeMobileMenu()">Productos de temporada</a>
 </div>
 
