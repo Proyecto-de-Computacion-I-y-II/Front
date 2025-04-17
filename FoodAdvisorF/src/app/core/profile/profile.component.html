@@ -1,28 +1,77 @@
 <div class="profile-container">
-  <div class="profile-up">
-    <img [src]="avatar" alt="avatar">
-    <div class="name">{{ userData?.usuario.nombre }} {{ userData?.usuario.apellidos }}</div>
+  <!-- Columna izquierda: avatar + nombre -->
+  <div class="profile-left">
+
+    <!-- Spinner global si avatar o nombre no han cargado -->
+    <ng-container *ngIf="!userData; else perfilCargado">
+      <div class="spinner-avatar"></div>
+    </ng-container>
+
+    <!-- Avatar + Nombre -->
+    <ng-template #perfilCargado>
+      <img [src]="avatar" alt="avatar" />
+      <div class="profile-name">
+        {{ userData?.usuario.nombre }} {{ userData?.usuario.apellidos }}
+      </div>
+    </ng-template>
+
   </div>
 
-  <div class="profile-content">
-    <div class="title">Mis datos:</div>
-    <div class="profile-table">
-      <div class="title-sub">Correo asociado:</div>
-      <div class="subtitle">{{ userData?.usuario.correo }}</div>
-      <div class="title-sub">Rol:</div>
-      <div class="subtitle">{{ userData?.usuario.rol }}</div>
-      <div class="title-sub">Creación de la Cuenta:</div>
-      <div class="subtitle">{{ userData?.usuario.created_at | date }}</div>
+  <!-- Columna derecha: información -->
+  <div class="profile-right">
+    <!-- Sección datos personales -->
+    <div class="profile-section">
+      <div class="section-title">Mis datos:</div>
+      <div class="section-grid">
+        <div class="title-sub">Correo asociado:</div>
+        <div class="subtitle">
+          <ng-container *ngIf="userData; else correoLoading">
+            {{ userData?.usuario.correo }}
+          </ng-container>
+          <ng-template #correoLoading>
+            <div class="spinner-small"></div>
+          </ng-template>
+        </div>
+
+        <div class="title-sub">Rol:</div>
+        <div class="subtitle">
+          <ng-container *ngIf="userData; else rolLoading">
+            {{ userData?.usuario.rol }}
+          </ng-container>
+          <ng-template #rolLoading>
+            <div class="spinner-small"></div>
+          </ng-template>
+        </div>
+
+        <div class="title-sub">Creación de la cuenta:</div>
+        <div class="subtitle">
+          <ng-container *ngIf="userData; else fechaLoading">
+            {{ userData?.usuario.created_at | date }}
+          </ng-container>
+          <ng-template #fechaLoading>
+            <div class="spinner-small"></div>
+          </ng-template>
+        </div>
+      </div>
     </div>
 
-    <hr class="separator1 separator2">
-
-    <div class="title">Actividad de la aplicación:</div>
-    <div class="profile-table">
-      <div class="title-sub">Cantidad de pedidos:</div>
-      <div class="subtitle">{{ prodUser }}</div>
+    <!-- Sección actividad -->
+    <div class="profile-section">
+      <div class="section-title">Actividad de la aplicación:</div>
+      <div class="section-grid">
+        <div class="title-sub">Cantidad de pedidos:</div>
+        <div class="subtitle">
+          <ng-container *ngIf="prodUser !== null; else pedidosLoading">
+            {{ prodUser }}
+          </ng-container>
+          <ng-template #pedidosLoading>
+            <div class="spinner-small"></div>
+          </ng-template>
+        </div>
+      </div>
     </div>
 
+    <!-- Botones -->
     <div class="profile-buttons">
       <button class="compras" (click)="historialCompras()">Ver Historial de Compras</button>
       <button class="cerrar-sesion" (click)="cerrarSesion()">Cerrar Sesión</button>
