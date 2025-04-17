@@ -13,6 +13,11 @@ export class ProductoTemporada {
     October: number;
     November: number;
     December: number;
+
+    //De producto
+    imagen: string;
+    nombre:string;
+    idSuper: number;
   
     [key: string]: number | string;
     
@@ -30,7 +35,10 @@ export class ProductoTemporada {
       September: number,
       October: number,
       November: number,
-      December: number
+      December: number,
+      imagen: string,
+      nombre: string,
+      idSuper: number
     ) {
       this.idTemp = idTemp;
       this.producto = producto;
@@ -46,5 +54,8 @@ export class ProductoTemporada {
       this.October = October;
       this.November = November;
       this.December = December;
+      this.imagen = imagen;
+      this.nombre = nombre;
+      this.idSuper = idSuper;
     }
   }  

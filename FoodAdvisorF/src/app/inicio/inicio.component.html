@@ -1,109 +1,16 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Food-Advisor Intro</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      width: 100%;
-    }
-
-    .image-wrapper {
-      position: relative;
-      width: 100%;
-      height: 90vh;
-      overflow: hidden;
-    }
-
-    .image-wrapper img.background {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.8;
-      z-index: 0;
-    }
-
-    .content-container {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: row-reverse;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100%;
-      padding: 2rem;
-      box-sizing: border-box;
-    }
-
-    .logo-container {
-      background-color: white;
-      padding: 0.1  rem;
-      border-radius: 1rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .logo-container img {
-      width: 75%;
-      height: auto;
-      border-radius: 1rem;
-    }
-
-    .text-container {
-      display: flex;
-      flex-direction: column;
-      margin-right: 2rem;
-      max-width: 600px;
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 1rem;
-      border-radius: 0.5rem;
-    }
-
-    .title {
-      font-size: 2.5rem;
-      font-weight: bold;
-    }
-
-    .title span.food {
-      color: #f58634;
-    }
-
-    .title span.advisor {
-      color: #69b550;
-    }
-
-    .description {
-      margin-top: 1rem;
-      font-size: 1rem;
-      line-height: 1.5;
-    }
-  </style>
-</head>
-<body>
-  <div class="image-wrapper">
-    <img src="frutas_y_verduras.webp" alt="Fondo" class="background" />
-    <div class="content-container">
-      <div class="logo-container">
-        <img src="logo_fondo.png" alt="Logo" />
+<div class="image-wrapper">
+  <img src="frutas_y_verduras.webp" alt="Fondo" class="background" />
+  <div class="content-container">
+    <div class="logo-container">
+      <img src="logo_fondo.png" alt="Logo" />
+    </div>
+    <div class="text-container">
+      <div class="title">
+        <span class="food">FOOD</span><span class="advisor">-ADVISOR</span>
       </div>
-      <div class="text-container">
-        <div class="title">
-          <span class="food">FOOD</span><span class="advisor">-ADVISOR</span>
-        </div>
-        <div class="description">
-          Somos un pequeño grupo de trabajo orientado a las nuevas formas de encontrar alimentos. Food-Advisor presentará una búsqueda de productos que se ajusten a una dieta equilibrada según los estudios de la ONU y la pirámide nutricional que presentan. Esta página está orientada a un consumo adecuado de carnes, verduras, grasas y mucho más, y no busca personalizar dietas peculiares que puedan requerir ciertas personas, si no que ofrece dar una aproximación y recomendaciones para variarla en cada compra de una cesta.
-        </div>
+      <div class="description">
+        Somos un pequeño grupo de trabajo orientado a las nuevas formas de encontrar alimentos. Food-Advisor presentará una búsqueda de productos que se ajusten a una dieta equilibrada según los estudios de la ONU y la pirámide nutricional que presentan. Esta página está orientada a un consumo adecuado de carnes, verduras, grasas y mucho más, y no busca personalizar dietas peculiares que puedan requerir ciertas personas, si no que ofrece dar una aproximación y recomendaciones para variarla en cada compra de una cesta.
       </div>
     </div>
   </div>
-</body>
-</html>
+</div>

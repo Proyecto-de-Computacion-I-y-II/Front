@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {CommunicationService} from '../../shared/services/communicacion/communication.service';
-import {User} from '../models/user';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {UserService} from '../../core/services/user/user.service';
-import {UserDTO} from '../models/user-dto';
-import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { UserService } from '../../core/services/user/user.service';
+import { CommunicationService } from '../../shared/services/communicacion/communication.service';
+import { User } from '../models/user';
+import { UserDTO } from '../models/user-dto';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
     this.userService.logIn(this.user).subscribe({
       next: (response: UserDTO) => {
         this.snackBar.dismiss();
-        localStorage.setItem('token', response.usuario.ID_user);
+        localStorage.setItem('token', response.token);
         this.router.navigate(['/home']).then();
       },
       error: (e) => {

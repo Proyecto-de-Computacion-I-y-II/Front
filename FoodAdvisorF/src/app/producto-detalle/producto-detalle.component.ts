@@ -1,10 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { environment } from '../../environments/environment';
+import { CestaService } from '../core/services/cesta/cesta.service';
 import { ProductService } from '../core/services/product/product.service';
 import { Product } from '../security/models/product';
-import { environment } from '../../environments/environment';
-import { Router } from '@angular/router'; 
-import { CestaService } from '../core/services/cesta/cesta.service';
 
 @Component({
   selector: 'app-producto-detalle',
@@ -49,7 +48,7 @@ export class ProductoDetalleComponent implements OnInit {
   agregarAlCarrito() {
     if (this.product) {
       this.cestaService.agregarProductoAlCarrito(this.product, this.cantidad);  // Usa el servicio
-      this.router.navigate(['/cesta']);  // Redirige a la página de cesta
+      //this.router.navigate(['/cestas']);  // Redirige a la página de cesta
     }
   }
 

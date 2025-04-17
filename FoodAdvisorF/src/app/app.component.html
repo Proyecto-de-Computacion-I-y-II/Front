@@ -1,44 +1,66 @@
 <mat-toolbar class="custom-toolbar" *ngIf="showHeader">
   <div class="toolbar-left">
     <img src="logo.png" alt="Food Advisor Logo" class="logo" [routerLink]="['/home']"/>
-
-    <!-- Barra de búsqueda solo visible si no estamos en '/login' o '/register' -->
-    <div *ngIf="!hideSearch" class="search-container">
+    
+    <!-- Barra de búsqueda oculta en móvil -->
+    <div class="search-container"   [ngClass]="(hideSearch || isMobileView) ? 'search-container-hidden' : 'search-container-show'">
       <input
         type="text"
         placeholder="Introduzca el nombre del producto"
         class="search-input"
         [(ngModel)]="searchQuery"
+        (keyup)="onSearchKeyUp($event)"
       />
-      <button class="search-button">
+      <button class="search-button" (click)="handleSearch()">
         <mat-icon>search</mat-icon>
       </button>
     </div>
   </div>
 
-  <nav>
-    <a mat-button [routerLink]="['/']" routerLinkActive="active">Inicio</a>
+  <!-- Navegación normal -->
+  <nav class="desktop-nav">
+    <a mat-button [routerLink]="['/inicio']" routerLinkActive="active">Inicio</a>
     <a mat-button [routerLink]="['/home']" routerLinkActive="active">Productos</a>
     <a mat-button [routerLink]="['/temporada']" routerLinkActive="active">Productos de temporada</a>
   </nav>
 
   <div class="toolbar-right">
+    <!-- Icono de búsqueda para móvil -->
+    <button *ngIf="isMobileView && !hideSearch" class="icon-button search-icon-button" (click)="toggleSearchBar()">
+      <mat-icon>search</mat-icon>
+    </button>
+    
+    <!-- Menú hamburguesa a la izquierda del carrito -->
+    <button *ngIf="isMobileView" class="icon-button menu-button" (click)="toggleMobileMenu()">
+      <mat-icon>{{ showMobileMenu ? 'close' : 'menu' }}</mat-icon>
+    </button>
+    
     <ng-container *ngIf="showProfile; else elseTemplate">
-      <button mat-icon-button class="cart-button" [routerLink]="['/cesta']">
+      <button mat-icon-button class="cart-button" [routerLink]="['/cestas']">
         <mat-icon>shopping_cart</mat-icon>
       </button>
       <img src="avatar.png" alt="User Avatar" class="user-avatar" [routerLink]="['/profile']"/>
       <span class="user-name">{{ userName }}</span>
     </ng-container>
 
-    <!-- Mostrar el botón de iniciar sesión solo si no estamos en '/login' o '/register' -->
     <ng-template #elseTemplate>
-      <button *ngIf="!hideLoginButton" mat-flat-button style="background-color: #f58634;" [routerLink]="['/login']">
+      <button *ngIf="!hideLoginButton" mat-flat-button class="login-button" [routerLink]="['/login']">
         Iniciar Sesión
       </button>
     </ng-template>
   </div>
 </mat-toolbar>
+
+<!-- Menú móvil desplegable -->
+<div class="mobile-nav" [ngClass]="{'show-mobile-menu': showMobileMenu}">
+  <a mat-button [routerLink]="['/inicio']" routerLinkActive="active" (click)="closeMobileMenu()">Inicio</a>
+  <a mat-button [routerLink]="['/home']" routerLinkActive="active" (click)="closeMobileMenu()">Productos</a>
+  <a mat-button [routerLink]="['/temporada']" routerLinkActive="active" (click)="closeMobileMenu()">Productos de temporada</a>
+</div>
+
+<!-- Overlay para cuando el menú está abierto -->
+<div class="mobile-menu-overlay" *ngIf="showMobileMenu" (click)="closeMobileMenu()"></div>
+
 
 <router-outlet/>
 

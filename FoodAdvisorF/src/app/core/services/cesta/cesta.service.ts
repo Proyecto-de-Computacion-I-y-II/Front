@@ -16,12 +16,15 @@ export class CestaService {
 
   // Agregar un producto al carrito
   agregarProductoAlCarrito(producto: any, cantidad: number) {
-    const productoExistente = this.productosEnCesta.find(p => p.id === producto.id);
+    
+    
+    
+    /*const productoExistente = this.productosEnCesta.find(p => p.id === producto.id);
 
     if (productoExistente) {
       productoExistente.cantidad += cantidad;
     } else {
       this.productosEnCesta.push({ ...producto, cantidad });
-    }
+    }*/
   }
 }

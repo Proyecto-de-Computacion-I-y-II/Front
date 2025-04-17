@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { provideHttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleGroup } from '@angular/material/button-toggle';
@@ -16,13 +15,18 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CestaComponent } from './core/cesta/cesta.component';
+import { CestasComponent } from './core/cestas/cestas.component';
 import { HomeComponent } from './core/home/home.component';
 import { ProfileComponent } from './core/profile/profile.component';
+import { InicioComponent } from './inicio/inicio.component';
 import { ProductoDetalleComponent } from './producto-detalle/producto-detalle.component';
 import { LoginComponent } from './security/login/login.component';
 import { RegisterComponent } from './security/register/register.component';
-import { CestasComponent } from './core/cestas/cestas.component';
-import { InicioComponent } from './inicio/inicio.component';
+import { TemporadaComponent } from './temporada/temporada.component';
+
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
+
 
 @NgModule({
   declarations: [
@@ -33,6 +37,7 @@ import { InicioComponent } from './inicio/inicio.component';
     ProfileComponent,
     CestaComponent,
     CestasComponent,
+    TemporadaComponent,
     InicioComponent
   ],
   imports: [
@@ -54,8 +59,8 @@ import { InicioComponent } from './inicio/inicio.component';
     ProductoDetalleComponent
   ],
   providers: [
-    provideHttpClient()
-
+    provideHttpClient(withInterceptorsFromDi()),
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true } // Proper registration for class-based interceptor
   ],
   bootstrap: [AppComponent]
 })
