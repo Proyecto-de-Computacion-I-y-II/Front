@@ -3,9 +3,20 @@
     margin-left: 20px;
 }
 
+h3{
+    margin: 1em 0;
+}
+
+hr {
+    color:#37C666;
+    opacity: 1;
+}
+
 .title-text {
     font-size: 24px;
     font-weight: bold;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 .categoria {
@@ -15,9 +26,39 @@
 
 .cantidad, .carrito {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
     align-items: center;
 }
+
+.btn-add {
+    padding: 20px;
+    font-size: 15px;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+    background-color: #37C666;
+}
+
+.btn-add:hover {
+opacity: 0.9;
+transform: scale(1.02);
+}
+
+.btn-change{
+    background-color: #f58634;
+    border-radius: 10px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 10%;
+}
+
 
 /* GRID PRINCIPAL */
 .grid-container {
@@ -25,6 +66,7 @@
     grid-template-columns: 1fr 2fr; /* Imagen 1 parte, info 2 partes */
     gap: 40px;
     align-items: center;
+    margin: 2em;
 }
 
 /* COLUMNA DE LA IMAGEN */
@@ -71,7 +113,11 @@
 
 .quantity {
     background-color: #f1f1f1;
-    padding: 10px 20px;
+    padding: 10px 0px;
+    text-align: center;
     border-radius: 5px;
     font-weight: bold;
+    border-color:#f58634;
+    margin:10px;
+    width: 3em;
 }
