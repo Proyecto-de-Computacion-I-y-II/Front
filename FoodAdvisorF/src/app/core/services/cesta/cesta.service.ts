@@ -1,13 +1,24 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { environment } from '../../../../environments/environment';
+import { Cesta } from './../../../security/models/Cesta';
 
 @Injectable({
   providedIn: 'root'
 })
+
+
 export class CestaService {
 
   private productosEnCesta: any[] = [];
 
-  constructor() { }
+  private apiUrl = environment.apiUrl;
+
+  constructor(
+        private http: HttpClient,
+        private snackBar: MatSnackBar
+  ) { }
 
   // Obtener los productos en el carrito
   obtenerProductosEnCarrito() {
@@ -16,12 +27,19 @@ export class CestaService {
 
   // Agregar un producto al carrito
   agregarProductoAlCarrito(producto: any, cantidad: number) {
-    const productoExistente = this.productosEnCesta.find(p => p.id === producto.id);
+    
+    this.http.post<Cesta>(`${this.apiUrl}/cestas-compra`,{
+      ID_prod : producto.ID_prod,
+      cantidad : cantidad
+    }).subscribe({
+      next: (resp) => {
+        this.snackBar.open("Producto añadido", "Entendido", {duration: 2000});
 
-    if (productoExistente) {
-      productoExistente.cantidad += cantidad;
-    } else {
-      this.productosEnCesta.push({ ...producto, cantidad });
+      },
+    error: (err) => {
+      this.snackBar.open("No se ha podido añadir el producto a la cesta. Pruebe más tarde", "Entendido", {duration: 2000});
+      console.log(err.message)
     }
+    });
   }
 }

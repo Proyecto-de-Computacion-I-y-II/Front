@@ -13,7 +13,7 @@
     <div class="grid-item info-container">
         <h3>Datos del Producto</h3>
         <div class="product-details">
-            <p><strong>Precio:</strong> {{ product?.precio + '€' || 'No se dispone de datos' }}</p>
+            <p><strong>Precio promedio:</strong> {{ product?.precio + '€' || 'No se dispone de datos' }}</p>
             <p><strong>Supermercado:</strong> {{ getSupermercadoNombre(product?.idSuper) }}</p>
         </div>
 
@@ -34,12 +34,12 @@
         <h3>Compra</h3>
         <div class="purchase-container">
             <div class="cantidad">
-            <button class="btn btn-dark" (click)="restarCantidad()">-</button>
+            <button class="btn-change" (click)="restarCantidad()">-</button>
             <span class="quantity">{{ cantidad }}</span>
-            <button class="btn btn-dark" (click)="sumarCantidad()">+</button>
+            <button class="btn-change" (click)="sumarCantidad()">+</button>
         </div>
         <div class="carrito">
-            <button class="btn btn-success" (click)="agregarAlCarrito()">Añadir al carrito</button>
+            <button class="btn-add" (click)="agregarAlCarrito()">Añadir a la cesta actual</button>
         </div>      
     </div>
 </div>

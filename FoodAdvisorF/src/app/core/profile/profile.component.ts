@@ -1,7 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommunicationService } from '../../shared/services/communicacion/communication.service';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   standalone: false,
@@ -35,7 +35,7 @@ export class ProfileComponent {
     const token = localStorage.getItem('token');
   
     if (token) {
-      const apiUrl = `http://127.0.0.1:8000/api/usuario/${token}`;
+      const apiUrl = `http://127.0.0.1:8000/api/usuario`;
   
       this.http.get(apiUrl).subscribe({
         next: (data: any) => {

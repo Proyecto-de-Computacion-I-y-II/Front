@@ -2,25 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-
-interface Producto {
-  ID_prod: number;
-  cantidad: number;
-  recomendado: boolean;
-  comprado: boolean;
-  deleted_at: string | null;
-}
-
-interface Cesta {
-  ID_cesta: number;
-  ID_user: number;
-  fecha_compra: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: null | string;
-  productos?: Producto[];
-  totalProductos?: number;
-}
+import { Cesta } from './../../security/models/Cesta';
 
 type CestaConContador = Cesta & { localCounter: number };
 @Component({
@@ -75,7 +57,7 @@ export class CestasComponent implements OnInit {
   }
 
   verDetallesCesta(idCesta: number) {
-    this.router.navigate(['/cesta', idCesta]);
+    this.router.navigate(['/cestas', idCesta]);
   }
 
   // Método para obtener detalles de una cesta específica

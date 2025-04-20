@@ -3,7 +3,7 @@
     <img src="logo.png" alt="Food Advisor Logo" class="logo" [routerLink]="['/home']"/>
     
     <!-- Barra de búsqueda oculta en móvil -->
-    <div *ngIf="!hideSearch" class="search-container" [ngClass]="{'show-search': showSearchBar}">
+    <div class="search-container"   [ngClass]="(hideSearch || isMobileView) ? 'search-container-hidden' : 'search-container-show'">
       <input
         type="text"
         placeholder="Introduzca el nombre del producto"
