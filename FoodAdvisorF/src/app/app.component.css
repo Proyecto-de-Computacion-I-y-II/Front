@@ -253,7 +253,7 @@
 }
 
 /* Media queries */
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1280px) {
   .desktop-nav {
     gap: 30px;
   }
@@ -285,7 +285,7 @@
 }
 
 /* CAMBIO PRINCIPAL: Activar menú hamburguesa a 1024px en lugar de 768px */
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1280px) {
   .custom-toolbar {
     padding: 12px 15px;
   }
@@ -335,7 +335,7 @@
 }
 
 /* CAMBIO IMPORTANTE: Complementario al anterior */
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1280px) {
   .menu-button, .search-icon-button {
     display: none;
   }

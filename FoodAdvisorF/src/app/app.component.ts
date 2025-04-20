@@ -66,7 +66,7 @@ export class AppComponent implements OnInit {
   }
 
   checkScreenSize() {
-    this.isMobileView = window.innerWidth < 768;
+    this.isMobileView = window.innerWidth < 1280;
     if (!this.isMobileView) {
       this.closeMobileMenu();
       this.closeSearchBar();
