@@ -47,8 +47,6 @@
   transition: opacity 0.3s ease;
 }
 
-
-
 .search-container-hidden {
   visibility: hidden;
   pointer-events: none;
@@ -170,6 +168,43 @@
   flex-shrink: 0; /* Evita que el botón de login se encoja */
 }
 
+/* Menú hamburguesa */
+.menu-button {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1100;
+  flex-shrink: 0;
+}
+
+.menu-button span {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: #333;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+/* Animación para el botón hamburguesa cuando está activo */
+.menu-button.active span:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.menu-button.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menu-button.active span:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
 .mobile-nav {
   display: none;
   flex-direction: column;
@@ -188,8 +223,7 @@
   display: flex;
 }
 
-
-/* Opcional: overlay semi-transparente que permite ver el contenido */
+/* Overlay semi-transparente que permite ver el contenido */
 .mobile-menu-overlay {
   position: fixed;
   top: 70px;
@@ -198,6 +232,11 @@
   bottom: 0;
   background-color: rgba(0,0,0,0.3); /* Más transparente para ver el contenido */
   z-index: 998;
+  display: none;
+}
+
+.mobile-menu-overlay.active {
+  display: block;
 }
 
 .mobile-nav a {
@@ -211,16 +250,6 @@
 .mobile-nav a.active {
   color: #f58634;
   background-color: #f9f9f9;
-}
-
-.mobile-menu-overlay {
-  position: fixed;
-  top: 70px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0,0,0,0.5);
-  z-index: 998;
 }
 
 /* Media queries */
@@ -255,13 +284,8 @@
   }
 }
 
-@media screen and (max-width: 900px) {
-  .search-container {
-    width: 250px;
-  }
-}
-
-@media screen and (max-width: 768px) {
+/* CAMBIO PRINCIPAL: Activar menú hamburguesa a 1024px en lugar de 768px */
+@media screen and (max-width: 1024px) {
   .custom-toolbar {
     padding: 12px 15px;
   }
@@ -286,7 +310,11 @@
     display: none;
   }
   
-  .menu-button, .search-icon-button {
+  .menu-button {
+    display: flex;
+  }
+  
+  .search-icon-button {
     display: flex;
   }
   
@@ -300,15 +328,20 @@
   
   /* Asegurar que los elementos de la derecha permanezcan visibles */
   .toolbar-right {
-    position: relative; /* Cambiado de absolute para mejor comportamiento */
+    position: relative;
     right: auto;
     top: auto;
   }
 }
 
-@media screen and (min-width: 769px) {
+/* CAMBIO IMPORTANTE: Complementario al anterior */
+@media screen and (min-width: 1025px) {
   .menu-button, .search-icon-button {
     display: none;
+  }
+  
+  .mobile-nav {
+    display: none !important;
   }
 }
 
