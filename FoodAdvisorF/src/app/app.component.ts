@@ -1,6 +1,8 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ChangeDetectorRef, Component, HostListener, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { environment } from './../environments/environment';
 import { UserService } from './core/services/user/user.service';
 import { CommunicationService } from './shared/services/communicacion/communication.service';
 
@@ -21,15 +23,18 @@ export class AppComponent implements OnInit {
   showMobileMenu: boolean = false;
   showSearchBar: boolean = false;
   isMobileView: boolean = false;
+  private apiUrl = environment.apiUrl;
 
   constructor(
     private userService: UserService,
     private communicationService: CommunicationService,
     private cdr: ChangeDetectorRef,
-    private router: Router
+    private router: Router,
+    private http: HttpClient
   ) {
     this.showHeader = true;
     this.showProfile = true;
+    
 
     this.titleChangedSubscription = this.communicationService.headerShowed.subscribe((value) => {
       this.showHeader = value.showHeader;
@@ -40,24 +45,53 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkScreenSize();
-    
+  
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const currentUrl = this.router.url;
         this.hideSearch = currentUrl === '/login' || currentUrl === '/register' || currentUrl === '/inicio';
         this.hideLoginButton = currentUrl === '/login' || currentUrl === '/register';
-        
+  
         // Cerrar menús al navegar
         this.closeMobileMenu();
         this.closeSearchBar();
+        this.checkRouteAccess();
       }
     });
+    this.checkRouteAccess();
+  }
 
+  checkRouteAccess() {
+    const token = localStorage.getItem('token');
 
-    if(!localStorage.getItem('token')){
+    if (!token) {
+      const rutasProhibidas = ['/cestas', '/profile'];
       this.showProfile = false;
-    }
+      const currentUrl = this.router.url;
 
+      // Redirect to login if trying to access restricted routes
+      if (rutasProhibidas.some(ruta => currentUrl.startsWith(ruta))) {
+        this.router.navigate(['/login']);
+      }
+    } else {
+      // If token exists, check user info
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      });
+
+      this.http.get(`${this.apiUrl}/usuario`, { headers }).subscribe({
+        next: (res) => {
+          this.showProfile = true;
+        },
+        error: (err) => {
+          if (err.status === 401 && err.error?.message == 'El token ha expirado') {
+            this.showProfile = false;
+            localStorage.removeItem('token');
+            this.router.navigate(['/login']);
+          }
+        }
+      });
+    }
   }
 
   @HostListener('window:resize', ['$event'])
