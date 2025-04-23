@@ -1,62 +1,57 @@
-<div class="page-container">
-  <header *ngIf="showHeader" class="custom-toolbar">
+<div class = "page-container">
+  <mat-toolbar class="custom-toolbar" *ngIf="showHeader">
     <div class="toolbar-left">
-      <!-- Logo -->
-      <img class="logo" src="logo.png" alt="Food Advisor"  [routerLink]="['/home']">
+      <img src="logo.png" alt="Food Advisor Logo" class="logo" [routerLink]="['/home']"/>
       
-      <!-- Buscador para escritorio -->
-      <div class="search-container" 
-           [ngClass]="{'search-container-show': !isMobileView && !hideSearch, 
-                      'search-container-hidden': !isMobileView && hideSearch,
-                      'show-search': isMobileView && showSearchBar}">
-        <input class="search-input"
-               type="text"
-               [(ngModel)]="searchQuery"
-               (keyup)="onSearchKeyUp($event)"
-               placeholder="Buscar productos...">
+      <!-- Barra de búsqueda oculta en móvil -->
+      <div class="search-container"   [ngClass]="(hideSearch || isMobileView) ? 'search-container-hidden' : 'search-container-show'">
+        <input
+          type="text"
+          placeholder="Introduzca el nombre del producto"
+          class="search-input"
+          [(ngModel)]="searchQuery"
+          (keyup)="onSearchKeyUp($event)"
+        />
         <button class="search-button" (click)="handleSearch()">
           <mat-icon>search</mat-icon>
         </button>
       </div>
-      
-      <!-- Navegación para escritorio -->
-      <nav class="desktop-nav">
-        <a [routerLink]="['/home']" routerLinkActive="active">Productos</a>
-        <a [routerLink]="['/ofertas']" routerLinkActive="active">Ofertas</a>
-        <a [routerLink]="['/recetas']" routerLinkActive="active">Recetas</a>
-      </nav>
     </div>
-    
+
+    <!-- Navegación normal -->
+    <nav class="desktop-nav">
+      <a mat-button [routerLink]="['/inicio']" routerLinkActive="active">Inicio</a>
+      <a mat-button [routerLink]="['/home']" routerLinkActive="active">Productos</a>
+      <a mat-button [routerLink]="['/temporada']" routerLinkActive="active">Productos de temporada</a>
+    </nav>
+
     <div class="toolbar-right">
-      <!-- Botón menú hamburguesa para móvil -->
-      <button class="menu-button" [ngClass]="{'active': showMobileMenu}" (click)="toggleMobileMenu()">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      
-      <!-- Botón de búsqueda para móvil -->
+      <!-- Icono de búsqueda para móvil -->
       <button *ngIf="isMobileView && !hideSearch" class="icon-button search-icon-button" (click)="toggleSearchBar()">
         <mat-icon>search</mat-icon>
       </button>
       
-      <!-- Botón de carrito -->
-      <button class="cart-button" (click)="goToCesta()">
-        <mat-icon>shopping_cart</mat-icon>
+      <!-- Menú hamburguesa a la izquierda del carrito -->
+      <button *ngIf="isMobileView" class="icon-button menu-button" (click)="toggleMobileMenu()">
+        <mat-icon>{{ showMobileMenu ? 'close' : 'menu' }}</mat-icon>
       </button>
       
-      <!-- Perfil de usuario o botón de login -->
-      <ng-container *ngIf="showProfile; else loginButton">
-        <img class="user-avatar" src="avatar.png" alt="User" [routerLink]="['/profile']">
+      <ng-container *ngIf="showProfile; else elseTemplate">
+        <button mat-icon-button class="cart-button" [routerLink]="['/cestas']">
+          <mat-icon>shopping_cart</mat-icon>
+        </button>
+        <img src="avatar.png" alt="User Avatar" class="user-avatar" [routerLink]="['/profile']"/>
         <span class="user-name">{{ userName }}</span>
       </ng-container>
-      
-      <ng-template #loginButton>
-        <button *ngIf="!hideLoginButton" class="login-button" [routerLink]="['/login']">Iniciar sesión</button>
+
+      <ng-template #elseTemplate>
+        <button *ngIf="!hideLoginButton" mat-flat-button class="login-button" [routerLink]="['/login']">
+          Iniciar Sesión
+        </button>
       </ng-template>
     </div>
-  </header>
-  
+  </mat-toolbar>
+
   <!-- Menú móvil desplegable -->
   <div class="mobile-nav" [ngClass]="{'show-mobile-menu': showMobileMenu}">
     <a mat-button [routerLink]="['/inicio']" routerLinkActive="active" (click)="closeMobileMenu()">Inicio</a>
@@ -64,17 +59,14 @@
     <a mat-button [routerLink]="['/temporada']" routerLinkActive="active" (click)="closeMobileMenu()">Productos de temporada</a>
   </div>
 
-  
-  <!-- Overlay para el menú móvil -->
-  <div class="mobile-menu-overlay" [ngClass]="{'active': showMobileMenu}" (click)="closeMobileMenu()"></div>
-  
-  <!-- Contenido principal -->
-  <main class="content">
-    <router-outlet></router-outlet>
-  </main>
-  
-  <!-- Footer -->
-  <footer class="footer">
-    <!-- Contenido del footer -->
-  </footer>
+  <!-- Overlay para cuando el menú está abierto -->
+  <div class="mobile-menu-overlay" *ngIf="showMobileMenu" (click)="closeMobileMenu()"></div>
+
+  <div class = "content">
+    <router-outlet/>
+  </div>
+
+  <mat-toolbar color="primary" class="footer">
+    <span class="footer-text">© Copyright | Foodadvisor</span>
+  </mat-toolbar>
 </div>

@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
     this.showHeader = true;
     this.showProfile = true;
     
+
     this.titleChangedSubscription = this.communicationService.headerShowed.subscribe((value) => {
       this.showHeader = value.showHeader;
       this.showProfile = value.logged;
@@ -120,6 +121,7 @@ export class AppComponent implements OnInit {
   toggleSearchBar() {
     this.showSearchBar = !this.showSearchBar;
     if (this.showSearchBar) {
+      this.closeMobileMenu();
       // Enfocar el input de búsqueda cuando se muestra
       setTimeout(() => {
         const searchInput = document.querySelector('.search-input') as HTMLInputElement;
