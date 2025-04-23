@@ -45,7 +45,39 @@
         <mat-icon>shopping_cart</mat-icon>
       </button>
 
-    
+      <!-- Botón borrar cesta (solo visible cuando el usuario está autenticado) -->
+      <button *ngIf="showProfile" class="delete-cart-button" (click)="confirmDeleteCart()">
+        <mat-icon>delete</mat-icon>
+        <span class="delete-cart-text">Borrar cesta</span>
+      </button>
+
+      <!-- Diálogo de confirmación con overlay -->
+      <div *ngIf="showDeleteConfirmation" class="confirmation-overlay" (click)="closeConfirmationOnOutsideClick($event)">
+        <div class="delete-confirmation-dialog">
+          <div class="delete-dialog-header">
+            <div class="delete-dialog-icon">
+              <mat-icon>delete</mat-icon>
+            </div>
+            <h2 class="delete-dialog-title">Confirmar eliminación</h2>
+          </div>
+          
+          <div class="delete-dialog-content">
+            <p>¿Estás seguro de que deseas borrar todos los productos de tu cesta?</p>
+            <p>Esta acción no se puede deshacer.</p>
+          </div>
+          
+          <div class="delete-dialog-actions">
+            <button class="cancel-button" (click)="cancelDeleteCart()">Cancelar</button>
+            <button class="confirm-delete-button" (click)="acceptDeleteCart()">
+              <mat-icon>delete_forever</mat-icon>
+              Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      
+
       
       <!-- Perfil de usuario o botón de login -->
       <ng-container *ngIf="showProfile; else loginButton">
