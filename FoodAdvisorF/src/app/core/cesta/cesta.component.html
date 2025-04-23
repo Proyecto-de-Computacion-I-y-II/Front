@@ -4,33 +4,66 @@
 
 <div *ngIf="productosEnCesta.length > 0; else cestaVacia">
   <div *ngFor="let producto of productosEnCesta">
-      <div class="grid-container">
-          <div class="grid-item">
-              <img [src]="producto.imagen" [alt]="producto.nombre" class="img-fluid w-75" />
-          </div>
-          <div class="grid-item">{{producto.nombre}}</div>
-          <div class="grid-item">Supermercado: {{ getSupermercadoNombre(producto.idSuper) }}</div>
-          <div class="grid-item">{{producto.cantidad}} unidades</div>
-          <div class="grid-item">{{producto.cantidad * producto.precio | number: '1.1-3'}} €</div>  <!-- Formato del precio: un numero delante del punto y de 1 a 3 decimales-->
+    <div class="grid-container">
+      <div class="grid-item">
+        <img
+          [src]="producto.imagen"
+          [alt]="producto.nombre"
+          class="img-fluid w-75"
+        />
       </div>
+      <div class="grid-item">{{ producto.nombre }}</div>
+      <div class="grid-item">{{ getSupermercadoNombre(producto.idSuper) }}</div>
+      <div class="grid-item cantidad-control">
+        <button class="quantity-button minus-button" (click)="decrementarCantidad(producto)">-</button>
+        <span class="cantidad-texto">{{producto.pivot?.cantidad}}</span>
+        <button class="quantity-button plus-button" (click)="incrementarCantidad(producto)">+</button>
+      </div>
+      <div class="grid-item">
+        {{ producto.pivot?.cantidad * producto.precio | number : "1.2-2" }} €
+      </div>
+    </div>
   </div>
 
-  <hr>
+  <hr />
 
-  <div class="purchase-container">
+  <div class="chart-container">
+    <canvas #porcentajeChart></canvas>
+  </div>
+
+  <div class="recommended-products-container">
+    <h2>Productos Recomendados para Equilibrar tu Cesta</h2>
+    <div *ngIf="productosRecomendados && productosRecomendados.length > 0; else noRecommendations" class="row row-cols-1 row-cols-md-4 g-4">
+      <div *ngFor="let recomendado of productosRecomendados" class="col">
+        <div class="card h-100">
+          <img [src]="recomendado.imagen" [alt]="recomendado.nombre" class="card-img-top product-image">
+          <div class="card-body">
+            <h5 class="card-title">{{ recomendado.nombre }}</h5>
+            <p class="card-text">Precio: {{ recomendado.precio }} €</p>
+            <p class="card-text">Supermercado: {{ getSupermercadoNombre(recomendado.idSuper) }}</p>
+            <p class="card-text"><small class="text-muted">Nivel Pirámide: {{ recomendado.nombreNivel }}</small></p>
+            <button class="btn btn-sm btn-outline-success" (click)="agregarProductoRecomendado(recomendado)">Añadir a la Cesta</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noRecommendations>
+      <p>La cesta se encuentra equilibrada.</p>
+    </ng-template>
+  </div>
+
+  <div class="purchase-button-container">
     <div class="compra">
       <button class="btn btn-success" [routerLink]="['/login']"> Realizar compra </button>
-      <!--Hay que adaptarlo para cuando ya se haya iniciado sesion-->
-   </div> 
-
-    <div class="porcentaje">
-      <button class="btn btn-warning"> Mostrar porcentaje alimenticio </button>
-    </div>
+      </div>
   </div>
 </div>
 
 <ng-template #cestaVacia>
   <div class="container">
-      <h1>No se encontraron productos en su cesta. ¡Agregue alguno para realizar una compra!</h1>
-  </div>  
+    <h1>
+      No se encontraron productos en su cesta. ¡Agregue alguno para realizar una
+      compra!
+    </h1>
+  </div>
 </ng-template>
