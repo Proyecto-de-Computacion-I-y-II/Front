@@ -154,26 +154,27 @@ export class HomeComponent implements OnInit {
     this.updateVisiblePages();
 
     this.productService.getValoresMaximos().subscribe((valores: any) => {
-      this.precio.end = parseInt(valores.precio);
-      this.precio.max = parseInt(valores.precio);
+      this.precio.end = Math.round(parseInt(valores.precio) / 100) * 100;
+      this.precio.max =  this.precio.end
 
-      this.grasa.end = parseFloat(valores.grasas);
-      this.grasa.max = parseFloat(valores.grasas);
 
-      this.azucar.end = parseFloat(valores.azucares);
-      this.azucar.max = parseFloat(valores.azucares);
+      this.grasa.end = Math.round(parseInt(valores.grasas) / 100) * 100;
+      this.grasa.max = this.grasa.end
 
-      this.sal.end = parseInt(valores.sal);
-      this.sal.max = parseInt(valores.sal);
+      this.azucar.end = Math.round(parseInt(valores.azucares) / 100) * 100;
+      this.azucar.max = this.azucar.end
 
-      this.proteinas.end = parseFloat(valores.proteinas);
-      this.proteinas.max = parseFloat(valores.proteinas);
+      this.sal.end = Math.round(parseInt(valores.sal) / 100) * 100;
+      this.sal.max = this.sal.end
 
-      this.hidrato.end = parseFloat(valores.hidratos_carbono);
-      this.hidrato.max = parseFloat(valores.hidratos_carbono);
+      this.proteinas.end = Math.round(parseInt(valores.proteinas) / 100) * 100;
+      this.proteinas.max = this.proteinas.end
 
-      this.acidos.end = parseFloat(valores.acidos_grasos);
-      this.acidos.max = parseFloat(valores.acidos_grasos);
+      this.hidrato.end = Math.round(parseInt(valores.hidratos_carbono) / 100) * 100;
+      this.hidrato.max =   this.hidrato.end
+
+      this.acidos.end = Math.round(parseInt(valores.acidos_grasos) / 100) * 100;
+      this.acidos.max = this.acidos.end
     });
 
   }

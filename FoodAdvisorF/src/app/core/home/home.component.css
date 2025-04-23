@@ -87,13 +87,10 @@ mat-select {
   max-width: 360px;
   font-size: 12px;
   padding: 6px;
+  border: 1px groove #2c9f51;
 }
 
-mat-select .mat-select-trigger {
-  padding: 0px; /* Un poco de espacio dentro del selector */
-  font-size: 10px;
 
-}
 
 mat-select .mat-select-arrow {
   color: black;
@@ -114,9 +111,10 @@ mat-option {
 }
 
 .custom-slider{
-  width: 250px;
+  width: 200px;
 }
-.form-group2 label {
+.form-g
+roup2 label {
   margin-top: 10px;
 }
 
@@ -149,7 +147,7 @@ span {
 }
 
 .slider-num mat-slider {
-  max-width: 150px;
+  max-width: 80px;
 }
 
 
@@ -386,7 +384,7 @@ span {
   gap: 10px;
   align-items: center;
   width: 100%;
-  padding: 10px;
+  padding: 20px;
 
 }
 
