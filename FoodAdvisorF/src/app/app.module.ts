@@ -26,6 +26,7 @@ import { TemporadaComponent } from './temporada/temporada.component';
 
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
+import {MatDrawer, MatDrawerContainer, MatSidenav, MatSidenavContainer} from '@angular/material/sidenav';
 
 
 @NgModule({
@@ -56,7 +57,9 @@ import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
     MatSliderRangeThumb,
     MatCardModule,
     MatButtonToggleGroup,
-    ProductoDetalleComponent
+    MatDrawer,
+    MatDrawerContainer,
+
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),

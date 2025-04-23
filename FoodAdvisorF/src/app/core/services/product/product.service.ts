@@ -39,4 +39,9 @@ export class ProductService {
     return this.http.get<{ supermercado: string }>(`${this.apiUrl}/${id}/super`);
   }
 
+  getValoresMaximos(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/valores-max`);
+  }
+
+
 }

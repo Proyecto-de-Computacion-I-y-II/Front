@@ -72,8 +72,9 @@ select {
 
 .form-group {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
+  margin: 10px;
 }
 
 
@@ -134,25 +135,24 @@ span {
 
 .form-group2 {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
-  margin: 0px;
-}
-
-.slider-container {
-  display: flex;
-  gap: 20px;
-  flex-direction: row;
-  max-width: 200px;
-}
-
-.slider-container mat-slider {
-  max-width: 200px;
+  gap: 1px;
 }
 
 .slider-num {
-  margin: 0px;
+  display: flex;
+  gap: 20px;
+  flex-direction: row;
+  max-width: 300px;
+  min-width: 250px;
 }
+
+.slider-num mat-slider {
+  max-width: 150px;
+}
+
+
 
 .fixed-width {
   display: inline-block; /* Para que respete el ancho mínimo */
@@ -290,7 +290,7 @@ span {
 }
 
 .pagination button.active {
-  background-color: #007bff;
+  background-color: #ff9f43;
   color: white;
   font-weight: bold;
 }
@@ -301,9 +301,113 @@ span {
 }
 
 
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30vh;
+}
+
+.spinner {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #2c9f51;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 
 
 
+/* Botón para abrir el sidebar */
+.toggle-sidebar {
+  margin: 16px;
+  padding: 8px 12px;
+  background-color: #3f51b5;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Sidebar (ya lo tienes bien) */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -300px;
+  width: 300px;
+  height: 100%;
+  background-color: #f9f9f9;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+  transition: left 0.3s ease;
+  z-index: 1000;
+  padding: 5px;
+}
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 900;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar-content {
+  max-height: 100vh;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+}
+
+/* Filtro individual */
+.filtro-section {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 12px;
+  background-color: #f9f9f9;
+}
 
 
+
+/* Botones */
+.sidebar-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  padding: 10px;
+
+}
+
+.sidebar-buttons button {
+  padding: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: #ff9f43; /* Naranja */
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  min-width: 250px;
+}
+
+.sidebar-buttons button:hover {
+  background-color: #e07e23;
+}
+
+
+#btn-aplicar {
+  margin-bottom: 50px;
+}

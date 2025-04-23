@@ -1,8 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from '../../security/models/product';
 import { CommunicationService } from '../../shared/services/communicacion/communication.service';
 import { ProductService } from '../services/product/product.service';
+import {Categoria} from '../../security/models/categoria';
+import {Subcategoria} from '../../security/models/subcategoria';
+import {Subcategoria2} from '../../security/models/subcategoria2';
+import {SupermarketService} from '../services/supermarket/supermarket.service';
 
 @Component({
   selector: 'app-home',
@@ -12,76 +16,101 @@ import { ProductService } from '../services/product/product.service';
 })
 export class HomeComponent implements OnInit {
 
-  isMenuOpen = false; // Esta variable indica si el menú está desplegado o no
 
-  supermercadoOptions = [
-    { label: 'Supermercado 1', value: 'supermercado1' },
-    { label: 'Supermercado 2', value: 'supermercado2' },
-    { label: 'Supermercado 3', value: 'supermercado3' }
-  ];
-  subcategoriaOptions = [
-    { label: 'sub 1', value: 'sub1' },
-    { label: 'sub 2', value: 'sub2' },
-    { label: 'sub 3', value: 'sub3' }
-  ];
-  subcategoria2Options = [
-    { label: 'sub 1', value: 'sub1' },
-    { label: 'sub 2', value: 'sub2' },
-    { label: 'sub 3', value: 'sub3' }
-  ];
-  temporadaOptions = [
-    { label: 'temp 1', value: 'temp1' },
-    { label: 'temp 2', value: 'temp2' },
-    { label: 'temp 3', value: 'temp3' }
-  ];
-  categoriaOptions = [
-    { label: 'Categoría 1', value: 'categoria1' },
-    { label: 'Categoría 2', value: 'categoria2' },
-    { label: 'Categoría 3', value: 'categoria3' }
-  ];
-
-  nivelPiramideOptions = [
-    { label: 'Pira 1', value: 'pira1' },
-    { label: 'Pira 2', value: 'pira2' },
-    { label: 'Pira 3', value: 'pira3' }
-  ];
-
-  supermercadoOptions2 = [
-    { label: 'Supermercado 4', value: 'supermercado4' },
-    { label: 'Supermercado 5', value: 'supermercado5' },
-    { label: 'Supermercado 6', value: 'supermercado6' }
-  ];
-  regionOptions2 = [
-    { label: 'Región 4', value: 'region4' },
-    { label: 'Región 5', value: 'region5' },
-    { label: 'Región 6', value: 'region6' }
-  ];
-  categoriaOptions2 = [
-    { label: 'Categoría 4', value: 'categoria4' },
-    { label: 'Categoría 5', value: 'categoria5' },
-    { label: 'Categoría 6', value: 'categoria6' }
-  ];
-
-  // Variables para almacenar las opciones seleccionadas
-  // Variables para almacenar las opciones seleccionadas
-  selectedSupermercado: string = 'ninguno';
-  selectedCategoria: string = 'ninguno';
-  selectedSupermercado2: string = 'ninguno';
-  selectedRegion2: string = 'ninguno';
-  selectedCategoria2: string = 'ninguno';
-  selectedSubcategoria: string = 'ninguno';
-  selectedSubcategoria2: string = 'ninguno';
-  selectedTemporada: string = 'ninguno';
-  selectedNivelPiramide:  string = 'ninguno';
+  precio = { start: 0.00, end: 0.00, max: 100.00 };
+  grasa = { start: 0.00, end: 0.00, max: 100.00 };
+  azucar = { start: 0.00, end: 0.00, max: 100.00 };
+  sal = { start: 0.00, end: 0.00, max: 100.00 };
+  proteinas = { start: 0.00, end: 0.00, max: 100.00 };
+  hidrato = { start: 0.00, end: 0.00, max: 100.00 };
+  acidos = { start: 0.00, end: 0.00, max: 100.00 };
 
 
-  precio = { start: 0.0, end: 100.0 };
-  grasa = { start: 0.0, end: 100.0 };
-  azucar = { start: 0.0, end: 100.0 };
-  sal = { start: 0.0, end: 100.0 };
-  proteinas = { start: 0.0, end: 100.0 };
-  hidrato= { start: 0.0, end: 100.0 };
-  acidos= { start: 0.0, end: 100.0 };
+
+
+  selectedCategoria: number | '' = '';
+  selectedSubcategoria: number | '' = '';
+  selectedSubcategoria2: number | '' = '';
+
+  categorias: Categoria[] = [];
+  subcategorias: Subcategoria[] = [];
+  subcategorias2: Subcategoria2[] = [];
+
+
+
+
+  selectedSupermercado: number | '' = '';  // valor del filtro seleccionado
+  supermercadoIds: number[] = Object.keys(ProductService.supermercadoDiccionario).map(id => +id);
+
+
+
+  mostrarFiltros: boolean = false;
+
+
+// Método para mostrar nombre del supermercado
+  getSupermercadoNombre(id: number): string {
+    return ProductService.getSupermercadoNombre(id);
+  }
+
+
+
+  sidebarOpen = false;
+
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+  }
+
+  aplicarFiltros() {
+    console.log('Filtros aplicados:', {
+      supermercado: this.selectedSupermercado,
+      categoria: this.selectedCategoria,
+      subcategoria: this.selectedSubcategoria,
+      subcategoria2: this.selectedSubcategoria2
+    });
+
+    this.sidebarOpen = false;
+    // Aquí podrías hacer la lógica para llamar a getProductsFiltrados(...)
+  }
+
+
+
+
+  onSupermercadoChange() {
+    this.selectedCategoria = '';
+    this.selectedSubcategoria = '';
+    this.selectedSubcategoria2 = '';
+    this.categorias = [];
+    this.subcategorias = [];
+    this.subcategorias2 = [];
+
+    if (this.selectedSupermercado) {
+      this.supermarketService.getCategoriasArbol(+this.selectedSupermercado).subscribe(
+        (data) => {
+          this.categorias = data;
+        },
+        (error) => console.error('Error cargando categorías', error)
+      );
+    }
+  }
+
+  onCategoriaChange() {
+    this.selectedSubcategoria = '';
+    this.selectedSubcategoria2 = '';
+    this.subcategorias2 = [];
+
+    const categoriaSeleccionada = this.categorias.find(cat => cat.id === +this.selectedCategoria);
+    this.subcategorias = categoriaSeleccionada ? categoriaSeleccionada.subcategorias : [];
+  }
+
+  onSubcategoriaChange() {
+    this.selectedSubcategoria2 = '';
+
+    const subSeleccionada = this.subcategorias.find(sub => sub.id === +this.selectedSubcategoria);
+    this.subcategorias2 = subSeleccionada?.subcategorias2 || [];
+  }
+
+
+
 
 
   products: Product[] = [];
@@ -91,9 +120,15 @@ export class HomeComponent implements OnInit {
   maxVisiblePages = 5;
   visiblePages: number[] = [];
 
+  isLoading: boolean = true;
 
-  constructor(private communicationService: CommunicationService, private productService: ProductService, private router: Router) {
+  constructor(private communicationService: CommunicationService,
+              private productService: ProductService,
+              private supermarketService: SupermarketService,
+              private router: Router) {
   }
+
+
 
   ngOnInit() {
     let loggedIn: boolean = false;
@@ -103,16 +138,50 @@ export class HomeComponent implements OnInit {
 
     this.communicationService.showHeaderChange({ showHeader: true , logged: loggedIn });
 
+    this.isLoading = true;
+
+
     this.productService.getAllProducts(this.currentPage).subscribe((response:any)=> {
       this.products = response.data;
-    });
+      console.log('Productos cargados:', this.products);
+      this.isLoading = false;
+    },
+      (error) => {
+        console.error('Error al cargar productos', error);
+        this.isLoading = false;
+      });
+
     this.updateVisiblePages();
 
+    this.productService.getValoresMaximos().subscribe((valores: any) => {
+      this.precio.end = parseInt(valores.precio);
+      this.precio.max = parseInt(valores.precio);
+
+      this.grasa.end = parseFloat(valores.grasas);
+      this.grasa.max = parseFloat(valores.grasas);
+
+      this.azucar.end = parseFloat(valores.azucares);
+      this.azucar.max = parseFloat(valores.azucares);
+
+      this.sal.end = parseInt(valores.sal);
+      this.sal.max = parseInt(valores.sal);
+
+      this.proteinas.end = parseFloat(valores.proteinas);
+      this.proteinas.max = parseFloat(valores.proteinas);
+
+      this.hidrato.end = parseFloat(valores.hidratos_carbono);
+      this.hidrato.max = parseFloat(valores.hidratos_carbono);
+
+      this.acidos.end = parseFloat(valores.acidos_grasos);
+      this.acidos.max = parseFloat(valores.acidos_grasos);
+    });
+
   }
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
+  toggleFiltros(): void {
+    this.mostrarFiltros = !this.mostrarFiltros;
   }
+
 
   // Función para redirigir al detalle del producto
   goToProductDetail(productId: number) {
@@ -127,40 +196,56 @@ export class HomeComponent implements OnInit {
 
   changePage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
+      this.isLoading = true;
+
       this.currentPage = page;
       this.updatePagedProducts();
     }
   }
 
   updatePagedProducts() {
+    this.isLoading = true;
+
     this.productService.getAllProducts(this.currentPage).subscribe((response:any)=> {
+
       this.products = response.data;
       console.log('Productos cargados:', this.products);
+      this.isLoading = false;
 
-    });
+    },
+      (error) => {
+        console.error('Error al cargar productos', error);
+        this.isLoading = false;
+      }
+
+    );
     this.updateVisiblePages();
   }
 
   prevPage() {
     if (this.currentPage > 1) {
+      this.isLoading = true;
       this.changePage(this.currentPage - 1);
     }
   }
 
   nextPage() {
     if (this.currentPage < this.totalPages) {
+      this.isLoading = true;
       this.changePage(this.currentPage + 1);
     }
   }
 
   initPage() {
     if (this.currentPage > 1) {
+      this.isLoading = true;
       this.changePage(1);
     }
   }
 
   lastPage() {
     if (this.currentPage < this.totalPages) {
+      this.isLoading = true;
       this.changePage(this.totalPages);
     }
   }

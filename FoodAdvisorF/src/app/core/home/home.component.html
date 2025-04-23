@@ -1,105 +1,106 @@
-<div class="menu-title" (click)="toggleMenu()">
-  <mat-icon>{{ isMenuOpen ? 'expand_more' : 'chevron_right' }}</mat-icon>
-  <span class="title-text">Filtros</span>
-</div>
 
-<div *ngIf="isMenuOpen" class="menu-content">
-  <div class="columns-container">
-    <!-- Columna izquierda -->
-    <div class="left-column">
-      <div class="form-group">
-        <label for="categoria">Categoria:</label>
-        <mat-select [(value)]="selectedCategoria" id="categoria" name="categoria">
-          <mat-option [value]="'ninguno'">Ninguno</mat-option>
-          <mat-option *ngFor="let option of categoriaOptions" [value]="option.value">
-            {{ option.label }}
-          </mat-option>
-        </mat-select>
-      </div>
-      <div class="form-group">
-        <label for="subcategoria">Subcategoria:</label>
-        <mat-select [(value)]="selectedSubcategoria" id="subcategoria" name="subcategoria">
-          <mat-option [value]="'ninguno'">Ninguno</mat-option>
-          <mat-option *ngFor="let option of subcategoriaOptions" [value]="option.value">
-            {{ option.label }}
-          </mat-option>
-        </mat-select>
-      </div>
-      <div class="form-group">
-        <label for="subcategoria2">Subcategoría2:</label>
-        <mat-select [(value)]="selectedSubcategoria2" id="subcategoria2" name="subcategoria2">
-          <mat-option [value]="'ninguno'">Ninguno</mat-option>
-          <mat-option *ngFor="let option of subcategoria2Options" [value]="option.value">
-            {{ option.label }}
-          </mat-option>
-        </mat-select>
-      </div>
 
-      <div class="form-group">
-        <label for="supermercado">Supermercado:</label>
-        <mat-select [(value)]="selectedSupermercado" id="supermercado" name="supermercado">
-          <mat-option [value]="'ninguno'">Ninguno</mat-option>
-          <mat-option *ngFor="let option of supermercadoOptions" [value]="option.value">
-            {{ option.label }}
-          </mat-option>
-        </mat-select>
-      </div>
+<!-- Sidebar (oculto por defecto) -->
+<div class="sidebar" [class.active]="sidebarOpen">
+  <div class="sidebar-content">
+    <h2>Filtros</h2>
+    <div class="form-group">
+      <label for="supermercado">Supermercado:</label>
+      <mat-select
+        [(value)]="selectedSupermercado"
+        (selectionChange)="onSupermercadoChange()"
+        id="supermercado"
+        name="supermercado">
+        <mat-option [value]="''">Todos</mat-option>
+        <mat-option *ngFor="let id of supermercadoIds" [value]="id">
+          {{ getSupermercadoNombre(id) }}
+        </mat-option>
+      </mat-select>
+    </div>
 
-      <div class="form-group">
-        <label for="temporada">Temporada:</label>
-        <mat-select [(value)]="selectedTemporada" id="temporada" name="temporada">
-          <mat-option [value]="'ninguno'">Ninguno</mat-option>
-          <mat-option *ngFor="let option of temporadaOptions" [value]="option.value">
-            {{ option.label }}
-          </mat-option>
-        </mat-select>
-      </div>
+    <div class="form-group">
+      <label for="categoria">Categoría:</label>
+      <mat-select
+        [(value)]="selectedCategoria"
+        (selectionChange)="onCategoriaChange()"
+        id="categoria"
+        name="categoria"
+        [disabled]="!selectedSupermercado">
+        <mat-option [value]="''">Todas</mat-option>
+        <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
+          {{ categoria.nombre }}
+        </mat-option>
+      </mat-select>
+    </div>
 
-      <div class="form-group">
-        <label for="nivelPiramide">Nivel Piramide:</label>
-        <mat-select [(value)]="selectedNivelPiramide" id="nivelPiramide" name="nivelPiramide">
-          <mat-option [value]="'ninguno'">Ninguno</mat-option>
-          <mat-option *ngFor="let option of nivelPiramideOptions" [value]="option.value">
-            {{ option.label }}
-          </mat-option>
-        </mat-select>
-      </div>
+    <div class="form-group">
+      <label for="subcategoria">Subcategoría:</label>
+      <mat-select
+        [(value)]="selectedSubcategoria"
+        (selectionChange)="onSubcategoriaChange()"
+        id="subcategoria"
+        name="subcategoria"
+        [disabled]="!selectedCategoria">
+        <mat-option [value]="''">Todas</mat-option>
+        <mat-option *ngFor="let sub of subcategorias" [value]="sub.id">
+          {{ sub.nombre }}
+        </mat-option>
+      </mat-select>
+    </div>
 
-      <mat-button-toggle-group class="btn-container">
-        <button mat-raised-button class="btn-aplicar">Aplicar Filtros</button>
-      </mat-button-toggle-group>
+    <div class="form-group">
+      <label for="subcategoria2">Subcategoría 2:</label>
+      <mat-select
+        [(value)]="selectedSubcategoria2"
+        id="subcategoria2"
+        name="subcategoria2"
+        [disabled]="!selectedSubcategoria">
+        <mat-option [value]="''">Todas</mat-option>
+        <mat-option *ngFor="let sub2 of subcategorias2" [value]="sub2.id">
+          {{ sub2.nombre }}
+        </mat-option>
+      </mat-select>
     </div>
 
 
+    <div class="sidebar-buttons">
+    <button (click)="toggleFiltros()">Filtros avanzados</button>
 
 
+    <!-- Filtros avanzados -->
+    <div *ngIf="mostrarFiltros" class="filtros-avanzados">
 
-
-
-    <div class="separator"></div>
-
-    <div class="right-column">
       <div class="form-group2">
         <label for="precio">Precio:</label>
-
         <div class="slider-num">
-          <span >{{ precio.start }}</span>
-          <mat-slider id="precio" color="primary" min="0.0" max="100.0" step="0.1"  thumbLabel  class="custom-slider">
-            <input class="input-slider" matSliderStartThumb [(ngModel)]="precio.start">
-            <input class="input-slider"  matSliderEndThumb [(ngModel)]="precio.end"/>
+          <span class="fixed-width">{{ precio.start }}</span>
+          <mat-slider
+            id="precio"
+            color="primary"
+            [min]="0.0"
+            [max]="precio.max"
+            [step]="1"
+            thumbLabel
+            class="custom-slider"
+          >
+            <input class="input-slider" matSliderStartThumb [(ngModel)]="precio.start" />
+            <input class="input-slider" matSliderEndThumb [(ngModel)]="precio.end" />
           </mat-slider>
           <span class="fixed-width">{{ precio.end }}</span>
         </div>
       </div>
 
+
       <div class="form-group2">
         <label for="grasas">Grasas:</label>
-
         <div class="slider-num">
-          <span>{{ grasa.start }}</span>
-          <mat-slider id="grasas" color="primary" min="0.0" max="100.0" step="0.1"  thumbLabel  class="custom-slider">
+          <span class="fixed-width">{{ grasa.start }}</span>
+          <mat-slider id="grasas" color="primary"
+                      [min]="0.0"
+                      [max]="grasa.max"
+                      [step]="0.1" thumbLabel class="custom-slider">
             <input class="input-slider" matSliderStartThumb [(ngModel)]="grasa.start">
-            <input class="input-slider"  matSliderEndThumb [(ngModel)]="grasa.end"/>
+            <input class="input-slider" matSliderEndThumb [(ngModel)]="grasa.end"/>
           </mat-slider>
           <span class="fixed-width">{{ grasa.end }}</span>
         </div>
@@ -107,12 +108,14 @@
 
       <div class="form-group2">
         <label for="azucares">Azucares:</label>
-
         <div class="slider-num">
-          <span>{{ azucar.start }}</span>
-          <mat-slider id="azucares" color="primary" min="0.0" max="100.0" step="0.1"  thumbLabel  class="custom-slider">
+          <span class="fixed-width">{{ azucar.start }}</span>
+          <mat-slider id="azucares" color="primary"
+                      [min]="0.0"
+                      [max]="azucar.max"
+                      [step]="0.1" thumbLabel class="custom-slider">
             <input class="input-slider" matSliderStartThumb [(ngModel)]="azucar.start">
-            <input class="input-slider"  matSliderEndThumb [(ngModel)]="azucar.end"/>
+            <input class="input-slider" matSliderEndThumb [(ngModel)]="azucar.end"/>
           </mat-slider>
           <span class="fixed-width">{{ azucar.end }}</span>
         </div>
@@ -120,12 +123,14 @@
 
       <div class="form-group2">
         <label for="sal">Sal:</label>
-
         <div class="slider-num">
-          <span>{{ sal.start }}</span>
-          <mat-slider id="sal" color="primary" min="0.0" max="100.0" step="0.1"  thumbLabel  class="custom-slider">
+          <span class="fixed-width">{{ sal.start }}</span>
+          <mat-slider id="sal" color="primary"
+                      [min]="0.0"
+                      [max]="sal.max"
+                      [step]="1" thumbLabel class="custom-slider">
             <input class="input-slider" matSliderStartThumb [(ngModel)]="sal.start">
-            <input class="input-slider"  matSliderEndThumb [(ngModel)]="sal.end"/>
+            <input class="input-slider" matSliderEndThumb [(ngModel)]="sal.end"/>
           </mat-slider>
           <span class="fixed-width">{{ sal.end }}</span>
         </div>
@@ -133,12 +138,14 @@
 
       <div class="form-group2">
         <label for="proteinas">Proteinas:</label>
-
         <div class="slider-num">
-          <span>{{ proteinas.start }}</span>
-          <mat-slider id="proteinas" color="primary" min="0.0" max="100.0" step="0.1"  thumbLabel  class="custom-slider">
+          <span class="fixed-width">{{ proteinas.start }}</span>
+          <mat-slider id="proteinas" color="primary"
+                      [min]="0.0"
+                      [max]="proteinas.max"
+                      [step]="0.1"thumbLabel class="custom-slider">
             <input class="input-slider" matSliderStartThumb [(ngModel)]="proteinas.start">
-            <input class="input-slider"  matSliderEndThumb [(ngModel)]="proteinas.end"/>
+            <input class="input-slider" matSliderEndThumb [(ngModel)]="proteinas.end"/>
           </mat-slider>
           <span class="fixed-width">{{ proteinas.end }}</span>
         </div>
@@ -146,45 +153,64 @@
 
       <div class="form-group2">
         <label for="hidrato">Carbohidratos:</label>
-
         <div class="slider-num">
-          <span>{{ hidrato.start }}</span>
-          <mat-slider id="hidrato" color="primary" min="0.0" max="100.0" step="0.1"  thumbLabel  class="custom-slider">
+          <span class="fixed-width">{{ hidrato.start }}</span>
+          <mat-slider id="hidrato" color="primary"
+                      [min]="0.0"
+                      [max]="hidrato.max"
+                      [step]="0.1" thumbLabel class="custom-slider">
             <input class="input-slider" matSliderStartThumb [(ngModel)]="hidrato.start">
-            <input class="input-slider"  matSliderEndThumb [(ngModel)]="hidrato.end"/>
+            <input class="input-slider" matSliderEndThumb [(ngModel)]="hidrato.end"/>
           </mat-slider>
           <span class="fixed-width">{{ hidrato.end }}</span>
         </div>
       </div>
 
       <div class="form-group2">
-        <label for="acidos">Acidos Grasos:</label>
-
+        <label for="acidos">Ácidos Grasos:</label>
         <div class="slider-num">
-          <span>{{ acidos.start }}</span>
-          <mat-slider id="acidos" color="primary" min="0.0" max="100.0" step="0.1"  thumbLabel  class="custom-slider">
+          <span class="fixed-width">{{ acidos.start }}</span>
+          <mat-slider id="acidos" color="primary"
+                      [min]="0.0"
+                      [max]="acidos.max"
+                      [step]="0.1" thumbLabel class="custom-slider">
             <input class="input-slider" matSliderStartThumb [(ngModel)]="acidos.start">
-            <input class="input-slider"  matSliderEndThumb [(ngModel)]="acidos.end"/>
+            <input class="input-slider" matSliderEndThumb [(ngModel)]="acidos.end"/>
           </mat-slider>
           <span class="fixed-width">{{ acidos.end }}</span>
         </div>
       </div>
 
-
-
     </div>
 
-    </div>
 
+
+
+    <!-- Puedes agregar filtros aquí -->
+    <button id="btn-aplicar" (click)="aplicarFiltros()">Aplicar</button>
+    </div>
   </div>
+</div>
+
+<!-- Fondo oscuro al abrir el sidebar -->
+<div class="sidebar-backdrop" *ngIf="sidebarOpen" (click)="toggleSidebar()"></div>
+
+
+
 
 <div class="menu-title-2">
   <span class="title-text">Productos</span>
+  <!-- Botón para abrir el sidebar -->
+  <button class="toggle-sidebar" (click)="toggleSidebar()">Filtros</button>
 </div>
 
 
+<div *ngIf="isLoading" class="loading-container">
+  <!-- Puedes usar un spinner o una barra de carga aquí -->
+  <div class="spinner"></div>
+</div>
 
-<div class="product-grid">
+<div *ngIf="!isLoading" class="product-grid">
   <div class="product-card" *ngFor="let product of products" (click)="goToProductDetail(product.ID_prod)">
     <img [src]="product.imagen || 'logo_fondo.png'" [alt]="product.nombre">
 
@@ -202,7 +228,7 @@
 
 </div>
 
-<div class="pagination">
+<div *ngIf="!isLoading" class="pagination">
   <button (click)="initPage()" [disabled]="currentPage === 1">««</button>
 
   <button (click)="prevPage()" [disabled]="currentPage === 1">«</button>
