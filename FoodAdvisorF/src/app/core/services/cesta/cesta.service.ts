@@ -28,7 +28,7 @@ export class CestaService {
   // Agregar un producto al carrito
   agregarProductoAlCarrito(producto: any, cantidad: number) {
     
-    this.http.post<Cesta>(`${this.apiUrl}/cestas-compra`,{
+    this.http.post<Cesta>(`${this.apiUrl}/cestas-compra/addProducto`,{
       ID_prod : producto.ID_prod,
       cantidad : cantidad
     }).subscribe({
