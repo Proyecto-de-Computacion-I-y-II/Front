@@ -1,8 +1,17 @@
+<<<<<<< Updated upstream
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { CestaService } from '../services/cesta/cesta.service';
 import { ProductService } from '../services/product/product.service';
 import { Chart, ChartOptions, ChartType, ChartData } from 'chart.js/auto';
 import { MatSnackBar } from '@angular/material/snack-bar';
+=======
+import { Component, OnInit } from '@angular/core';
+import { CestaService } from '../services/cesta/cesta.service';
+import { ProductService } from '../services/product/product.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from '../../../environments/environment';
+>>>>>>> Stashed changes
 
 @Component({
   selector: 'app-cesta',
@@ -10,6 +19,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   templateUrl: './cesta.component.html',
   styleUrl: './cesta.component.css'
 })
+<<<<<<< Updated upstream
 export class CestaComponent implements OnInit, AfterViewInit {
   productosEnCesta: any[] = [];
   idCestaUsuario: number = 1; // *** ¡REEMPLAZA ESTO CON TU LÓGICA PARA OBTENER EL ID DE LA CESTA! ***
@@ -124,11 +134,39 @@ export class CestaComponent implements OnInit, AfterViewInit {
         options: chartOptions
       }
     );
+=======
+export class CestaComponent implements OnInit {
+  productosEnCesta: any[] = [];
+  showDeleteConfirmation: boolean = false;
+  showProfile: boolean = false; // Controla si mostrar el botón de borrar cesta
+  private apiUrl = environment.apiUrl;
+  private cestaId: number = 0;
+  
+  constructor(
+    private cestaService: CestaService,
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
+  
+  ngOnInit(): void {
+    // Obtener el ID de la cesta de los parámetros de la ruta
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.cestaId = +params['id'];
+      }
+    });
+    
+    this.productosEnCesta = this.cestaService.obtenerProductosEnCarrito();
+    // Determina si el usuario está autenticado para mostrar el botón
+    this.showProfile = !!localStorage.getItem('token');
+>>>>>>> Stashed changes
   }
-
+  
   getSupermercadoNombre(idSuper: number | undefined): string {
     return ProductService.getSupermercadoNombre(idSuper ?? 0);
   }
+<<<<<<< Updated upstream
 
   decrementarCantidad(producto: any) {
     if (producto.pivot.cantidad > 1) {
@@ -190,6 +228,108 @@ export class CestaComponent implements OnInit, AfterViewInit {
           console.error('Error al añadir producto recomendado a la cesta:', error);
         }
       });
+=======
+  
+  // Métodos para el diálogo de confirmación
+  confirmDeleteCart(): void {
+    this.showDeleteConfirmation = true;
+  }
+  
+  cancelDeleteCart(): void {
+    this.showDeleteConfirmation = false;
+  }
+  
+  acceptDeleteCart(): void {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Si no tenemos el ID de la cesta de la ruta, intentamos obtenerlo del servicio
+      if (!this.cestaId) {
+        this.cestaId = this.obtenerIdCestaActual();
+      }
+      
+      if (!this.cestaId) {
+        alert('No se pudo identificar la cesta para eliminar. Por favor, inténtalo de nuevo.');
+        this.showDeleteConfirmation = false;
+        return;
+      }
+      
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      });
+      
+      // Utilizamos el endpoint correcto según la API
+      this.http.delete(`${this.apiUrl}/cestas-compra/${this.cestaId}`, { headers }).subscribe({
+        next: (response: any) => {
+          console.log('Cesta eliminada correctamente:', response.mensaje);
+          
+          // Limpiamos la cesta localmente
+          this.vaciarCarritoLocal();
+          
+          // Cerramos el diálogo de confirmación
+          this.showDeleteConfirmation = false;
+          
+          // Redirigimos a la página de cestas
+          this.router.navigate(['/cestas']);
+        },
+        error: (error) => {
+          console.error('Error al eliminar la cesta:', error);
+          
+          // Mostramos un mensaje de error al usuario
+          let errorMsg = 'Ha ocurrido un error al intentar eliminar la cesta.';
+          if (error.error && error.error.mensaje) {
+            errorMsg = error.error.mensaje;
+          }
+          
+          alert(errorMsg + ' Por favor, inténtalo de nuevo.');
+          this.showDeleteConfirmation = false;
+        }
+      });
+    } else {
+      // Si no hay token, redirige al login
+      this.router.navigate(['/login']);
+    }
+  }
+  
+  // Método para obtener el ID de la cesta actual
+  private obtenerIdCestaActual(): number {
+    // Intentamos obtener el ID de la cesta del localStorage
+    const cestaInfo = localStorage.getItem('cestaInfo');
+    if (cestaInfo) {
+      try {
+        const cesta = JSON.parse(cestaInfo);
+        return cesta.ID_cesta;
+      } catch (error) {
+        console.error('Error al parsear la información de la cesta:', error);
+      }
+    }
+    
+    // Si no hay información en localStorage, intentamos obtenerla del primer producto
+    if (this.productosEnCesta && this.productosEnCesta.length > 0 && this.productosEnCesta[0].idCesta) {
+      return this.productosEnCesta[0].idCesta;
+    }
+    
+    // Si no podemos obtener el ID de ninguna manera, devolvemos 0 o manejamos el error
+    console.warn('No se pudo obtener el ID de la cesta actual');
+    return 0;
+  }
+  
+  // Método para vaciar el carrito localmente
+  private vaciarCarritoLocal(): void {
+    // Limpiamos el array de productos
+    this.productosEnCesta = [];
+    
+    // Limpiamos el localStorage
+    localStorage.removeItem('productosEnCarrito');
+    localStorage.removeItem('cestaInfo');
+    
+  }
+  
+  closeConfirmationOnOutsideClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (target.classList.contains('confirmation-overlay')) {
+      this.showDeleteConfirmation = false;
+    }
+>>>>>>> Stashed changes
   }
 }
 

@@ -154,7 +154,7 @@ export class AppComponent implements OnInit {
 
   goToCesta(): void {
     if (localStorage.getItem('token')) {
-      this.router.navigate(['/cesta']);
+      this.router.navigate(['/cestas']);
     } else {
       this.router.navigate(['/login']);
     }
