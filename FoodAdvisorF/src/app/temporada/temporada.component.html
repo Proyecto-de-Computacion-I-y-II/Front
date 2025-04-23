@@ -1,5 +1,14 @@
-<h2>Productos de Temporada: {{ currentMonth }}</h2>
 
-<div *ngFor="let producto of products">
-  <h3>{{ producto }}</h3>
+<div class="menu-title-2">
+  <span class="title-text">Productos de Temporada: {{ currentMonth }}</span>
+</div>
+
+<div *ngIf="isLoading" class="loading-container">
+  <div class="spinner"></div>
+</div>
+
+<div *ngIf="!isLoading">
+  <div *ngFor="let producto of products">
+    <h3>{{ producto }}</h3>
+  </div>
 </div>

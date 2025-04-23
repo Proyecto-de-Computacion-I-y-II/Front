@@ -14,19 +14,28 @@ export class TemporadaComponent implements OnInit {
   products: ProductoTemporada[] = [];
   currentMonth: string = '';
   meses = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  
+  isLoading: boolean = true;
 
   constructor(private productoTempService: ProductoTempService) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     const monthIndex = new Date().getMonth(); // Obtiene el mes actual (0 - 11)
     this.currentMonth = this.meses[monthIndex]; // Asigna el nombre del mes actual
     this.productoTempService.getProductosDelMes().subscribe(response => {
       // Suponiendo que tu endpoint devuelve { mes: "April", productos: [...] }
       this.products = response.productos;
       console.log("Productos del mes:", this.products);
+      this.isLoading = false;
     }, error => {
       console.error("Error al cargar productos del mes:", error);
+      this.isLoading = false;
     });
+
+    
+
   }
+
+  
+
 }
