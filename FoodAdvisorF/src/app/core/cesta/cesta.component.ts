@@ -1,9 +1,18 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { CestaService } from '../services/cesta/cesta.service';
 import { ProductService } from '../services/product/product.service';
 import { Chart, ChartOptions, ChartType, ChartData } from 'chart.js/auto';
 import { MatSnackBar } from '@angular/material/snack-bar';
+=======
+import { Component, OnInit } from '@angular/core';
+import { CestaService } from '../services/cesta/cesta.service';
+import { ProductService } from '../services/product/product.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from '../../../environments/environment';
+>>>>>>> Stashed changes
 =======
 import { Component, OnInit } from '@angular/core';
 import { CestaService } from '../services/cesta/cesta.service';
@@ -19,6 +28,7 @@ import { environment } from '../../../environments/environment';
   templateUrl: './cesta.component.html',
   styleUrl: './cesta.component.css'
 })
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 export class CestaComponent implements OnInit, AfterViewInit {
   productosEnCesta: any[] = [];
@@ -162,10 +172,39 @@ export class CestaComponent implements OnInit {
     this.showProfile = !!localStorage.getItem('token');
 >>>>>>> Stashed changes
   }
+=======
+export class CestaComponent implements OnInit {
+  productosEnCesta: any[] = [];
+  showDeleteConfirmation: boolean = false;
+  showProfile: boolean = false; // Controla si mostrar el botón de borrar cesta
+  private apiUrl = environment.apiUrl;
+  private cestaId: number = 0;
+  
+  constructor(
+    private cestaService: CestaService,
+    private http: HttpClient,
+    private router: Router,
+    private route: ActivatedRoute
+  ) { }
+  
+  ngOnInit(): void {
+    // Obtener el ID de la cesta de los parámetros de la ruta
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.cestaId = +params['id'];
+      }
+    });
+    
+    this.productosEnCesta = this.cestaService.obtenerProductosEnCarrito();
+    // Determina si el usuario está autenticado para mostrar el botón
+    this.showProfile = !!localStorage.getItem('token');
+  }
+>>>>>>> Stashed changes
   
   getSupermercadoNombre(idSuper: number | undefined): string {
     return ProductService.getSupermercadoNombre(idSuper ?? 0);
   }
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
 
   decrementarCantidad(producto: any) {
@@ -229,6 +268,8 @@ export class CestaComponent implements OnInit {
         }
       });
 =======
+=======
+>>>>>>> Stashed changes
   
   // Métodos para el diálogo de confirmación
   confirmDeleteCart(): void {
@@ -329,6 +370,9 @@ export class CestaComponent implements OnInit {
     if (target.classList.contains('confirmation-overlay')) {
       this.showDeleteConfirmation = false;
     }
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
   }
 }

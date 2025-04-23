@@ -1,8 +1,11 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 .titulo {
   margin: 20px;
   text-align: center;
 =======
+=======
+>>>>>>> Stashed changes
 /* Estilos generales */
 .titulo {
   display: flex;
@@ -11,11 +14,15 @@
   margin: 20px 30px 30px;
   padding-bottom: 15px;
   border-bottom: 1px solid #e0e0e0;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 }
 
 .titulo .title-text {
   font-weight: bold;
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
   margin-left: 8px;
   font-size: 20px;
@@ -275,6 +282,12 @@ hr {
   color: #333;
   margin-left: 10px;
 }
+=======
+  font-size: 24px;
+  color: #333;
+  margin-left: 10px;
+}
+>>>>>>> Stashed changes
   
   .container {
   width: 100%;
@@ -645,5 +658,9 @@ hr {
   .delete-dialog-actions {
   padding: 16px 20px 20px;
   }
+<<<<<<< Updated upstream
+  }
+>>>>>>> Stashed changes
+=======
   }
 >>>>>>> Stashed changes
