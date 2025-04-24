@@ -16,7 +16,6 @@
     font-weight: bold;
     margin-left: 8px;
     font-size: 20px;
-  
   }
   
   .menu-title-2 {
@@ -28,4 +27,9 @@
     justify-content: center;
     align-items: center;
     height: 30vh;
+  }
+
+  .subtitle-container {
+    display: flex;
+    margin-left: 5vh;
   }

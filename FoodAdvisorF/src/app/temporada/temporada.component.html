@@ -1,4 +1,3 @@
-
 <div class="menu-title-2">
   <span class="title-text">Productos de Temporada: {{ currentMonth }}</span>
 </div>
@@ -9,6 +8,16 @@
 
 <div *ngIf="!isLoading">
   <div *ngFor="let producto of products">
-    <h3>{{ producto }}</h3>
+    <div class="subtitle-container">
+      {{ producto.producto }}
+    </div>
+
+    <!-- Subproductos -->
+    <div class="subproductos" *ngIf="producto.detalles?.length">
+      <div *ngFor="let detalle of producto.detalles" class="subproducto-card">
+        <img [src]="detalle.imagen" alt="{{ detalle.nombre }}" width="100" />
+        <div>{{ detalle.nombre }}</div>
+      </div>
+    </div>
   </div>
 </div>

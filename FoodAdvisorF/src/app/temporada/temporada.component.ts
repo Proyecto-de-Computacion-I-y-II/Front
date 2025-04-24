@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductoTemporada } from '../models/producto-temp';
 import { ProductoTempService } from '../services/producto-temp.service';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-temporada',
@@ -13,29 +12,34 @@ export class TemporadaComponent implements OnInit {
 
   products: ProductoTemporada[] = [];
   currentMonth: string = '';
-  meses = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   isLoading: boolean = true;
 
   constructor(private productoTempService: ProductoTempService) {}
 
   ngOnInit(): void {
     this.isLoading = true;
-    const monthIndex = new Date().getMonth(); // Obtiene el mes actual (0 - 11)
-    this.currentMonth = this.meses[monthIndex]; // Asigna el nombre del mes actual
+
+    // Obtener nombre del mes en inglés para la consulta
+    const date = new Date();
+    const mesEn = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
+    this.currentMonth = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(date);
+    this.currentMonth = this.currentMonth.charAt(0).toUpperCase() + this.currentMonth.slice(1);
+
     this.productoTempService.getProductosDelMes().subscribe(response => {
-      // Suponiendo que tu endpoint devuelve { mes: "April", productos: [...] }
       this.products = response.productos;
-      console.log("Productos del mes:", this.products);
+
+      // Para cada producto, buscar subproductos
+      this.products.forEach(producto => {
+        this.productoTempService.getDetallesPorIdTemp(producto.idTemp).subscribe(detalles => {
+          // Se le añade un nuevo campo dinámicamente
+          (producto as any).detalles = detalles;
+        });
+      });
+
       this.isLoading = false;
     }, error => {
       console.error("Error al cargar productos del mes:", error);
       this.isLoading = false;
     });
-
-    
-
   }
-
-  
-
 }
