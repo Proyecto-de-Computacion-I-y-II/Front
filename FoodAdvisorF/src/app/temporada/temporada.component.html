@@ -9,12 +9,12 @@
 <div *ngIf="!isLoading">
   <div *ngFor="let producto of products">
     <div class="subtitle-container">
-      {{ producto.producto.charAt(0).toUpperCase() + producto.producto.slice(1) }} <!--La primera letra se muestta en mayuscula-->
+      {{ producto.producto.charAt(0).toUpperCase() + producto.producto.slice(1) }} <!--La primera letra se muestra en mayuscula-->
     </div>
 
     <!-- Subproductos como tarjetas -->
     <div class="product-grid" *ngIf="producto.detalles?.length">
-      <div class="product-card" *ngFor="let detalle of producto.detalles">
+      <div class="product-card" *ngFor="let detalle of producto.detalles" (click)="goToProductDetail(detalle.id)">
         <img [src]="detalle.imagen || 'logo_fondo.png'" [alt]="detalle.nombre">
         <div class="product-info">
           <div class="product-details">

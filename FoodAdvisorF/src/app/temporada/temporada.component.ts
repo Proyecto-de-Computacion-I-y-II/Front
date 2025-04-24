@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'; // Asegúrate de importar el Router
 import { ProductoTemporada } from '../models/producto-temp';
 import { ProductoTempService } from '../services/producto-temp.service';
 
@@ -14,12 +15,14 @@ export class TemporadaComponent implements OnInit {
   currentMonth: string = '';
   isLoading: boolean = true;
 
-  constructor(private productoTempService: ProductoTempService) {}
+  constructor(
+    private productoTempService: ProductoTempService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
 
-    // Obtener nombre del mes en inglés para la consulta
     const date = new Date();
     const mesEn = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
     this.currentMonth = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(date);
@@ -27,19 +30,21 @@ export class TemporadaComponent implements OnInit {
 
     this.productoTempService.getProductosDelMes().subscribe(response => {
       this.products = response.productos;
-
-      // Para cada producto, buscar subproductos
       this.products.forEach(producto => {
         this.productoTempService.getDetallesPorIdTemp(producto.idTemp).subscribe(detalles => {
-          // Se le añade un nuevo campo dinámicamente
           (producto as any).detalles = detalles;
         });
       });
-
       this.isLoading = false;
     }, error => {
       console.error("Error al cargar productos del mes:", error);
       this.isLoading = false;
     });
+  }
+
+  // Método para navegar al detalle del producto
+  goToProductDetail(id: number) {
+    console.log('Navegando a producto con ID:', id);
+    this.router.navigate(['/producto-detalle', id]);
   }
 }

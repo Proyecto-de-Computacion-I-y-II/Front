@@ -63,6 +63,7 @@
   width: 100%;
   height: 150px;
   object-fit: contain;
+  cursor: pointer;
   border-bottom: 2px dotted #2c9f51;
   padding: 15px;
 }
