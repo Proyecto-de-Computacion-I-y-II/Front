@@ -154,69 +154,14 @@ export class AppComponent implements OnInit {
 
   goToCesta(): void {
     if (localStorage.getItem('token')) {
-      this.router.navigate(['/cesta']);
+      this.router.navigate(['/cestas']);
     } else {
       this.router.navigate(['/login']);
     }
   }
   
-  // Método para mostrar el diálogo de confirmación
-  confirmDeleteCart(): void {
-    this.showDeleteConfirmation = true;
-  }
+
   
-  // Método para cancelar la eliminación
-  cancelDeleteCart(): void {
-    this.showDeleteConfirmation = false;
-  }
-  
-  // Método para confirmar y proceder con la eliminación
-  acceptDeleteCart(): void {
-    const token = localStorage.getItem('token');
-    
-    if (token) {
-      const headers = new HttpHeaders({
-        Authorization: `Bearer ${token}`
-      });
-      
-      // Llamada a la API para vaciar la cesta
-      this.http.delete(`${this.apiUrl}/cesta/vaciar`, { headers }).subscribe({
-        next: (response) => {
-          // Notificar al usuario que la operación fue exitosa
-          console.log('Cesta vaciada correctamente');
-          
-          // Opcional: Puedes emitir un evento para actualizar otros componentes
-          // this.communicationService.notifyCartUpdated();
-          
-          // Cerrar el diálogo de confirmación
-          this.showDeleteConfirmation = false;
-          
-          // Redirigir al usuario a la página de inicio o actualizar la página actual
-          this.router.navigate(['/home']);
-        },
-        error: (error) => {
-          console.error('Error al vaciar la cesta:', error);
-          
-          // Mostrar mensaje de error al usuario
-          alert('Ha ocurrido un error al intentar vaciar la cesta. Por favor, inténtalo de nuevo.');
-          
-          // Cerrar el diálogo de confirmación
-          this.showDeleteConfirmation = false;
-        }
-      });
-    } else {
-      // Si no hay token, redirigir al login
-      this.router.navigate(['/login']);
-    }
-  }
-  
-  // Método para cerrar el diálogo si se hace clic fuera
-  closeConfirmationOnOutsideClick(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
-    if (target.classList.contains('confirmation-overlay')) {
-      this.showDeleteConfirmation = false;
-    }
-  }
   
   ngOnDestroy() {
     if (this.titleChangedSubscription) {

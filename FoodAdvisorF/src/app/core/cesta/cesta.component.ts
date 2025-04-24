@@ -3,8 +3,9 @@ import { CestaService } from '../services/cesta/cesta.service';
 import { ProductService } from '../services/product/product.service';
 import { Chart, ChartOptions, ChartType, ChartData } from 'chart.js/auto';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
-
+import { Router, ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-cesta',
   standalone: false,
@@ -20,14 +21,29 @@ export class CestaComponent implements OnInit, AfterViewInit {
   @ViewChild('porcentajeChart') porcentajeChartCanvas!: ElementRef;
   chart: Chart | null = null;
   productosRecomendados: any[] = [];
+  showDeleteConfirmation: boolean = false;
+  private apiUrl = environment.apiUrl;
+  private cestaId: number = 0;
 
   constructor(
     private cestaService: CestaService,
     private snackBar: MatSnackBar,
-    private route: ActivatedRoute 
+    private route: ActivatedRoute,
+    private router: Router,
+    private http: HttpClient,
   ) { }
 
   ngOnInit(): void {
+
+        // Obtener el ID de la cesta de los parámetros de la ruta
+        this.route.params.subscribe(params => {
+          if (params['id']) {
+            this.cestaId = +params['id'];
+          }
+        });
+      
+
+      
     this.idCestaUsuario = Number(this.route.snapshot.paramMap.get('id')); // Obtiene el ID de la ruta
     this.obtenerProductosDeLaCestaDesdeApi();
     this.obtenerPorcentajesDeLaCesta();
@@ -196,6 +212,83 @@ export class CestaComponent implements OnInit, AfterViewInit {
           console.error('Error al añadir producto recomendado a la cesta:', error);
         }
       });
+  }
+
+  confirmDeleteCart(): void {
+    this.showDeleteConfirmation = true;
+  }
+
+  cancelDeleteCart(): void {
+    this.showDeleteConfirmation = false;
+  }
+
+  acceptDeleteCart(): void {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    if (!this.cestaId) {
+      this.cestaId = this.obtenerIdCestaActual();
+    }
+
+    if (!this.cestaId) {
+      alert('No se pudo identificar la cesta para eliminar.');
+      this.showDeleteConfirmation = false;
+      return;
+    }
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    this.http.delete(`${this.apiUrl}/cestas-compra/${this.cestaId}`, { headers }).subscribe({
+      next: (response: any) => {
+        console.log('Cesta eliminada correctamente:', response.mensaje);
+        this.vaciarCarritoLocal();
+        this.showDeleteConfirmation = false;
+        this.router.navigate(['/cestas']);
+      },
+      error: (error) => {
+        console.error('Error al eliminar la cesta:', error);
+        const errorMsg = error.error?.mensaje ?? 'Error al eliminar la cesta.';
+        alert(errorMsg);
+        this.showDeleteConfirmation = false;
+      }
+    });
+  }
+
+  private obtenerIdCestaActual(): number {
+    const cestaInfo = localStorage.getItem('cestaInfo');
+    if (cestaInfo) {
+      try {
+        const cesta = JSON.parse(cestaInfo);
+        return cesta.ID_cesta;
+      } catch (error) {
+        console.error('Error al parsear la información de la cesta:', error);
+      }
+    }
+
+    if (this.productosEnCesta.length > 0 && this.productosEnCesta[0].idCesta) {
+      return this.productosEnCesta[0].idCesta;
+    }
+
+    console.warn('No se pudo obtener el ID de la cesta actual');
+    return 0;
+  }
+
+  private vaciarCarritoLocal(): void {
+    this.productosEnCesta = [];
+    localStorage.removeItem('productosEnCarrito');
+    localStorage.removeItem('cestaInfo');
+  }
+
+  closeConfirmationOnOutsideClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (target.classList.contains('confirmation-overlay')) {
+      this.showDeleteConfirmation = false;
+    }
   }
 }
 
