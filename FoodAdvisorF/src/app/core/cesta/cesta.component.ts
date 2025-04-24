@@ -3,6 +3,7 @@ import { CestaService } from '../services/cesta/cesta.service';
 import { ProductService } from '../services/product/product.service';
 import { Chart, ChartOptions, ChartType, ChartData } from 'chart.js/auto';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cesta',
@@ -12,7 +13,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class CestaComponent implements OnInit, AfterViewInit {
   productosEnCesta: any[] = [];
-  idCestaUsuario: number = 1; // *** ¡REEMPLAZA ESTO CON TU LÓGICA PARA OBTENER EL ID DE LA CESTA! ***
+
+  idCestaUsuario: number = 0;
+
   porcentajesCesta: any[] = []; // Para almacenar los datos de los porcentajes
   @ViewChild('porcentajeChart') porcentajeChartCanvas!: ElementRef;
   chart: Chart | null = null;
@@ -20,9 +23,12 @@ export class CestaComponent implements OnInit, AfterViewInit {
 
   constructor(
     private cestaService: CestaService,
-    private snackBar: MatSnackBar // <- Asegúrate de tener esta línea
+    private snackBar: MatSnackBar,
+    private route: ActivatedRoute 
   ) { }
+
   ngOnInit(): void {
+    this.idCestaUsuario = Number(this.route.snapshot.paramMap.get('id')); // Obtiene el ID de la ruta
     this.obtenerProductosDeLaCestaDesdeApi();
     this.obtenerPorcentajesDeLaCesta();
     this.obtenerProductosRecomendados();
