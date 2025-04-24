@@ -53,6 +53,7 @@ export class ProductoDetalleComponent implements OnInit {
     if (localStorage.getItem('token')) {
       // Si está logueado, agregar directamente el producto a la cesta
       this.cestaService.agregarProductoAlCarrito(this.product, this.cantidad); 
+      this.router.navigate(['/cestas']);
     } else {
       // Si no está logueado, guardar el producto y redirigir al login
       const productoGuardado = {
