@@ -9,14 +9,18 @@
 <div *ngIf="!isLoading">
   <div *ngFor="let producto of products">
     <div class="subtitle-container">
-      {{ producto.producto }}
+      {{ producto.producto.charAt(0).toUpperCase() + producto.producto.slice(1) }} <!--La primera letra se muestta en mayuscula-->
     </div>
 
-    <!-- Subproductos -->
-    <div class="subproductos" *ngIf="producto.detalles?.length">
-      <div *ngFor="let detalle of producto.detalles" class="subproducto-card">
-        <img [src]="detalle.imagen" alt="{{ detalle.nombre }}" width="100" />
-        <div>{{ detalle.nombre }}</div>
+    <!-- Subproductos como tarjetas -->
+    <div class="product-grid" *ngIf="producto.detalles?.length">
+      <div class="product-card" *ngFor="let detalle of producto.detalles">
+        <img [src]="detalle.imagen || 'logo_fondo.png'" [alt]="detalle.nombre">
+        <div class="product-info">
+          <div class="product-details">
+            <h3 class="product-name">{{ detalle.nombre }}</h3>
+          </div>
+        </div>
       </div>
     </div>
   </div>
