@@ -19,20 +19,22 @@
     <div class="grid-item info-container">
         <h3>Datos del Producto</h3>
         <div class="product-details">
-            <p><strong>Precio promedio:</strong> {{ product?.precio + '€' || 'No se dispone de datos' }}</p>
-            <p><strong>Supermercado:</strong> {{ getSupermercadoNombre(product?.idSuper) }}</p>
+            <p *ngIf="!product"><strong>Precio promedio: </strong>---</p>
+            <p *ngIf="product"><strong>Precio promedio: </strong> {{ product?.precio + '€' || '---' }}</p>
+            <p *ngIf="!product"><strong>Supermercado: </strong>---</p>
+            <p *ngIf="product"><strong>Supermercado: </strong>{{ getSupermercadoNombre(product?.idSuper) }}</p>
         </div>
 
         <hr>
 
         <h3>Valor Nutricional</h3>
         <div class="nutrition-table">
-            <p><strong>Grasas:</strong> {{ product?.grasas  || 'No se dispone de datos' }} </p>
-            <p> <strong>Azúcares:</strong> {{ product?.azucares || 'No se dispone de datos' }} </p>
-            <p><strong>Ácidos-grasos:</strong> {{ product?.acidos_grasos  || 'No se dispone de datos' }} </p>
-            <p> <strong>Sal:</strong> {{ product?.sal  || 'No se dispone de datos'}}</p>
-            <p><strong>Hidratos-carbono:</strong> {{ product?.hidratos_carbono  || 'No se dispone de datos'}} </p>
-            <p><strong>Proteínas:</strong> {{ product?.proteinas  || 'No se dispone de datos'}} </p>
+            <p><strong>Grasas:</strong> {{ product?.grasas  || '---' }} </p>
+            <p><strong>Azúcares:</strong> {{ product?.azucares || '---' }} </p>
+            <p><strong>Ácidos-grasos:</strong> {{ product?.acidos_grasos  || '---' }} </p>
+            <p><strong>Sal:</strong> {{ product?.sal  || '---'}}</p>
+            <p><strong>Hidratos-carbono:</strong> {{ product?.hidratos_carbono  || '---'}} </p>
+            <p><strong>Proteínas:</strong> {{ product?.proteinas  || '---'}} </p>
         </div>
 
         <hr>
@@ -43,9 +45,51 @@
             <button class="quantity-button minus-button" (click)="restarCantidad()">-</button>
             <span class="quantity">{{ cantidad }}</span>
             <button class="quantity-button plus-button" (click)="sumarCantidad()">+</button>
+            </div>
+            <div class="carrito">
+                <button 
+                (click)="agregarAlCarrito()" 
+                [ngClass]="{'btn-loading': isLoading || isStoring, 'btn-add': !isLoading}">
+                <span *ngIf="!isStoring">Añadir a la cesta actual</span>
+                <div *ngIf="isStoring" class="loader"></div>
+              </button>
+            </div>
         </div>
-        <div class="carrito">
-            <button class="btn-add" (click)="agregarAlCarrito()">Añadir a la cesta actual</button>
-        </div>      
     </div>
+</div>
+
+<div class="productos-similares">
+    <div class="hr-margin">
+        <hr>
+    </div>
+    <h2 class="title-text">Productos similares en este supermercado</h2>
+    <div *ngIf="isLoadingSimillars" class="loading-container">
+        <!-- Puedes usar un spinner o una barra de carga aquí -->
+        <div class="spinner"></div>
+    </div>
+
+    <div *ngIf="!isLoadingSimillars" >
+        <div *ngIf="products.length > 0" class="product-grid">
+            <div class="product-card" *ngFor="let product of products" (click)="goToProductDetail(product.ID_prod)">
+                <img *ngIf="!forceLogoPng" [src]="product.imagen || 'logo_fondo.png'" [alt]="product.nombre">
+                <img *ngIf="forceLogoPng" [src]="'logo_fondo.png'" [alt]="product.nombre">
+            
+                <div class="product-info">
+                <div class="product-details">
+                    <h3 class="product-name">{{  keepLastTwoWordsTogether(product.nombre) }}</h3>
+            
+                </div>
+                <div class="product-price">
+                    {{ product.precio }}€
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="products.length === 0" class="no-similares">
+            No hay productos similares disponibles.
+        </div>
+    </div>
+
+
 </div>
