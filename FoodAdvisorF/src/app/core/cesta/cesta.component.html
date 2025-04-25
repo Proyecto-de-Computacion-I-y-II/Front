@@ -74,7 +74,7 @@
           <div class="card-body">
             <h5 class="card-title">{{ recomendado.nombre }}</h5>
             <p class="card-text">Precio: {{ recomendado.precio }} €</p>
-            <p class="card-text">Supermercado: {{ getSupermercadoNombre(recomendado.idSuper) }}</p>
+            <p class="card-text">Supermercado: {{ recomendado.nombreSupermercado }}</p>
             <p class="card-text"><small class="text-muted">Nivel Pirámide: {{ recomendado.nombreNivel }}</small></p>
             <button class="btn btn-sm btn-outline-success" (click)="agregarProductoRecomendado(recomendado)">Añadir a la Cesta</button>
           </div>

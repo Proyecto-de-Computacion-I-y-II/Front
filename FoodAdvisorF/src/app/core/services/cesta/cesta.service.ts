@@ -65,6 +65,22 @@ export class CestaService {
     });
   }
 
+  // Modificar la cantidad de un producto en el carrito (envía una petición PUT a la API)
+  modificarCantidadCarrito(cestaId: number, productoId: number, cantidad: number) {
+    this.http.put(`${this.apiUrl}/cestas-compra/${cestaId}/update-producto`, {
+      ID_prod: productoId,
+      cantidad: cantidad
+    }).subscribe({
+      next: (resp: any) => { // Ajusta 'any' al tipo de respuesta esperado
+        this.snackBar.open("Cantidad actualizada", "Entendido", { duration: 2000 });
+      },
+      error: (err) => {
+        this.snackBar.open("No se ha podido actualizar la cantidad. Pruebe más tarde", "Entendido", { duration: 2000 });
+        console.log(err.message);
+      }
+    });
+  }
+
   obtenerPorcentajesCesta(idCesta: number): Observable<PorcentajeCesta[]> {
     const url = `${this.apiUrl}/cestas/${idCesta}/porcentajes`;
     return this.http.get<PorcentajeCesta[]>(url);

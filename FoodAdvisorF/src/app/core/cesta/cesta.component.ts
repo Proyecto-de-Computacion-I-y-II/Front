@@ -165,7 +165,7 @@ export class CestaComponent implements OnInit, AfterViewInit {
   }
 
   actualizarCestaEnApi(producto: any, cantidad: number) {
-    this.cestaService.agregarProductoAlCarrito(producto, cantidad); // Ahora recibe el producto completo
+    this.cestaService.modificarCantidadCarrito(this.idCestaUsuario, producto.ID_prod, cantidad); // Ahora recibe el producto completo
     this.snackBar.open("Cantidad actualizada", "Entendido", { duration: 2000 });
     this.obtenerProductosDeLaCestaDesdeApi();
     this.obtenerPorcentajesDeLaCesta();
