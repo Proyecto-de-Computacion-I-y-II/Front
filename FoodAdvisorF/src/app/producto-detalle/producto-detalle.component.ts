@@ -46,9 +46,22 @@ export class ProductoDetalleComponent implements OnInit {
   }
 
   agregarAlCarrito() {
-    if (this.product) {
-      this.cestaService.agregarProductoAlCarrito(this.product, this.cantidad);  // Usa el servicio
-      //this.router.navigate(['/cestas']);  // Redirige a la página de cesta
+    // if (this.product) {
+    //   this.cestaService.agregarProductoAlCarrito(this.product, this.cantidad);  // Usa el servicio
+    //   //this.router.navigate(['/cestas']);  // Redirige a la página de cesta
+    // }
+    if (localStorage.getItem('token')) {
+      // Si está logueado, agregar directamente el producto a la cesta
+      this.cestaService.agregarProductoAlCarrito(this.product, this.cantidad); 
+      this.router.navigate(['/cestas']);
+    } else {
+      // Si no está logueado, guardar el producto y redirigir al login
+      const productoGuardado = {
+        producto: this.product,
+        cantidad: this.cantidad
+      };
+      localStorage.setItem('productoPendiente', JSON.stringify(productoGuardado));  // Guardar el producto pendiente en localStorage
+      this.router.navigate(['/login']);
     }
   }
 

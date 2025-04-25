@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { Cesta } from './../../security/models/Cesta';
+import { Cesta } from './../../security/models/cesta';
 
 type CestaConContador = Cesta & { localCounter: number };
 @Component({

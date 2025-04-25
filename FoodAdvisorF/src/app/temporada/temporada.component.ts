@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router'; // Asegúrate de importar el Router
 import { ProductoTemporada } from '../models/producto-temp';
 import { ProductoTempService } from '../services/producto-temp.service';
-import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-temporada',
@@ -13,29 +13,38 @@ export class TemporadaComponent implements OnInit {
 
   products: ProductoTemporada[] = [];
   currentMonth: string = '';
-  meses = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   isLoading: boolean = true;
 
-  constructor(private productoTempService: ProductoTempService) {}
+  constructor(
+    private productoTempService: ProductoTempService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
-    const monthIndex = new Date().getMonth(); // Obtiene el mes actual (0 - 11)
-    this.currentMonth = this.meses[monthIndex]; // Asigna el nombre del mes actual
+
+    const date = new Date();
+    const mesEn = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
+    this.currentMonth = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(date);
+    this.currentMonth = this.currentMonth.charAt(0).toUpperCase() + this.currentMonth.slice(1);
+
     this.productoTempService.getProductosDelMes().subscribe(response => {
-      // Suponiendo que tu endpoint devuelve { mes: "April", productos: [...] }
       this.products = response.productos;
-      console.log("Productos del mes:", this.products);
+      this.products.forEach(producto => {
+        this.productoTempService.getDetallesPorIdTemp(producto.idTemp).subscribe(detalles => {
+          (producto as any).detalles = detalles;
+        });
+      });
       this.isLoading = false;
     }, error => {
       console.error("Error al cargar productos del mes:", error);
       this.isLoading = false;
     });
-
-    
-
   }
 
-  
-
+  // Método para navegar al detalle del producto
+  goToProductDetail(id: number) {
+    console.log('Navegando a producto con ID:', id);
+    this.router.navigate(['/producto-detalle', id]);
+  }
 }

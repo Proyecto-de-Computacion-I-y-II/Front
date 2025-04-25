@@ -14,7 +14,7 @@
     </div>
     
     <!-- Contenedor para mostrar las cestas cuando existan -->
-    <div *ngIf="!loading && !error && cestasCompra && cestasCompra.length > 0; else cestaVacia" class="cestas-list">
+    <div *ngIf="!loading && !error && cestasCompra && cestasCompra.length > 0" class="cestas-list">
       <div *ngFor="let cesta of cestasCompra" class="cesta-item">
         <div class="cesta-header">
           <h3>Cesta {{ cesta.localCounter }}</h3>
@@ -37,8 +37,8 @@
   </div>
 </div>
 
-<ng-template #cestaVacia>
+<!-- <ng-template #cestaVacia>
   <div class="container">
     <h1>No se encontraron cestas de compra. ¡Cree una para realizar una compra!</h1>
   </div>  
-</ng-template>
+</ng-template> -->

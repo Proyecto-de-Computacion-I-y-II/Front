@@ -18,4 +18,8 @@ export class ProductoTempService {
     return this.http.get(this.apiUrl);
   }  
 
+  getDetallesPorIdTemp(idTemp: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/${idTemp}/detalles`);
+  }  
+
 }
