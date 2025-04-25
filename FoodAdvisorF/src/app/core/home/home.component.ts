@@ -1,12 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Categoria } from '../../security/models/categoria';
 import { Product } from '../../security/models/product';
+import { Subcategoria } from '../../security/models/subcategoria';
+import { Subcategoria2 } from '../../security/models/subcategoria2';
 import { CommunicationService } from '../../shared/services/communicacion/communication.service';
 import { ProductService } from '../services/product/product.service';
-import {Categoria} from '../../security/models/categoria';
-import {Subcategoria} from '../../security/models/subcategoria';
-import {Subcategoria2} from '../../security/models/subcategoria2';
-import {SupermarketService} from '../services/supermarket/supermarket.service';
+import { SupermarketService } from '../services/supermarket/supermarket.service';
 
 @Component({
   selector: 'app-home',
@@ -115,7 +115,7 @@ export class HomeComponent implements OnInit {
 
   products: Product[] = [];
   currentPage = 1;
-  totalPages =487;
+  totalPages = 487;
 
   maxVisiblePages = 5;
   visiblePages: number[] = [];
@@ -149,7 +149,7 @@ export class HomeComponent implements OnInit {
       (error) => {
         console.error('Error al cargar productos', error);
         this.isLoading = false;
-      });
+    });
 
     this.updateVisiblePages();
 

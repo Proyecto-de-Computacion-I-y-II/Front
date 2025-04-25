@@ -18,7 +18,9 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent},
   { path: 'cestas/:id', component: CestaComponent},
   { path: 'cestas', component: CestasComponent},
-  { path: 'producto-detalle/:id', component: ProductoDetalleComponent},
+  { path: 'producto-detalle/:id', component: ProductoDetalleComponent,
+    runGuardsAndResolvers: 'always'
+  },
   { path: 'temporada', component: TemporadaComponent},
   { path: '', redirectTo: 'inicio', pathMatch: 'full'},
   { path: '**', redirectTo: 'inicio'}

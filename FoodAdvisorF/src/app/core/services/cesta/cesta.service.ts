@@ -49,21 +49,13 @@ export class CestaService {
 
 
   // Agregar un producto al carrito (envía una petición POST a la API)
-  agregarProductoAlCarrito(producto: any, cantidad: number) {
-    this.http.post<Cesta>(`${this.apiUrl}/cestas-compra/addProducto`, {
+  agregarProductoAlCarrito(producto: any, cantidad: number): Observable<any> {
+    return this.http.post<Cesta>(`${this.apiUrl}/cestas-compra/addProducto`, {
       ID_prod: producto.ID_prod,
       cantidad: cantidad
-    }).subscribe({
-      next: (resp) => {
-        this.snackBar.open("Producto añadido", "Entendido", { duration: 2000 });
-        // Podrías actualizar this.productosEnCesta aquí si la API devuelve la cesta actualizada
-      },
-      error: (err) => {
-        this.snackBar.open("No se ha podido añadir el producto a la cesta. Pruebe más tarde", "Entendido", { duration: 2000 });
-        console.log(err.message)
-      }
     });
   }
+  
 
   // Modificar la cantidad de un producto en el carrito (envía una petición PUT a la API)
   modificarCantidadCarrito(cestaId: number, productoId: number, cantidad: number) {
