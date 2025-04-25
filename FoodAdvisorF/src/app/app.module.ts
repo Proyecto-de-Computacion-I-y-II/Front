@@ -25,8 +25,8 @@ import { RegisterComponent } from './security/register/register.component';
 import { TemporadaComponent } from './temporada/temporada.component';
 
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
-import {MatDrawer, MatDrawerContainer, MatSidenav, MatSidenavContainer} from '@angular/material/sidenav';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 
@@ -40,7 +40,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     CestaComponent,
     CestasComponent,
     TemporadaComponent,
-    InicioComponent
+    InicioComponent,
+    ProductoDetalleComponent
   ],
   imports: [
     MatExpansionModule,

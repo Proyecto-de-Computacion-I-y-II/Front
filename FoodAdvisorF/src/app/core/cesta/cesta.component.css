@@ -160,12 +160,15 @@ hr {
 }
 
 .minus-button {
-  color: #d9534f; /* Rojo */
+  color: #f58634;
+  font-weight: bolder;
 }
 
 .plus-button {
-  color: #5cb85c; /* Verde */
+  color: #5cb85c;
+  font-weight: bolder;
 }
+
 
 .cantidad-texto {
   margin: 0 5px;
