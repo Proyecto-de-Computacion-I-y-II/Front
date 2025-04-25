@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'; // Asegúrate de importar el Router
+import { Router } from '@angular/router'; 
 import { ProductoTemporada } from '../models/producto-temp';
 import { ProductoTempService } from '../services/producto-temp.service';
 
@@ -12,8 +12,24 @@ import { ProductoTempService } from '../services/producto-temp.service';
 export class TemporadaComponent implements OnInit {
 
   products: ProductoTemporada[] = [];
-  currentMonth: string = '';
   isLoading: boolean = true;
+
+  meses: { nombre: string, numero: number }[] = [
+    { nombre: 'Enero', numero: 1 },
+    { nombre: 'Febrero', numero: 2 },
+    { nombre: 'Marzo', numero: 3 },
+    { nombre: 'Abril', numero: 4 },
+    { nombre: 'Mayo', numero: 5 },
+    { nombre: 'Junio', numero: 6 },
+    { nombre: 'Julio', numero: 7 },
+    { nombre: 'Agosto', numero: 8 },
+    { nombre: 'Septiembre', numero: 9 },
+    { nombre: 'Octubre', numero: 10 },
+    { nombre: 'Noviembre', numero: 11 },
+    { nombre: 'Diciembre', numero: 12 },
+  ];
+
+  mesSeleccionado: number | null = null;
 
   constructor(
     private productoTempService: ProductoTempService,
@@ -21,14 +37,14 @@ export class TemporadaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.cargarProductosDelMesActual();
+  }
+
+  cargarProductosPorMes(mes: number): void {
+    this.mesSeleccionado = mes;
     this.isLoading = true;
 
-    const date = new Date();
-    const mesEn = new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
-    this.currentMonth = new Intl.DateTimeFormat('es-ES', { month: 'long' }).format(date);
-    this.currentMonth = this.currentMonth.charAt(0).toUpperCase() + this.currentMonth.slice(1);
-
-    this.productoTempService.getProductosDelMes().subscribe(response => {
+    this.productoTempService.getProductosPorMes(mes).subscribe(response => {
       this.products = response.productos;
       this.products.forEach(producto => {
         this.productoTempService.getDetallesPorIdTemp(producto.idTemp).subscribe(detalles => {
@@ -42,9 +58,23 @@ export class TemporadaComponent implements OnInit {
     });
   }
 
-  // Método para navegar al detalle del producto
+  cargarProductosDelMesActual(): void {
+    this.isLoading = true;
+    this.productoTempService.getProductosDelMes().subscribe(response => {
+      this.products = response.productos;
+      this.products.forEach(producto => {
+        this.productoTempService.getDetallesPorIdTemp(producto.idTemp).subscribe(detalles => {
+          (producto as any).detalles = detalles;
+        });
+      });
+      this.isLoading = false;
+    }, error => {
+      console.error("Error al cargar productos del mes actual:", error);
+      this.isLoading = false;
+    });
+  }
+
   goToProductDetail(id: number) {
-    console.log('Navegando a producto con ID:', id);
     this.router.navigate(['/producto-detalle', id]);
   }
 }

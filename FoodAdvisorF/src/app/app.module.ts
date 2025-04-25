@@ -27,6 +27,7 @@ import { TemporadaComponent } from './temporada/temporada.component';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import {MatDrawer, MatDrawerContainer, MatSidenav, MatSidenavContainer} from '@angular/material/sidenav';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import {MatDrawer, MatDrawerContainer, MatSidenav, MatSidenavContainer} from '@a
     InicioComponent
   ],
   imports: [
+    MatExpansionModule,
     BrowserModule,
     AppRoutingModule,
     MatToolbarModule,
