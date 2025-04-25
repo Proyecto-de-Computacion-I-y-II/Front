@@ -22,8 +22,9 @@ export class ProductoTempService {
     return this.http.get<any[]>(`${this.apiUrl}/${idTemp}/detalles`);
   }  
 
-  getProductosPorMes(mes: number): Observable<{ mes: string, productos: any[] }> {
-    return this.http.get<{ mes: string, productos: any[] }>(`${this.apiUrl}/${mes}`);
+  getProductosPorMes(mes: number): Observable<{ mes: string, productos: any[], productossaliendo: any[] }> {
+    return this.http.get<{ mes: string, productos: any[], productossaliendo: any[] }>(`${this.apiUrl}/${mes}`);
   }
+  
   
 }

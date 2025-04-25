@@ -15,14 +15,34 @@
   <div class="spinner"></div>
 </div>
 
+
 <div *ngIf="!isLoading">
-  <div *ngFor="let producto of products">
-    <div class="subtitle-container">
-      {{ producto.producto.charAt(0).toUpperCase() + producto.producto.slice(1) }} <!--La primera letra se muestra en mayuscula-->
+  <div class="wrapper">
+    <div *ngFor="let producto of products">
+      <div class="subtitle-container">
+        <img src="logo.png" alt="Food Advisor Logo" class="logo">
+        <br>
+        {{ producto.producto.charAt(0).toUpperCase() + producto.producto.slice(1) }}
+      </div>
     </div>
+  </div>
+
+  <h4> Entrando o saliendo de temporada </h4>
+  <div class="wrapper">
+    <div *ngFor="let producto of productosSaliendo">
+      <div class="subtitle-container">
+        <img src="logo.png" alt="Food Advisor Logo" class="logo">
+        <br>
+        {{ producto.producto.charAt(0).toUpperCase() + producto.producto.slice(1) }}
+      </div>
+    </div>
+  </div>
+
+</div>
+
 
     <!-- Subproductos como tarjetas -->
-    <div class="product-grid" *ngIf="producto.detalles?.length">
+    <!-- <div class="product-grid" *ngIf="producto.detalles?.length">
       <div class="product-card" *ngFor="let detalle of producto.detalles" (click)="goToProductDetail(detalle.id)">
         <img [src]="detalle.imagen || 'logo_fondo.png'" [alt]="detalle.nombre">
         <div class="product-info">
@@ -31,6 +51,4 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> -->

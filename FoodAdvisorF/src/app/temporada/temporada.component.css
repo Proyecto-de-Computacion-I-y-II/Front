@@ -68,10 +68,10 @@
     height: 30vh;
   }
 
-  .subtitle-container {
+  /* .subtitle-container {
     display: flex;
     margin-left: 5vh;
-  }
+  } */
 
   /* Cuadrícula subproductos */
 .product-grid {
@@ -137,11 +137,18 @@
 
 .desktop-nav {
   display: flex;
-  gap: 40px;
-  margin: 0 30px;
-  flex-shrink: 0; /* Evita que la navegación se encoja */
-  white-space: nowrap; /* Evita que los textos se partan */
+  flex-wrap: wrap;
+  gap: 1.5em;
+  justify-content: center;
 }
+
+/* @media (max-width: 768px) {
+  .desktop-nav {
+    flex-direction: column;
+    align-items: center;
+  }
+} */
+
 
 .desktop-nav a {
   color: #333;
@@ -160,4 +167,21 @@
   width: 100%;
   height: 2px;
   background-color: #f58634;
+}
+
+.wrapper {
+  /* border: 2px solid; */
+  border-radius: 5px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.wrapper > div {
+  border: none;
+  /* border-radius: 5px; */
+  padding: 1em;
+}
+
+.wrapper > div {
+  flex: 1 1 200px;
 }

@@ -12,6 +12,7 @@ import { ProductoTempService } from '../services/producto-temp.service';
 export class TemporadaComponent implements OnInit {
 
   products: ProductoTemporada[] = [];
+  productosSaliendo: ProductoTemporada[] = [];
   isLoading: boolean = true;
 
   meses: { nombre: string, numero: number }[] = [
@@ -37,7 +38,9 @@ export class TemporadaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.cargarProductosDelMesActual();
+    const mesActual = new Date().getMonth() + 1; // Mes actual (ajustado para que sea 1-12)
+    this.mesSeleccionado = mesActual; // Establece mes actual
+    this.cargarProductosPorMes(mesActual); // Cargar productos a mes actual
   }
 
   cargarProductosPorMes(mes: number): void {
@@ -46,6 +49,8 @@ export class TemporadaComponent implements OnInit {
 
     this.productoTempService.getProductosPorMes(mes).subscribe(response => {
       this.products = response.productos;
+      this.productosSaliendo = response.productossaliendo;
+      
       this.products.forEach(producto => {
         this.productoTempService.getDetallesPorIdTemp(producto.idTemp).subscribe(detalles => {
           (producto as any).detalles = detalles;
@@ -60,7 +65,7 @@ export class TemporadaComponent implements OnInit {
 
   cargarProductosDelMesActual(): void {
     this.isLoading = true;
-    this.productoTempService.getProductosDelMes().subscribe(response => {
+    this.productoTempService.getProductosDelMes().subscribe(response => { 
       this.products = response.productos;
       this.products.forEach(producto => {
         this.productoTempService.getDetallesPorIdTemp(producto.idTemp).subscribe(detalles => {
