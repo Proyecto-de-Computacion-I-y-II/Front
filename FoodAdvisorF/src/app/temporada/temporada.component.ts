@@ -46,22 +46,33 @@ export class TemporadaComponent implements OnInit {
   cargarProductosPorMes(mes: number): void {
     this.mesSeleccionado = mes;
     this.isLoading = true;
-
+  
     this.productoTempService.getProductosPorMes(mes).subscribe(response => {
       this.products = response.productos;
       this.productosSaliendo = response.productossaliendo;
       
+      // Asociar imágenes a los productos en temporada
       this.products.forEach(producto => {
+        const nombreImagen = producto.producto.toLowerCase(); // usa nombre como "acelga", "apio"
+        (producto as any).imagen = `assets/img/${nombreImagen}.png`;
+  
         this.productoTempService.getDetallesPorIdTemp(producto.idTemp).subscribe(detalles => {
           (producto as any).detalles = detalles;
         });
       });
+  
+      // Asociar imágenes a productos saliendo
+      this.productosSaliendo.forEach(producto => {
+        const nombreImagen = producto.producto.toLowerCase();
+        (producto as any).imagen = `assets/img/${nombreImagen}.png`;
+      });
+  
       this.isLoading = false;
     }, error => {
       console.error("Error al cargar productos del mes:", error);
       this.isLoading = false;
     });
-  }
+  }  
 
   cargarProductosDelMesActual(): void {
     this.isLoading = true;

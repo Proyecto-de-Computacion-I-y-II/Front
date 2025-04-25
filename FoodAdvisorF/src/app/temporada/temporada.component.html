@@ -20,7 +20,7 @@
   <div class="wrapper">
     <div *ngFor="let producto of products">
       <div class="subtitle-container">
-        <img src="logo.png" alt="Food Advisor Logo" class="logo">
+        <img [src]="producto.imagen" [alt]="producto.producto" class="producto-imagen">
         <br>
         {{ producto.producto.charAt(0).toUpperCase() + producto.producto.slice(1) }}
       </div>
@@ -31,7 +31,7 @@
   <div class="wrapper">
     <div *ngFor="let producto of productosSaliendo">
       <div class="subtitle-container">
-        <img src="logo.png" alt="Food Advisor Logo" class="logo">
+        <img [src]="producto.imagen" [alt]="producto.producto" class="producto-imagen">
         <br>
         {{ producto.producto.charAt(0).toUpperCase() + producto.producto.slice(1) }}
       </div>
