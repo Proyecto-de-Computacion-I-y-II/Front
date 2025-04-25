@@ -1,12 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { CestaService } from '../core/services/cesta/cesta.service';
 import { ProductService } from '../core/services/product/product.service';
 import { Product } from '../security/models/product';
 
+
 @Component({
   selector: 'app-producto-detalle',
+  standalone: false,
   templateUrl: './producto-detalle.component.html',
   styleUrls: ['./producto-detalle.component.css']
 })
@@ -17,12 +20,15 @@ export class ProductoDetalleComponent implements OnInit {
   @Input() Product: any;
   @Output() agregarProducto = new EventEmitter<any>();
   cantidad: number = 1;
+  isLoading: boolean  = true;
   
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private router: Router,
-    private cestaService: CestaService
+    private cestaService: CestaService,
+    private snackBar: MatSnackBar
+    
   ) {}
 
   ngOnInit(): void {
@@ -31,6 +37,7 @@ export class ProductoDetalleComponent implements OnInit {
     if (productId) {
       this.productService.getProductById(productId).subscribe((product: Product) => {
         this.product = product;  // Guarda los detalles del producto
+        this.isLoading = false;
       });
     }
   }
@@ -46,21 +53,21 @@ export class ProductoDetalleComponent implements OnInit {
   }
 
   agregarAlCarrito() {
-    // if (this.product) {
-    //   this.cestaService.agregarProductoAlCarrito(this.product, this.cantidad);  // Usa el servicio
-    //   //this.router.navigate(['/cestas']);  // Redirige a la página de cesta
-    // }
-    if (localStorage.getItem('token')) {
-      // Si está logueado, agregar directamente el producto a la cesta
-      this.cestaService.agregarProductoAlCarrito(this.product, this.cantidad); 
-    } else {
-      // Si no está logueado, guardar el producto y redirigir al login
-      const productoGuardado = {
-        producto: this.product,
-        cantidad: this.cantidad
-      };
-      localStorage.setItem('productoPendiente', JSON.stringify(productoGuardado));  // Guardar el producto pendiente en localStorage
-      this.router.navigate(['/login']);
+    if (this.product) {
+      if (localStorage.getItem('token')) {
+        // Si está logueado, agregar directamente el producto a la cesta
+        this.cestaService.agregarProductoAlCarrito(this.product, this.cantidad);
+      } else {
+        // Si no está logueado, guardar el producto y redirigir al login
+        const productoGuardado = {
+          producto: this.product,
+          cantidad: this.cantidad
+        };
+        localStorage.setItem('productoPendiente', JSON.stringify(productoGuardado));  // Guardar el producto pendiente en localStorage
+        this.router.navigate(['/login']);
+      }
+    }else{
+      this.snackBar.open("Espere unos segundos", "Entendido", { duration: 2000 });
     }
   }
 

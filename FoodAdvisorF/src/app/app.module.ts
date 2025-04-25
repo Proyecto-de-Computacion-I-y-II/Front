@@ -25,8 +25,8 @@ import { RegisterComponent } from './security/register/register.component';
 import { TemporadaComponent } from './temporada/temporada.component';
 
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
-import {MatDrawer, MatDrawerContainer, MatSidenav, MatSidenavContainer} from '@angular/material/sidenav';
 
 
 @NgModule({
@@ -39,7 +39,8 @@ import {MatDrawer, MatDrawerContainer, MatSidenav, MatSidenavContainer} from '@a
     CestaComponent,
     CestasComponent,
     TemporadaComponent,
-    InicioComponent
+    InicioComponent,
+    ProductoDetalleComponent
   ],
   imports: [
     BrowserModule,

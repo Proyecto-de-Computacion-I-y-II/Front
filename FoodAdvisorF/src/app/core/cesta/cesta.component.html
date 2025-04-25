@@ -40,11 +40,13 @@
   <div *ngFor="let producto of productosEnCesta">
     <div class="grid-container">
       <div class="grid-item">
-        <img
-          [src]="producto.imagen"
-          [alt]="producto.nombre"
-          class="img-fluid w-75"
-        />
+      <div *ngIf="isLoading" class="loading-container">
+          <!-- Puedes usar un spinner o una barra de carga aquí -->
+          <div class="spinner"></div>
+      </div>
+      <div *ngIf="!isLoading" class = "image-container">
+          <img [src]="producto.imagen || 'logo_fondo.png' " [alt]="producto.nombre" class="img-fluid w-75 img" />
+      </div>
       </div>
       <div class="grid-item">{{ producto.nombre }}</div>
       <div class="grid-item">{{ getSupermercadoNombre(producto.idSuper) }}</div>

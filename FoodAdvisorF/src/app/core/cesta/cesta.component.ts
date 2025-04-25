@@ -1,11 +1,11 @@
-import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Chart, ChartData, ChartOptions } from 'chart.js/auto';
+import { environment } from '../../../environments/environment';
 import { CestaService } from '../services/cesta/cesta.service';
 import { ProductService } from '../services/product/product.service';
-import { Chart, ChartOptions, ChartType, ChartData } from 'chart.js/auto';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router, ActivatedRoute } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-cesta',
   standalone: false,
@@ -24,6 +24,7 @@ export class CestaComponent implements OnInit, AfterViewInit {
   showDeleteConfirmation: boolean = false;
   private apiUrl = environment.apiUrl;
   private cestaId: number = 0;
+  isLoading: boolean = true;
 
   constructor(
     private cestaService: CestaService,
@@ -62,8 +63,8 @@ export class CestaComponent implements OnInit, AfterViewInit {
           
         } else {
           this.productosEnCesta = [];
-          
         }
+        this.isLoading = false;
       },
       error: (error) => {
         console.error('Error al obtener la cesta desde la API:', error);
