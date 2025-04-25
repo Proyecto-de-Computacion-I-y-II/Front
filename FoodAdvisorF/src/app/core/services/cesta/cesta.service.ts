@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Cesta } from './../../../security/models/cesta';
-import { Observable } from 'rxjs';
 
 interface PorcentajeCesta {
   id: number;
@@ -46,6 +46,7 @@ export class CestaService {
     const url = `${this.apiUrl}/usuario/cestas/${idCesta}`;
     return this.http.get<Cesta[]>(url);
   }
+
 
   // Agregar un producto al carrito (envía una petición POST a la API)
   agregarProductoAlCarrito(producto: any, cantidad: number) {

@@ -20,8 +20,7 @@
           <h3>Cesta {{ cesta.localCounter }}</h3>
           <span class="cesta-fecha">Fecha de compra: {{ cesta.fecha_compra | date }}</span>
         </div>
-        <span *ngIf="cesta.localCounter === 1;else emptySpan" class="cesta-actual">Cesta actual</span>
-        <ng-template #emptySpan>
+        <span *ngIf="cesta.localCounter === cestasCompra.length;else emptySpan" class="cesta-actual">Cesta actual</span>        <ng-template #emptySpan>
           <span class="cesta-actual-placeholder"></span>
         </ng-template>
         <div class="cesta-info">

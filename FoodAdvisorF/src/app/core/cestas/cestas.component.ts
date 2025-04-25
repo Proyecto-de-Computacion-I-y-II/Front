@@ -35,10 +35,10 @@ export class CestasComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.cestasCompra = (response.body?.cestas?.sort(
-            (a, b) => new Date(a.fecha_compra).getTime() - new Date(b.fecha_compra).getTime()
-          ) || []).map((cesta, index) => ({
+            (a, b) => new Date(b.fecha_compra).getTime() - new Date(a.fecha_compra).getTime()
+          ) || []).map((cesta, index, array) => ({
             ...cesta,
-            localCounter: index + 1
+            localCounter: array.length - index
           }));
         
         this.loading = false;
