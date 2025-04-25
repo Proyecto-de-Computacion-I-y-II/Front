@@ -127,7 +127,6 @@
   font-weight: bold;
   margin: 0;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -184,4 +183,13 @@
 
 .wrapper > div {
   flex: 1 1 200px;
+}
+
+.subtitle-container {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.subtitle-container:hover {
+  transform: scale(1.05); /* Hace que el contenedor crezca ligeramente */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Agrega sombra */
 }
