@@ -37,41 +37,42 @@ export class ProfileComponent {
     if (token) {
       const apiUrl = `http://127.0.0.1:8000/api/usuario`;
   
-      this.http.get(apiUrl).subscribe({
+      this.http.get(apiUrl, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).subscribe({
         next: (data: any) => {
           this.userData = data;
-  
-          this.avatar = `https://ui-avatars.com/api/?name=${this.userData.usuario.nombre}+${this.userData.usuario.apellidos}&background=random&color=fff`;
+          this.avatar = `https://ui-avatars.com/api/?name=${data.usuario.nombre}+${data.usuario.apellidos}&background=random&color=fff`;
         },
         error: (err) => console.error('Error al obtener el usuario:', err)
       });
     }
   }
   
-
+  
   loadBuyProducts() {
     const token = localStorage.getItem('token');
   
     if (token) {
-      const apiUrl = `http://127.0.0.1:8000/api/usuario/get-top-sellers`;
+      const headers = { Authorization: `Bearer ${token}` };
+      const apiUrl = `http://127.0.0.1:8000/api/usuario/productos-totales`;
   
-      this.http.get(apiUrl).subscribe({
-        next: (data) => {
-          const rankingData: any[] = data as any[];
-          const usuario = rankingData.find((u: any) => u.ID_user == token);
-  
-          if (usuario) { 
-            this.prodUser = usuario.total_comprado;
-            console.log(`Has comprado ${this.prodUser} productos.`);
-          } else {
-            this.prodUser = 0;
-            console.warn('Usuario no encontrado en el ranking.');
-          }
+      this.http.get(apiUrl, { headers }).subscribe({
+        next: (data: any) => {
+          this.prodUser = data.total_comprado;
         },
-        error: (err) => console.error('Error al obtener los datos:', err)
+        error: (err) => {
+          console.error('Error al obtener el total de productos comprados:', err);
+          this.prodUser = 0;
+        }
       });
     }
   }
+  
+
+  
   
   
 }
