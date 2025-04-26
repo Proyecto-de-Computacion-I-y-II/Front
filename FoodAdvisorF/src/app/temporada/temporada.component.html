@@ -31,9 +31,8 @@
   </div>
 </div>
 
-
-  <h4> Entrando o saliendo de temporada </h4>
   <div *ngIf="!isLoading" class="product-grid">
+    <h4> Entrando o saliendo de temporada </h4>
   <div class="product-card" *ngFor="let producto of productosSaliendo" (click)="verProductos(producto)" >
     <img [src]="producto.imagen || 'logo_fondo.png'" [alt]="producto.nombre" class="producto-imagen">
 
