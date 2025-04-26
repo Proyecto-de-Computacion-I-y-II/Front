@@ -19,7 +19,7 @@
     <div class="grid-item info-container">
         <h3>Datos del Producto</h3>
         <div class="product-details">
-            <p *ngIf="!product"><strong>Precio promedio: </strong>---</p>
+            <p *ngIf="!product"><strong>Precio promedio: </strong> ---</p>
             <p *ngIf="product"><strong>Precio promedio: </strong> {{ product.precio + '€' || '---' }}</p>
             <p *ngIf="!product"><strong>Supermercado: </strong>---</p>
             <p *ngIf="product" class="superName"><strong>Supermercado: </strong>{{ getSupermercadoNombre(product?.idSuper) }}</p>
@@ -28,16 +28,31 @@
         <hr>
 
         <h3>Valor Nutricional</h3>
-        <div class="nutrition-table">
-            <p><strong>Grasas:</strong> {{ product?.grasas  || '---' }} </p>
+        <div *ngIf="!hasNutritionInfo(); else noInfo" class="nutrition-table">
+            <p><strong>Grasas:</strong> {{ product?.grasas || '---' }} </p>
             <p><strong>Azúcares:</strong> {{ product?.azucares || '---' }} </p>
-            <p><strong>Ácidos-grasos:</strong> {{ product?.acidos_grasos  || '---' }} </p>
-            <p><strong>Sal:</strong> {{ product?.sal  || '---'}}</p>
-            <p><strong>Hidratos-carbono:</strong> {{ product?.hidratos_carbono  || '---'}} </p>
-            <p><strong>Proteínas:</strong> {{ product?.proteinas  || '---'}} </p>
-        </div>
+            <p><strong>Ácidos-grasos:</strong> {{ product?.acidos_grasos || '---' }} </p>
+            <p><strong>Sal:</strong> {{ product?.sal || '---' }}</p>
+            <p><strong>Hidratos-carbono:</strong> {{ product?.hidratos_carbono || '---' }} </p>
+            <p><strong>Proteínas:</strong> {{ product?.proteinas || '---' }} </p>
+          </div>
+          
+          <ng-template #noInfo>
+            <p>Sin información nutricional</p>
+          </ng-template>
 
         <hr>
+        <h3>Ingredientes</h3>
+          <p *ngIf="isLoading">---</p>
+
+          <div *ngIf="!hasIngredientes(); else noIng">
+            <p>{{ product?.ingredientes }}</p>
+            <hr>
+          </div>
+
+          <ng-template #noIng>
+            <p>Sin ingredientes</p>
+          </ng-template>
 
         <h3>Guardar en cesta</h3>
         <div class="purchase-container">

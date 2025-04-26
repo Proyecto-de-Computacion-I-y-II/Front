@@ -59,6 +59,7 @@ export class ProductoDetalleComponent implements OnInit {
           console.error('Error al cargar productos', error);
           this.isLoadingSimillars = false;
           this.forceLogoPng = true;
+          this.router.navigate(['/not-found'])
       });
     }
 
@@ -79,6 +80,20 @@ export class ProductoDetalleComponent implements OnInit {
       console.log('Page was manually reloaded (F5 or button)');
       // ✅ Do NOT reload again here, just detect it (no window.location.reload())
     }
+  }
+
+  hasNutritionInfo(): boolean {
+    const p = this.product;
+    return p?.grasas == 0 &&
+           p?.azucares == 0 &&
+           p?.acidos_grasos == 0 &&
+           p?.sal == 0 &&
+           p?.hidratos_carbono == 0 &&
+           p?.proteinas == 0;
+  }
+
+  hasIngredientes(): boolean {
+    return this.product?.ingredientes.trim() == '';
   }
 
   sumarCantidad() {
