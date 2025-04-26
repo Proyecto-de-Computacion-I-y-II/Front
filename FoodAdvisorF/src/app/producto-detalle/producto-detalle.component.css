@@ -156,9 +156,10 @@ transform: scale(1.02);
 }
 
 .product-details {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
-    gap: 10px;
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    justify-content: space-between
 }
 
 .nutrition-table {
@@ -314,9 +315,7 @@ min-height: 70px;
 
 }
 
-.product-details {
-text-align: left;
-}
+
 
 .product-name {
 font-size: 12px;

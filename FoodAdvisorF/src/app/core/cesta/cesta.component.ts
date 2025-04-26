@@ -6,6 +6,7 @@ import { Chart, ChartData, ChartOptions } from 'chart.js/auto';
 import { environment } from '../../../environments/environment';
 import { CestaService } from '../services/cesta/cesta.service';
 import { ProductService } from '../services/product/product.service';
+
 @Component({
   selector: 'app-cesta',
   standalone: false,
@@ -14,10 +15,8 @@ import { ProductService } from '../services/product/product.service';
 })
 export class CestaComponent implements OnInit, AfterViewInit {
   productosEnCesta: any[] = [];
-
   idCestaUsuario: number = 0;
-
-  porcentajesCesta: any[] = []; // Para almacenar los datos de los porcentajes
+  porcentajesCesta: any[] = [];
   @ViewChild('porcentajeChart') porcentajeChartCanvas!: ElementRef;
   chart: Chart | null = null;
   productosRecomendados: any[] = [];
@@ -25,6 +24,7 @@ export class CestaComponent implements OnInit, AfterViewInit {
   private apiUrl = environment.apiUrl;
   private cestaId: number = 0;
   isLoading: boolean = true;
+  esUltimaCesta: boolean = false;
 
   constructor(
     private cestaService: CestaService,
@@ -35,39 +35,38 @@ export class CestaComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.cestaId = +params['id'];
+      }
+    });
 
-        // Obtener el ID de la cesta de los parámetros de la ruta
-        this.route.params.subscribe(params => {
-          if (params['id']) {
-            this.cestaId = +params['id'];
-          }
-        });
-      
-
-      
-    this.idCestaUsuario = Number(this.route.snapshot.paramMap.get('id')); // Obtiene el ID de la ruta
+    this.idCestaUsuario = Number(this.route.snapshot.paramMap.get('id'));
     this.obtenerProductosDeLaCestaDesdeApi();
     this.obtenerPorcentajesDeLaCesta();
     this.obtenerProductosRecomendados();
   }
 
   ngAfterViewInit(): void {
-    this.renderizarGrafico();
+    // No llamamos a renderizarGrafico aquí inicialmente.
   }
 
   obtenerProductosDeLaCestaDesdeApi() {
+    this.isLoading = true; // Iniciamos la carga, mostramos el spinner
     this.cestaService.obtenerProductosDeCesta(this.idCestaUsuario).subscribe({
       next: (data: any) => {
-        if (data && data.cesta && data.cesta.length > 0 && data.cesta[0].productos) {
-          this.productosEnCesta = data.cesta[0].productos;
-          
+        if (data && data.cesta && data.cesta.productos && Array.isArray(data.cesta.productos)) {
+          this.productosEnCesta = data.cesta.productos;
+          this.esUltimaCesta = data.ultima || false;
         } else {
           this.productosEnCesta = [];
+          this.esUltimaCesta = false;
         }
-        this.isLoading = false;
+        this.isLoading = false; // Finaliza la carga, ocultamos el spinner
       },
       error: (error) => {
-        console.error('Error al obtener la cesta desde la API:', error);
+        this.isLoading = false; // En caso de error, también ocultamos el spinner
+        this.esUltimaCesta = false;
       }
     });
   }
@@ -76,7 +75,7 @@ export class CestaComponent implements OnInit, AfterViewInit {
     this.cestaService.obtenerPorcentajesCesta(this.idCestaUsuario).subscribe({
       next: (data) => {
         this.porcentajesCesta = data;
-        this.renderizarGrafico(); // Renderiza el gráfico cuando se obtienen los datos
+        this.renderizarGrafico(); // Llamamos a renderizarGrafico cuando los datos están listos
       },
       error: (error) => {
         console.error('Error al obtener los porcentajes de la cesta:', error);
@@ -85,20 +84,20 @@ export class CestaComponent implements OnInit, AfterViewInit {
   }
 
   renderizarGrafico() {
-    if (!this.porcentajeChartCanvas || !this.porcentajesCesta || this.porcentajesCesta.length === 0) {
+    if (!this.porcentajeChartCanvas || !this.porcentajesCesta || this.porcentajesCesta.length === 0 /* || this.esUltimaCesta */) {
       return;
     }
 
     const labels = this.porcentajesCesta.map(p => p.nivel_piramide.Nombre);
     const dataValues = this.porcentajesCesta.map(p => parseFloat(p.porcentaje));
     const backgroundColors = [
-      'rgba(255, 99, 132, 0.7)',    // Rojo
-      'rgba(54, 162, 235, 0.7)',   // Azul
-      'rgba(255, 206, 86, 0.7)',   // Amarillo
-      'rgba(75, 192, 192, 0.7)',   // Verde azulado
-      'rgba(153, 102, 255, 0.7)',  // Morado
-      'rgba(255, 159, 64, 0.7)',   // Naranja
-      'rgba(144, 238, 144, 0.7)'   // Verde claro
+      'rgba(255, 99, 132, 0.7)',
+      'rgba(54, 162, 235, 0.7)',
+      'rgba(255, 206, 86, 0.7)',
+      'rgba(75, 192, 192, 0.7)',
+      'rgba(153, 102, 255, 0.7)',
+      'rgba(255, 159, 64, 0.7)',
+      'rgba(144, 238, 144, 0.7)'
     ];
 
     const borderColors = [
@@ -136,7 +135,7 @@ export class CestaComponent implements OnInit, AfterViewInit {
     };
 
     if (this.chart) {
-      this.chart.destroy(); // Destruye el gráfico existente si hay uno
+      this.chart.destroy();
     }
 
     this.chart = new Chart(
@@ -156,39 +155,38 @@ export class CestaComponent implements OnInit, AfterViewInit {
   decrementarCantidad(producto: any) {
     if (producto.pivot.cantidad > 1) {
       producto.pivot.cantidad--;
-      this.actualizarCestaEnApi(producto, producto.pivot.cantidad); // Pasamos el producto completo
+      this.actualizarCestaEnApi(producto, producto.pivot.cantidad);
     }
   }
 
   incrementarCantidad(producto: any) {
     producto.pivot.cantidad++;
-    this.actualizarCestaEnApi(producto, producto.pivot.cantidad); // Pasamos el producto completo
+    this.actualizarCestaEnApi(producto, producto.pivot.cantidad);
   }
 
   actualizarCestaEnApi(producto: any, cantidad: number) {
-    this.cestaService.modificarCantidadCarrito(this.idCestaUsuario, producto.ID_prod, cantidad); // Ahora recibe el producto completo
+    this.cestaService.modificarCantidadCarrito(producto.ID_prod, cantidad);
     this.snackBar.open("Cantidad actualizada", "Entendido", { duration: 2000 });
     this.obtenerProductosDeLaCestaDesdeApi();
     this.obtenerPorcentajesDeLaCesta();
   }
 
   obtenerProductosRecomendados() {
+    if (this.esUltimaCesta) {
+      this.productosRecomendados = [];
+      return;
+    }
+
     this.cestaService.obtenerRecomendacionesCesta(this.idCestaUsuario).subscribe({
       next: (data) => {
-        this.productosRecomendados = []; // Reinicia el array
-
-        // Verifica si la propiedad 'recomendaciones' existe en la respuesta
+        this.productosRecomendados = [];
         if (data && data.recomendaciones) {
-          // Itera sobre las claves del objeto 'recomendaciones' (que son los idNivel)
           for (const nivelId in data.recomendaciones) {
             if (data.recomendaciones.hasOwnProperty(nivelId)) {
-              // Concatena el array de productos para cada nivel al array principal
               this.productosRecomendados = this.productosRecomendados.concat(data.recomendaciones[nivelId]);
             }
           }
         }
-
-        console.log('Productos recomendados procesados:', this.productosRecomendados);
       },
       error: (error) => {
         console.error('Error al obtener las recomendaciones de la cesta:', error);
@@ -197,16 +195,14 @@ export class CestaComponent implements OnInit, AfterViewInit {
   }
 
   agregarProductoRecomendado(producto: any) {
-    const cestaId = this.idCestaUsuario; // Asegúrate de tener el ID de la cesta disponible
-
-    // Aquí llamas a tu servicio para agregar el producto recomendado a la cesta
-    this.cestaService.agregarProductoRecomendado(producto, 1) // Pasamos el ID de la cesta, el producto y la cantidad
+    const cestaId = this.idCestaUsuario;
+    this.cestaService.agregarProductoRecomendado(producto, 1)
       .subscribe({
         next: (response) => {
           this.snackBar.open(`${producto.nombre} añadido a la cesta`, 'Entendido', { duration: 2000 });
-          this.obtenerProductosDeLaCestaDesdeApi(); // Recarga la cesta
-          this.obtenerPorcentajesDeLaCesta(); // Recarga los porcentajes
-          this.obtenerProductosRecomendados(); // Recarga las recomendaciones
+          this.obtenerProductosDeLaCestaDesdeApi();
+          this.obtenerPorcentajesDeLaCesta();
+          this.obtenerProductosRecomendados();
         },
         error: (error) => {
           this.snackBar.open(`No se pudo añadir ${producto.nombre} a la cesta`, 'Entendido', { duration: 3000 });
@@ -291,5 +287,12 @@ export class CestaComponent implements OnInit, AfterViewInit {
       this.showDeleteConfirmation = false;
     }
   }
-}
 
+  calcularPrecioTotal(): number {
+    let total = 0;
+    for (const producto of this.productosEnCesta) {
+      total += producto.precio * producto.pivot.cantidad;
+    }
+    return total;
+  }
+}
