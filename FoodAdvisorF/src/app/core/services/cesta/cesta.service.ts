@@ -58,8 +58,8 @@ export class CestaService {
   
 
   // Modificar la cantidad de un producto en el carrito (envía una petición PUT a la API)
-  modificarCantidadCarrito(cestaId: number, productoId: number, cantidad: number) {
-    this.http.put(`${this.apiUrl}/cestas-compra/${cestaId}/update-producto`, {
+  modificarCantidadCarrito(productoId: number, cantidad: number) {
+    this.http.put(`${this.apiUrl}/cestas-compra/update-producto`, {
       ID_prod: productoId,
       cantidad: cantidad
     }).subscribe({

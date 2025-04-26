@@ -166,7 +166,7 @@ export class CestaComponent implements OnInit, AfterViewInit {
   }
 
   actualizarCestaEnApi(producto: any, cantidad: number) {
-    this.cestaService.modificarCantidadCarrito(this.idCestaUsuario, producto.ID_prod, cantidad); // Ahora recibe el producto completo
+    this.cestaService.modificarCantidadCarrito(producto.ID_prod, cantidad); // Ahora recibe el producto completo
     this.snackBar.open("Cantidad actualizada", "Entendido", { duration: 2000 });
     this.obtenerProductosDeLaCestaDesdeApi();
     this.obtenerPorcentajesDeLaCesta();
@@ -290,6 +290,13 @@ export class CestaComponent implements OnInit, AfterViewInit {
     if (target.classList.contains('confirmation-overlay')) {
       this.showDeleteConfirmation = false;
     }
+  }
+  calcularPrecioTotal(): number {
+    let total = 0;
+    for (const producto of this.productosEnCesta) {
+      total += producto.precio * producto.pivot.cantidad;
+    }
+    return total;
   }
 }
 

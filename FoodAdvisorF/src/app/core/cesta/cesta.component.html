@@ -37,6 +37,9 @@
 </div>
 
 <div *ngIf="productosEnCesta.length > 0; else cestaVacia">
+  <div class="total-cesta">
+    <b> Total:</b> {{ calcularPrecioTotal() | number : '1.2-2' }} €
+  </div>
   <div *ngFor="let producto of productosEnCesta">
     <div class="grid-container">
       <div class="grid-item">
@@ -55,12 +58,16 @@
         <span class="cantidad-texto">{{producto.pivot?.cantidad}}</span>
         <button class="quantity-button plus-button" (click)="incrementarCantidad(producto)">+</button>
       </div>
+      <div class="grid-item">Precio/ud: {{ producto.precio}} €</div>
       <div class="grid-item">
-        {{ producto.pivot?.cantidad * producto.precio | number : "1.2-2" }} €
+        Total: {{ producto.pivot?.cantidad * producto.precio | number : "1.2-2" }} €
       </div>
     </div>
   </div>
 
+  <div class="total-cesta">
+    <b> Total:</b> {{ calcularPrecioTotal() | number : '1.2-2' }} €
+  </div>
   <hr />
 
   <div class="chart-container">

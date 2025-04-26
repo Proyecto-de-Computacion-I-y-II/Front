@@ -457,3 +457,19 @@ hr {
   font-size: 18px;
   margin-right: 6px;
 }
+
+/* Estilos para el total de la cesta */
+.total-cesta {
+  display: flex;
+  justify-content: flex-end; /* Lo alinea a la derecha */
+  align-items: center; /* Centra verticalmente */
+  padding-top: 15px; /* Añade un poco de espacio superior */
+  margin: 0 30px 20px; /* Misma margen horizontal que el título y un poco de margen inferior */
+  font-size: 1.3em; /* Un tamaño de fuente ligeramente mayor */
+  font-weight: bold; /* Para que destaque */
+  color: #333; /* Mismo color que el título principal */
+}
+
+.total-cesta b {
+  margin-right: 10px; /* Espacio entre la etiqueta "Total:" y el precio */
+}
