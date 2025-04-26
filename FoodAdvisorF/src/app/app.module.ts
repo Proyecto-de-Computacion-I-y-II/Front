@@ -28,6 +28,7 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@a
 import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { SubproductosTemporadaComponent } from './subproductos-temporada/subproductos-temporada.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     CestasComponent,
     TemporadaComponent,
     InicioComponent,
-    ProductoDetalleComponent
+    ProductoDetalleComponent,
+    SubproductosTemporadaComponent
   ],
   imports: [
     MatExpansionModule,

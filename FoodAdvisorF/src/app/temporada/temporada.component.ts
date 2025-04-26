@@ -74,23 +74,25 @@ export class TemporadaComponent implements OnInit {
     });
   }  
 
-  cargarProductosDelMesActual(): void {
-    this.isLoading = true;
-    this.productoTempService.getProductosDelMes().subscribe(response => { 
-      this.products = response.productos;
-      this.products.forEach(producto => {
-        this.productoTempService.getDetallesPorIdTemp(producto.idTemp).subscribe(detalles => {
-          (producto as any).detalles = detalles;
-        });
-      });
-      this.isLoading = false;
-    }, error => {
-      console.error("Error al cargar productos del mes actual:", error);
-      this.isLoading = false;
-    });
-  }
+  // cargarProductosDelMesActual(): void {
+  //   this.isLoading = true;
+  //   this.productoTempService.getProductosDelMes().subscribe(response => { 
+  //     this.products = response.productos;
+  //     this.products.forEach(producto => {
+  //       this.productoTempService.getDetallesPorIdTemp(producto.idTemp).subscribe(detalles => {
+  //         (producto as any).detalles = detalles;
+  //       });
+  //     });
+  //     this.isLoading = false;
+  //   }, error => {
+  //     console.error("Error al cargar productos del mes actual:", error);
+  //     this.isLoading = false;
+  //   });
+  // }
 
-  goToProductDetail(id: number) {
-    this.router.navigate(['/producto-detalle', id]);
+  verProductos(product: ProductoTemporada) {
+    console.log("Producto clicado:", product);
+    this.router.navigate(['/subproducto-temporada', product.idTemp]);
   }
+  
 }

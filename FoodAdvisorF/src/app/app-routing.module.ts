@@ -9,6 +9,7 @@ import { ProductoDetalleComponent } from './producto-detalle/producto-detalle.co
 import { LoginComponent } from './security/login/login.component';
 import { RegisterComponent } from './security/register/register.component';
 import { TemporadaComponent } from './temporada/temporada.component';
+import { SubproductosTemporadaComponent } from './subproductos-temporada/subproductos-temporada.component';
 
 const routes: Routes = [
   { path: 'inicio', component: InicioComponent},
@@ -22,6 +23,7 @@ const routes: Routes = [
     runGuardsAndResolvers: 'always'
   },
   { path: 'temporada', component: TemporadaComponent},
+  { path: 'subproducto-temporada/:idTemp', component: SubproductosTemporadaComponent},
   { path: '', redirectTo: 'inicio', pathMatch: 'full'},
   { path: '**', redirectTo: 'inicio'}
 ];
