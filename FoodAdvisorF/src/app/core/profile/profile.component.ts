@@ -17,7 +17,7 @@ export class ProfileComponent {
   constructor(private router: Router, private communicationService: CommunicationService, private http: HttpClient) {}
 
   historialCompras() {
-    console.log('Historial de compras clickeado');
+    this.router.navigate(['/cestas'])
   }
 
   cerrarSesion() {
