@@ -90,10 +90,11 @@ hr {
   height: auto !important;
 }
 
-.purchase-container {
+.purchase-button-container {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px; /* Añadimos un margen inferior de 40px */
   padding: 10px;
 }
 
@@ -472,4 +473,73 @@ hr {
 
 .total-cesta b {
   margin-right: 10px; /* Espacio entre la etiqueta "Total:" y el precio */
+}
+
+.loading-spinner-overlay {
+  position: fixed; /* Para que cubra toda la ventana */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8); /* Fondo semitransparente para que se vea el spinner */
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+  z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+}
+
+.spinner-large {
+  width: 100px; /* Aumentamos el tamaño */
+  height: 100px; /* Aumentamos el tamaño */
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  border: 6px solid; /* Aumentamos el grosor del borde */
+  border-color: #f58634 #f58634 transparent transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.spinner-large::after,
+.spinner-large::before {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border: 6px solid; /* Aumentamos el grosor del borde */
+  border-color: transparent transparent #5cb85c #5cb85c;
+  width: 80px; /* Aumentamos el tamaño */
+  height: 80px; /* Aumentamos el tamaño */
+  border-radius: 50%;
+  animation: rotationBack 0.5s linear infinite;
+  transform-origin: center center;
+}
+
+.spinner-large::before {
+  width: 64px; /* Aumentamos el tamaño */
+  height: 64px; /* Aumentamos el tamaño */
+  border-color: #f58634 #f58634 transparent transparent;
+  animation: rotation 1.5s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes rotationBack {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
 }
