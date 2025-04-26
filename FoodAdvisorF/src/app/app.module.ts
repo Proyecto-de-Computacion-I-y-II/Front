@@ -27,6 +27,8 @@ import { TemporadaComponent } from './temporada/temporada.component';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { SubproductosTemporadaComponent } from './subproductos-temporada/subproductos-temporada.component';
 
 
 @NgModule({
@@ -40,9 +42,11 @@ import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
     CestasComponent,
     TemporadaComponent,
     InicioComponent,
-    ProductoDetalleComponent
+    ProductoDetalleComponent,
+    SubproductosTemporadaComponent
   ],
   imports: [
+    MatExpansionModule,
     BrowserModule,
     AppRoutingModule,
     MatToolbarModule,

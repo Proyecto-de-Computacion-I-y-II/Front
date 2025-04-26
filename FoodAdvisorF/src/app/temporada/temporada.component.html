@@ -1,27 +1,50 @@
 <div class="menu-title-2">
-  <span class="title-text">Productos de Temporada: {{ currentMonth }}</span>
+  <span class="title-text">Productos de Temporada</span>
+  <nav class="desktop-nav">
+    <a mat-button
+      *ngFor="let mes of meses"
+      (click)="cargarProductosPorMes(mes.numero)"
+      [class.active]="mesSeleccionado === mes.numero">
+      {{ mes.nombre }}
+    </a>
+  </nav>  
 </div>
+
 
 <div *ngIf="isLoading" class="loading-container">
   <div class="spinner"></div>
 </div>
 
-<div *ngIf="!isLoading">
-  <div *ngFor="let producto of products">
-    <div class="subtitle-container">
-      {{ producto.producto.charAt(0).toUpperCase() + producto.producto.slice(1) }} <!--La primera letra se muestra en mayuscula-->
-    </div>
 
-    <!-- Subproductos como tarjetas -->
-    <div class="product-grid" *ngIf="producto.detalles?.length">
-      <div class="product-card" *ngFor="let detalle of producto.detalles" (click)="goToProductDetail(detalle.id)">
-        <img [src]="detalle.imagen || 'logo_fondo.png'" [alt]="detalle.nombre">
-        <div class="product-info">
-          <div class="product-details">
-            <h3 class="product-name">{{ detalle.nombre }}</h3>
-          </div>
-        </div>
+<div *ngIf="!isLoading" class="product-grid">
+  <div class="product-card" *ngFor="let product of products" (click)="verProductos(product)">
+    <img [src]="product.imagen || 'logo_fondo.png'" [alt]="product.nombre" class="producto-imagen">
+
+    <div class="product-info">
+      <div class="product-details">
+        <h3 class="product-name">
+          {{ product.producto.charAt(0).toUpperCase() + product.producto.slice(1) }}
+        </h3>
       </div>
+
     </div>
   </div>
+</div>
+
+
+  <h4> Entrando o saliendo de temporada </h4>
+  <div *ngIf="!isLoading" class="product-grid">
+  <div class="product-card" *ngFor="let producto of productosSaliendo" (click)="verProductos(producto)" >
+    <img [src]="producto.imagen || 'logo_fondo.png'" [alt]="producto.nombre" class="producto-imagen">
+
+    <div class="product-info">
+      <div class="product-details">
+        <h3 class="product-name">
+          {{ producto.producto.charAt(0).toUpperCase() + producto.producto.slice(1) }}
+        </h3>
+      </div>
+
+    </div>
+  </div>
+
 </div>

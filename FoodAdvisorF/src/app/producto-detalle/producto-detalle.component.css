@@ -33,6 +33,22 @@ hr {
 
 .btn-add {
     padding: 20px;
+    display: flex;
+    font-size: 15px;
+    border-radius: 10px;
+    height: 70px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+    background-color: #37C666;
+    justify-content: center;
+}
+
+.btn-loading{
+    padding: 20px;
     font-size: 15px;
     border-radius: 10px;
     border: none;
@@ -41,7 +57,7 @@ hr {
     cursor: pointer;
     transition: 0.3s;
     width: 100%;
-    background-color: #37C666;
+    background-color: #74b58ada;
 }
 
 .btn-add:hover {
@@ -86,24 +102,35 @@ transform: scale(1.02);
     }
 }
 
-
 .minus-button {
     color: #f58634;
     font-weight: bolder;
+    border-color: #f58634;
+    border-width: 0.20em;
 }
 
 .plus-button {
     color: #5cb85c;
     font-weight: bolder;
+    border-color: #5cb85c;
+    border-width: 0.20em;
 }
 
 /* GRID PRINCIPAL */
 .grid-container {
-    display: grid;
-    grid-template-columns: 1fr 2fr; /* Imagen 1 parte, info 2 partes */
+    display: flex;
     gap: 40px;
     align-items: center;
     margin: 2em;
+    flex-wrap: wrap;
+}
+
+.grid-container > :first-child {
+    flex: 1;
+}
+
+.grid-container > :last-child {
+    flex: 2;
 }
 
 /* COLUMNA DE LA IMAGEN */
@@ -129,9 +156,10 @@ transform: scale(1.02);
 }
 
 .product-details {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
-    gap: 10px;
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    justify-content: space-between
 }
 
 .nutrition-table {
@@ -163,8 +191,8 @@ transform: scale(1.02);
     width: 3em;
 
     /* Border adjustments */
-    border-left: 2px solid #f58634;
-    border-right: 2px solid #5cb85c;
+    border-left: 0.2em solid #f58634;
+    border-right: 0.2em solid #5cb85c;
 }
 
 
@@ -229,17 +257,109 @@ transform: scale(1.02);
 }
 }
 
-
-
-
-
-
-
-@keyframes rotation {
-0% {
-    transform: rotate(0deg);
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    min-width: 300px;
 }
-100% {
-    transform: rotate(360deg);
+
+.hr-margin{
+    margin: 0px 2.5%;
 }
-} 
+
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px;
+    padding: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-bottom: 40px;
+    align-items: center;
+}
+
+.product-card {
+background: #ffffff !important;
+border-radius: 5px;
+text-align: center;
+cursor: pointer;
+border: 2px solid #2c9f51;
+transition: transform 0.2s ease-in-out;
+}
+
+.product-card:hover {
+transform: scale(1.05);
+box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+
+.product-card img {
+width: 100%;
+object-fit: contain;
+border-bottom: 2px dotted #2c9f51;
+padding: 15px;
+
+}
+
+.product-info {
+background: #f1f1f1 !important;
+height: 100%;
+width: 100%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 8px;
+gap: 10px;
+min-height: 70px;
+
+}
+
+
+
+.product-name {
+font-size: 12px;
+font-weight: bold;
+margin: 0;
+
+display: -webkit-box;
+-webkit-line-clamp: 3;            /* Limita a 3 líneas */
+-webkit-box-orient: vertical;
+overflow: hidden;
+text-overflow: ellipsis;
+word-break: break-word;           /* Rompe solo si necesario */
+overflow-wrap: break-word;        /* Ayuda a evitar letras sueltas */
+}
+
+.product-price {
+font-size: 1.1rem;
+font-weight: bold;
+color: #2c9f51;
+}
+
+
+.no-similares{
+    margin-left: 5em;
+}
+
+
+
+
+/* HTML: <div class="loader"></div> */
+.loader {
+    height: 30px;
+    aspect-ratio: 2.5;
+    --_g: no-repeat radial-gradient(farthest-side,#f58434da 90%,#0000);
+    background:var(--_g), var(--_g), var(--_g), var(--_g);
+    background-size: 20% 50%;
+    animation: l43 1s infinite linear; 
+  }
+  @keyframes l43 {
+    0%     {background-position: calc(0*100%/3) 50% ,calc(1*100%/3) 50% ,calc(2*100%/3) 50% ,calc(3*100%/3) 50% }
+    16.67% {background-position: calc(0*100%/3) 0   ,calc(1*100%/3) 50% ,calc(2*100%/3) 50% ,calc(3*100%/3) 50% }
+    33.33% {background-position: calc(0*100%/3) 100%,calc(1*100%/3) 0   ,calc(2*100%/3) 50% ,calc(3*100%/3) 50% }
+    50%    {background-position: calc(0*100%/3) 50% ,calc(1*100%/3) 100%,calc(2*100%/3) 0   ,calc(3*100%/3) 50% }
+    66.67% {background-position: calc(0*100%/3) 50% ,calc(1*100%/3) 50% ,calc(2*100%/3) 100%,calc(3*100%/3) 0   }
+    83.33% {background-position: calc(0*100%/3) 50% ,calc(1*100%/3) 50% ,calc(2*100%/3) 50% ,calc(3*100%/3) 100%}
+    100%   {background-position: calc(0*100%/3) 50% ,calc(1*100%/3) 50% ,calc(2*100%/3) 50% ,calc(3*100%/3) 50% }
+  }

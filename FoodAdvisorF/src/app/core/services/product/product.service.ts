@@ -18,6 +18,11 @@ export class ProductService {
     return this.http.get<any>(this.apiUrl+'?page='+currentPage);
   }
 
+  // Método para obtener los productos similares a otro
+  getProductsSimillarTo(id: string): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}/productos-sim/${id}`);
+  }
+
   // Método para obtener un producto por ID
   getProductById(id: string): Observable<Product> {
     return this.http.get<Product>(`${this.apiUrl}/${id}`);
