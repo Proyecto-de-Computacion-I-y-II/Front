@@ -61,6 +61,24 @@ export class ProductoDetalleComponent implements OnInit {
           this.forceLogoPng = true;
       });
     }
+
+    this.handleBrowserNavigation();
+  }
+
+  handleBrowserNavigation() {
+    // Listen for BACK/FORWARD navigation
+    window.addEventListener('popstate', () => {
+      console.log('Back or Forward detected, reloading...');
+      window.location.reload();
+    });
+  
+    // Only react to reload if user really reloaded, not during normal load
+    const [navigation] = performance.getEntriesByType('navigation') as PerformanceNavigationTiming[];
+  
+    if (navigation?.type === 'reload') {
+      console.log('Page was manually reloaded (F5 or button)');
+      // ✅ Do NOT reload again here, just detect it (no window.location.reload())
+    }
   }
 
   sumarCantidad() {
