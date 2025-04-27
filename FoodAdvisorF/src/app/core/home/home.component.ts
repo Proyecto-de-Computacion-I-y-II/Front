@@ -115,7 +115,7 @@ export class HomeComponent implements OnInit {
 
   products: Product[] = [];
   currentPage = 1;
-  totalPages = 487;
+  totalPages = 1;
 
   maxVisiblePages = 5;
   visiblePages: number[] = [];
@@ -142,7 +142,8 @@ export class HomeComponent implements OnInit {
 
 
     this.productService.getAllProducts(this.currentPage).subscribe((response:any)=> {
-      this.products = response.data;
+      this.products = response.productos;
+      this.totalPages = response.total_paginas;
       console.log('Productos cargados:', this.products);
       this.isLoading = false;
     },
