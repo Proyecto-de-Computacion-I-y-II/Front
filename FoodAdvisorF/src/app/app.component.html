@@ -2,7 +2,7 @@
   <mat-toolbar class="custom-toolbar" *ngIf="showHeader">
     <div class="toolbar-left">
       <img src="logo.png" alt="Food Advisor Logo" class="logo" [routerLink]="['/home']"/>
-      
+
       <!-- Barra de búsqueda oculta en móvil -->
       <div class="search-container"   [ngClass]="(hideSearch || isMobileView) ? 'search-container-hidden' : 'search-container-show'">
         <input
@@ -30,12 +30,12 @@
       <button *ngIf="isMobileView && !hideSearch" class="icon-button search-icon-button" (click)="toggleSearchBar()">
         <mat-icon>search</mat-icon>
       </button>
-      
+
       <!-- Menú hamburguesa a la izquierda del carrito -->
       <button *ngIf="isMobileView" class="icon-button menu-button" (click)="toggleMobileMenu()">
         <mat-icon>{{ showMobileMenu ? 'close' : 'menu' }}</mat-icon>
       </button>
-      
+
       <ng-container *ngIf="showProfile; else elseTemplate">
         <button mat-icon-button class="cart-button" [routerLink]="['/cestas']">
           <mat-icon>shopping_cart</mat-icon>

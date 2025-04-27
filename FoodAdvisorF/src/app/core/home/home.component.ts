@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import { Categoria } from '../../security/models/categoria';
 import { Product } from '../../security/models/product';
 import { Subcategoria } from '../../security/models/subcategoria';
@@ -15,6 +15,7 @@ import { SupermarketService } from '../services/supermarket/supermarket.service'
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit {
+
 
 
   precio = { start: 0.00, end: 0.00, max: 100.00 };
@@ -36,8 +37,8 @@ export class HomeComponent implements OnInit {
   subcategorias: Subcategoria[] = [];
   subcategorias2: Subcategoria2[] = [];
 
-
-
+  nombre: string = '';
+  titulo: string = 'Productos';
 
   selectedSupermercados: number[] = [];
   supermercadoIds: number[] = Object.keys(ProductService.supermercadoDiccionario).map(id => +id);
@@ -112,11 +113,16 @@ export class HomeComponent implements OnInit {
     if (this.fibra.start !== 0.00) filtros.fibra_min = this.fibra.start;
     if (this.fibra.end !== this.fibra.max) filtros.fibra_max = this.fibra.end;
 
+
+    if (this.nombre !='') {
+      filtros.nombre = this.nombre;
+    }
+
     console.log('Filtros enviados:', filtros);
 
     this.isLoading = true;
 
-    this.productService.filtrarProductos(filtros, 1).subscribe(
+    this.productService.filtrarProductos(filtros, this.currentPage).subscribe(
       (response: any) => {
         this.products = response.productos;
         this.totalPages = response.total_paginas || 1;
@@ -187,12 +193,17 @@ export class HomeComponent implements OnInit {
   constructor(private communicationService: CommunicationService,
               private productService: ProductService,
               private supermarketService: SupermarketService,
-              private router: Router) {
+              private router: Router,
+              private route: ActivatedRoute) {
   }
 
 
 
   ngOnInit() {
+
+
+
+
     let loggedIn: boolean = false;
     if (localStorage.getItem('token')) {
       loggedIn = true;
@@ -203,19 +214,8 @@ export class HomeComponent implements OnInit {
     this.isLoading = true;
 
 
-    this.productService.getAllProducts(this.currentPage).subscribe((response:any)=> {
-      this.products = response.productos;
-      this.totalPages = response.total_paginas;
-      console.log('Productos cargados:', this.products);
-      this.isLoading = false;
-        this.updateVisiblePages();
-    },
-      (error) => {
-        console.error('Error al cargar productos', error);
-        this.isLoading = false;
-    });
 
-
+    var charged_filter = false;
 
     this.productService.getValoresMaximos().subscribe((valores: any) => {
       this.precio.end = this.getTruncatedEnd(valores.precio);
@@ -242,10 +242,26 @@ export class HomeComponent implements OnInit {
       this.fibra.end = this.getTruncatedEnd(valores.fibra);
       this.fibra.max = this.fibra.end;
 
+      charged_filter = true;
 
+      if (charged_filter) {
+        this.route.queryParams.subscribe(params => {
+          this.nombre = params['search'] || '';
+          console.log('Búsqueda en HomeComponent:', this.nombre);
+          if(this.nombre != '') {
+            this.titulo = "Resultados para ''" + this.nombre + "''";
+          }
+          this.aplicarFiltros();
+        });
+
+      }
     });
 
+
+
     this.selectedSupermercados = this.supermercadoIds;
+
+
   }
 
   getTruncatedEnd(value: any) {
@@ -288,19 +304,8 @@ export class HomeComponent implements OnInit {
   updatePagedProducts() {
     this.isLoading = true;
 
-    this.productService.getAllProducts(this.currentPage).subscribe((response:any)=> {
+   this.aplicarFiltros();
 
-      this.products = response.productos;
-      console.log('Productos cargados:', this.products);
-      this.isLoading = false;
-
-    },
-      (error) => {
-        console.error('Error al cargar productos', error);
-        this.isLoading = false;
-      }
-
-    );
     this.updateVisiblePages();
   }
 
@@ -342,11 +347,17 @@ export class HomeComponent implements OnInit {
     }
 
     this.visiblePages = Array.from({ length: end - start + 1 }, (_, i) => start + i);
+
+
   }
 
 
 
   limpiarFiltros() {
+    if(this.nombre != '') {
+      this.nombre =  '';
+      this.titulo = "Productos";
+    }
     this.precio.start = 0.00;
     this.precio.end = Math.trunc(this.precio.max);
 
@@ -381,6 +392,8 @@ export class HomeComponent implements OnInit {
     this.subcategorias = [];
     this.subcategorias2 = [];
 
+    this.nombre = '';
+
     this.isLoading = true;
     this.productService.getAllProducts(1).subscribe((response: any) => {
       this.products = response.productos;
@@ -393,6 +406,7 @@ export class HomeComponent implements OnInit {
       this.isLoading = false;
     });
   }
+
 
 
 

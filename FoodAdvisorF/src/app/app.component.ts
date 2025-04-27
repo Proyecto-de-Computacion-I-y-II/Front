@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
   ) {
     this.showHeader = true;
     this.showProfile = true;
-    
+
 
     this.titleChangedSubscription = this.communicationService.headerShowed.subscribe((value) => {
       this.showHeader = value.showHeader;
@@ -45,13 +45,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.checkScreenSize();
-  
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const currentUrl = this.router.url;
         this.hideSearch = currentUrl === '/login' || currentUrl === '/register' || currentUrl === '/inicio';
         this.hideLoginButton = currentUrl === '/login' || currentUrl === '/register';
-  
+
         // Cerrar menús al navegar
         this.closeMobileMenu();
         this.closeSearchBar();
@@ -138,11 +138,13 @@ export class AppComponent implements OnInit {
 
   handleSearch() {
     if (this.searchQuery.trim()) {
-      this.router.navigate(['/home'], { 
-        queryParams: { search: this.searchQuery } 
+      this.router.navigate(['/home'], {
+        queryParams: { search: this.searchQuery }
       });
       this.closeSearchBar();
     }
+
+    this.searchQuery = '';
   }
 
   onSearchKeyUp(event: KeyboardEvent) {
@@ -160,10 +162,12 @@ export class AppComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
-  
+
   ngOnDestroy() {
     if (this.titleChangedSubscription) {
       this.titleChangedSubscription.unsubscribe();
     }
   }
+
+
 }
