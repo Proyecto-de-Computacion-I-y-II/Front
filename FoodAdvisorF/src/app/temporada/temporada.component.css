@@ -193,3 +193,7 @@
   transform: scale(1.05); /* Hace que el contenedor crezca ligeramente */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Agrega sombra */
 }
+
+h4{
+  margin-left: 5vh;
+}
