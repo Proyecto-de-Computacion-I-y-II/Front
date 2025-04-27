@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    width: 100%;
+}
+
+.image-wrapper {
+position: relative;
+width: 100%;
+height: 90vh;
+overflow: hidden;
+}
+
+.image-wrapper img.background {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+object-fit: cover;
+opacity: 0.8;
+z-index: 0;
+}
+
+.fallo-desc {
+    font-size: 1.25em;
+}
+
+.btn-volver{
+    display: flex;
+    font-size: 15px;
+    border-radius: 10px;
+    border-width: 2.5px;
+    border-color: #f58634;
+    height: 4em;
+    min-width: 14em;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 20%;
+    background-color: #37C666;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-container {
+position: relative;
+z-index: 1;
+display: flex;
+flex-direction: column-reverse;
+align-items: center;
+justify-content: space-evenly;
+width: 100%;
+height: 100%;
+padding: 2rem;
+box-sizing: border-box;
+}
+
+.logo-container {
+background-color: white;
+padding: 0.1rem;
+border-radius: 1rem;
+display: flex;
+justify-content: center;
+align-items: center;
+width: 15rem;
+opacity: 0.8;
+}
+
+.logo-container img {
+width: 100%;
+height: auto;
+border-radius: 1rem;
+opacity: inherit;
+}
+
+.text-container {
+display: flex;
+align-self: center;
+flex-direction: column;
+text-align: center;
+max-width: 50rem;
+background-color: rgba(255, 255, 255, 0.8);
+padding: 1rem;
+border-radius: 0.5rem;
+}
+
+.title {
+font-size: 2.5rem;
+font-weight: bold;
+}
+
+.title span.food {
+color: #f58634;
+}
+
+.title span.advisor {
+color: #69b550;
+}
+
+.description {
+margin-top: 1rem;
+font-size: 1rem;
+line-height: 1.5;
+}

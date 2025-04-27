@@ -29,6 +29,7 @@ import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SubproductosTemporadaComponent } from './subproductos-temporada/subproductos-temporada.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { SubproductosTemporadaComponent } from './subproductos-temporada/subprod
     TemporadaComponent,
     InicioComponent,
     ProductoDetalleComponent,
-    SubproductosTemporadaComponent
+    SubproductosTemporadaComponent,
+    NotFoundComponent
   ],
   imports: [
     MatExpansionModule,

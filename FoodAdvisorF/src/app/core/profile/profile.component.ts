@@ -11,13 +11,13 @@ import { CommunicationService } from '../../shared/services/communicacion/commun
 })
 export class ProfileComponent {
   userData: any = null;
-  prodUser: number = 0;
+  prodUser: number = -1;
   avatar:string = 'https://ui-avatars.com/api/?name=${{this.userData?.nombre}}+${{this.userData?.apellidos}}&background=random&color=fff'
 
   constructor(private router: Router, private communicationService: CommunicationService, private http: HttpClient) {}
 
   historialCompras() {
-    console.log('Historial de compras clickeado');
+    this.router.navigate(['/cestas'])
   }
 
   cerrarSesion() {
