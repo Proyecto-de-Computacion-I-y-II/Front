@@ -355,6 +355,7 @@ export class HomeComponent implements OnInit {
 
   limpiarFiltros() {
     if(this.nombre != '') {
+      this.router.navigate(['/home']);
       this.nombre =  '';
       this.titulo = "Productos";
     }
