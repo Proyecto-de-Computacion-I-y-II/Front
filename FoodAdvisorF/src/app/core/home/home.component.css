@@ -360,11 +360,6 @@ span {
 }
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
 
 
 
@@ -453,4 +448,19 @@ span {
 
 #btn-aplicar {
   margin-bottom: 50px;
+}
+
+.loading-container{
+  display: flex;
+  flex-direction: column;
+}
+
+.loading-text {
+  margin: 12px 0;
+  color: #555;
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  line-height: 1.5;
+  font-style: italic;
 }

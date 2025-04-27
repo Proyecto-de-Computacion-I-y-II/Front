@@ -47,6 +47,11 @@ export class CestaService {
     return this.http.get<Cesta[]>(url);
   }
 
+  crearCesta(fecha_de_compra: string): Observable<any> {
+    return this.http.post<Cesta>(`${this.apiUrl}/cestas-compra`, {
+      fecha_compra: fecha_de_compra
+    });
+  }
 
   // Agregar un producto al carrito (envía una petición POST a la API)
   agregarProductoAlCarrito(producto: any, cantidad: number): Observable<any> {

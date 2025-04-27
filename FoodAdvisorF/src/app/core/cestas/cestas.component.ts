@@ -1,8 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { CestaService } from '../services/cesta/cesta.service';
 import { Cesta } from './../../security/models/cesta';
+
+
 
 type CestaConContador = Cesta & { localCounter: number };
 @Component({
@@ -17,12 +21,15 @@ export class CestasComponent implements OnInit {
   cestasCompra: CestaConContador[] = [];
   loading: boolean = false;
   error: string | null = null;
+  showCreateConfirmation: boolean = false;
   
   private apiUrl = environment.apiUrl;
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private cestaService: CestaService,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +56,36 @@ export class CestasComponent implements OnInit {
           this.error = 'No se pudieron cargar las cestas del usuario';
         }
       });
+  }
+
+  createCesta(){
+    this.showCreateConfirmation = true;
+  }
+
+  closeConfirmationOnOutsideClick(){
+    this.showCreateConfirmation = false;
+  }
+
+  cancelcreateCart(){
+    this.showCreateConfirmation = false;
+  }
+
+  acceptcreateCart(){
+    const now = new Date();
+    this.loading = true;
+    const formattedDate = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}.000`;  
+    this.cestaService.crearCesta(formattedDate).subscribe({
+      next: (data: any) => {
+        window.location.reload(); // reload the page if success
+      },
+      error: (error) => {
+        this.snackBar.open('Algo ha fallado, inténtelo más tarde', 'Cerrar', {
+          duration: 3000, // 3 seconds
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        });
+      }
+    })
   }
   
   formatDate(dateString: string): string {

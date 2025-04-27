@@ -1,11 +1,45 @@
 <div class="titulo">
   <span class="title-text">Mis cestas de la compra</span>
   <hr>
-  
+  <button class="btn-crear-cesta" (click)="createCesta()"><strong>+</strong></button>
+
+  <div
+  *ngIf="showCreateConfirmation"
+  class="confirmation-overlay"
+  (click)="closeConfirmationOnOutsideClick()"
+>
+  <div class="create-confirmation-dialog">
+    <div class="create-dialog-header">
+      <div class="create-dialog-icon">
+        <mat-icon>create</mat-icon>
+      </div>
+      <h2 class="create-dialog-title">¿Crear una nueva cesta?</h2>
+    </div>
+
+    <div class="create-dialog-content">
+      <p>
+        Al crear una nueva cesta, no podrás modificar la que tienes actualmente.
+      </p>
+      <p>¿Crear una nueva cesta?</p>
+    </div>
+
+    <div class="create-dialog-actions">
+      <button class="cancel-button" (click)="cancelcreateCart()">
+        Cancelar
+      </button>
+      <button class="confirm-create-button" (click)="acceptcreateCart()">
+        Crear
+      </button>
+    </div>
+  </div>
+</div>
+
+
   <div class="purchase-container">
     <!-- Indicador de carga -->
     <div *ngIf="loading" class="loading-spinner">
       <p>Cargando cestas...</p>
+      <div class="spinner"></div>
     </div>
     
     <!-- Mensaje de error -->
