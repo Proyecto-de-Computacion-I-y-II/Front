@@ -61,16 +61,76 @@ export class HomeComponent implements OnInit {
   }
 
   aplicarFiltros() {
-    console.log('Filtros aplicados:', {
-      supermercado: this.selectedSupermercado,
-      categoria: this.selectedCategoria,
-      subcategoria: this.selectedSubcategoria,
-      subcategoria2: this.selectedSubcategoria2
-    });
-
-    this.sidebarOpen = false;
-    // Aquí podrías hacer la lógica para llamar a getProductsFiltrados(...)
+    console.log('Aplicando filtros...');
+  
+    const filtros: any = {};
+  
+    // Filtro por supermercado
+    if (this.selectedSupermercado !== '') {
+      filtros.idSuper = [this.selectedSupermercado];
+    }
+  
+    // Filtro por categoría
+    if (this.selectedCategoria !== '') {
+      filtros.idNivel = [this.selectedCategoria];
+    }
+  
+    // Filtro por subcategorías
+    if (this.selectedSubcategoria !== '') {
+      filtros.idNivel = filtros.idNivel || [];
+      filtros.idNivel.push(this.selectedSubcategoria);
+    }
+  
+    if (this.selectedSubcategoria2 !== '') {
+      filtros.idNivel = filtros.idNivel || [];
+      filtros.idNivel.push(this.selectedSubcategoria2);
+    }
+  
+    // Filtro de precio
+    if (this.precio.start !== 0.00 || this.precio.end !== this.precio.max) {
+      filtros.precio_min = this.precio.start;
+      filtros.precio_max = this.precio.end;
+    }
+  
+    // Filtros nutricionales
+    if (this.grasa.start !== 0.00) filtros.grasas_min = this.grasa.start;
+    if (this.grasa.end !== this.grasa.max) filtros.grasas_max = this.grasa.end;
+  
+    if (this.azucar.start !== 0.00) filtros.azucares_min = this.azucar.start;
+    if (this.azucar.end !== this.azucar.max) filtros.azucares_max = this.azucar.end;
+  
+    if (this.sal.start !== 0.00) filtros.sal_min = this.sal.start;
+    if (this.sal.end !== this.sal.max) filtros.sal_max = this.sal.end;
+  
+    if (this.proteinas.start !== 0.00) filtros.proteinas_min = this.proteinas.start;
+    if (this.proteinas.end !== this.proteinas.max) filtros.proteinas_max = this.proteinas.end;
+  
+    if (this.hidrato.start !== 0.00) filtros.hidratos_carbono_min = this.hidrato.start;
+    if (this.hidrato.end !== this.hidrato.max) filtros.hidratos_carbono_max = this.hidrato.end;
+  
+    if (this.acidos.start !== 0.00) filtros.acidos_grasos_min = this.acidos.start;
+    if (this.acidos.end !== this.acidos.max) filtros.acidos_grasos_max = this.acidos.end;
+  
+    console.log('Filtros enviados:', filtros);
+  
+    this.isLoading = true;
+  
+    this.productService.filtrarProductos(filtros, 1).subscribe(
+      (response: any) => {
+        this.products = response.data; 
+        this.totalPages = response.last_page || 1;
+        this.currentPage = response.current_page || 1;
+        this.updateVisiblePages();
+        this.isLoading = false;
+        this.sidebarOpen = false;
+      },
+      (error) => {
+        console.error('Error al aplicar filtros', error);
+        this.isLoading = false;
+      }
+    );
   }
+  
 
 
 
