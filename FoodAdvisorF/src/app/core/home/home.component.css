@@ -158,6 +158,13 @@ span {
   text-align: center; /* Centra el número dentro del span */
 }
 
+.input-fixed-width {
+  width: 30px;
+  text-align: center;
+  margin: 0 5px;
+}
+
+
 .btn-aplicar {
   background-color: #88CB74 !important;
   color: white !important;
@@ -194,15 +201,16 @@ span {
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 30px;
-  padding: 20px;
-  margin-left: 30px;
-  margin-right: 30px;
-  margin-bottom: 40px;
+  padding: 20px 60px 40px 60px;
   align-items: center;
-
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
+
 
 .product-card {
   background: #ffffff !important;
@@ -350,7 +358,7 @@ span {
 100% {
   transform: rotate(360deg);
 }
-} 
+}
 @keyframes rotationBack {
 0% {
   transform: rotate(0deg);
@@ -367,7 +375,7 @@ span {
 .toggle-sidebar {
   margin: 16px;
   padding: 8px 12px;
-  background-color: #3f51b5;
+  background-color: #f58634;
   color: white;
   border: none;
   cursor: pointer;
@@ -446,7 +454,7 @@ span {
 }
 
 
-#btn-aplicar {
+#btn-limpiar {
   margin-bottom: 50px;
 }
 
@@ -463,4 +471,27 @@ span {
   font-size: 15px;
   line-height: 1.5;
   font-style: italic;
+}
+
+
+.no-productos {
+  display: flex;
+  justify-content: center;
+  min-width: 80%;
+  margin: 0 80px 0 80px;
+}
+
+.no-productos h1 {
+  font-size: 32px;
+  text-align: center;
+}
+
+
+.limpiar {
+  padding: 8px 12px;
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
 }

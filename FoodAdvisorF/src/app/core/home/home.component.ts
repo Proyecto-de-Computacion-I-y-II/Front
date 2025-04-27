@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   proteinas = { start: 0.00, end: 0.00, max: 100.00 };
   hidrato = { start: 0.00, end: 0.00, max: 100.00 };
   acidos = { start: 0.00, end: 0.00, max: 100.00 };
-
+  fibra = { start: 0.00, end: 0.00, max: 100.00 };
 
 
 
@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
 
 
 
-  selectedSupermercado: number | '' = '';  // valor del filtro seleccionado
+  selectedSupermercados: number[] = [];
   supermercadoIds: number[] = Object.keys(ProductService.supermercadoDiccionario).map(id => +id);
 
 
@@ -62,67 +62,69 @@ export class HomeComponent implements OnInit {
 
   aplicarFiltros() {
     console.log('Aplicando filtros...');
-  
+
     const filtros: any = {};
-  
+
     // Filtro por supermercado
-    if (this.selectedSupermercado !== '') {
-      filtros.idSuper = [this.selectedSupermercado];
+    if (this.selectedSupermercados.length > 0) {
+      filtros.idSuper = this.selectedSupermercados;
     }
-  
+
     // Filtro por categoría
     if (this.selectedCategoria !== '') {
-      filtros.idNivel = [this.selectedCategoria];
+      filtros.id_cat = this.selectedCategoria;
     }
-  
+
     // Filtro por subcategorías
     if (this.selectedSubcategoria !== '') {
-      filtros.idNivel = filtros.idNivel || [];
-      filtros.idNivel.push(this.selectedSubcategoria);
+      filtros.id_sub_cat =  this.selectedSubcategoria;
     }
-  
+
     if (this.selectedSubcategoria2 !== '') {
-      filtros.idNivel = filtros.idNivel || [];
-      filtros.idNivel.push(this.selectedSubcategoria2);
+      filtros.id_sub_cat_2 = this.selectedSubcategoria2;
     }
-  
+
     // Filtro de precio
     if (this.precio.start !== 0.00 || this.precio.end !== this.precio.max) {
       filtros.precio_min = this.precio.start;
       filtros.precio_max = this.precio.end;
     }
-  
+
     // Filtros nutricionales
     if (this.grasa.start !== 0.00) filtros.grasas_min = this.grasa.start;
     if (this.grasa.end !== this.grasa.max) filtros.grasas_max = this.grasa.end;
-  
+
     if (this.azucar.start !== 0.00) filtros.azucares_min = this.azucar.start;
     if (this.azucar.end !== this.azucar.max) filtros.azucares_max = this.azucar.end;
-  
+
     if (this.sal.start !== 0.00) filtros.sal_min = this.sal.start;
     if (this.sal.end !== this.sal.max) filtros.sal_max = this.sal.end;
-  
+
     if (this.proteinas.start !== 0.00) filtros.proteinas_min = this.proteinas.start;
     if (this.proteinas.end !== this.proteinas.max) filtros.proteinas_max = this.proteinas.end;
-  
+
     if (this.hidrato.start !== 0.00) filtros.hidratos_carbono_min = this.hidrato.start;
     if (this.hidrato.end !== this.hidrato.max) filtros.hidratos_carbono_max = this.hidrato.end;
-  
+
     if (this.acidos.start !== 0.00) filtros.acidos_grasos_min = this.acidos.start;
     if (this.acidos.end !== this.acidos.max) filtros.acidos_grasos_max = this.acidos.end;
-  
+
+    if (this.fibra.start !== 0.00) filtros.fibra_min = this.fibra.start;
+    if (this.fibra.end !== this.fibra.max) filtros.fibra_max = this.fibra.end;
+
     console.log('Filtros enviados:', filtros);
-  
+
     this.isLoading = true;
-  
+
     this.productService.filtrarProductos(filtros, 1).subscribe(
       (response: any) => {
-        this.products = response.data; 
-        this.totalPages = response.last_page || 1;
-        this.currentPage = response.current_page || 1;
+        this.products = response.productos;
+        this.totalPages = response.total_paginas || 1;
+        this.currentPage = response.pagina_actual || 1;
         this.updateVisiblePages();
         this.isLoading = false;
         this.sidebarOpen = false;
+        console.log(this.products);
       },
       (error) => {
         console.error('Error al aplicar filtros', error);
@@ -130,7 +132,7 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-  
+
 
 
 
@@ -143,8 +145,8 @@ export class HomeComponent implements OnInit {
     this.subcategorias = [];
     this.subcategorias2 = [];
 
-    if (this.selectedSupermercado) {
-      this.supermarketService.getCategoriasArbol(+this.selectedSupermercado).subscribe(
+    if (this.selectedSupermercados.length == 1) {
+      this.supermarketService.getCategoriasArbol(+this.selectedSupermercados[0]).subscribe(
         (data) => {
           this.categorias = data;
         },
@@ -206,38 +208,56 @@ export class HomeComponent implements OnInit {
       this.totalPages = response.total_paginas;
       console.log('Productos cargados:', this.products);
       this.isLoading = false;
+        this.updateVisiblePages();
     },
       (error) => {
         console.error('Error al cargar productos', error);
         this.isLoading = false;
     });
 
-    this.updateVisiblePages();
+
 
     this.productService.getValoresMaximos().subscribe((valores: any) => {
-      this.precio.end = Math.round(parseInt(valores.precio) / 100) * 100;
-      this.precio.max =  this.precio.end
+      this.precio.end = this.getTruncatedEnd(valores.precio);
+      this.precio.max = this.precio.end;
+
+      this.grasa.end = this.getTruncatedEnd(valores.grasas);
+      this.grasa.max = this.grasa.end;
+
+      this.azucar.end = this.getTruncatedEnd(valores.azucares);
+      this.azucar.max = this.azucar.end;
+
+      this.sal.end = this.getTruncatedEnd(valores.sal);
+      this.sal.max = this.sal.end;
+
+      this.proteinas.end = this.getTruncatedEnd(valores.proteinas);
+      this.proteinas.max = this.proteinas.end;
+
+      this.hidrato.end = this.getTruncatedEnd(valores.hidratos_carbono);
+      this.hidrato.max = this.hidrato.end;
+
+      this.acidos.end = this.getTruncatedEnd(valores.acidos_grasos);
+      this.acidos.max = this.acidos.end;
+
+      this.fibra.end = this.getTruncatedEnd(valores.fibra);
+      this.fibra.max = this.fibra.end;
 
 
-      this.grasa.end = Math.round(parseInt(valores.grasas) / 100) * 100;
-      this.grasa.max = this.grasa.end
-
-      this.azucar.end = Math.round(parseInt(valores.azucares) / 100) * 100;
-      this.azucar.max = this.azucar.end
-
-      this.sal.end = Math.round(parseInt(valores.sal) / 100) * 100;
-      this.sal.max = this.sal.end
-
-      this.proteinas.end = Math.round(parseInt(valores.proteinas) / 100) * 100;
-      this.proteinas.max = this.proteinas.end
-
-      this.hidrato.end = Math.round(parseInt(valores.hidratos_carbono) / 100) * 100;
-      this.hidrato.max =   this.hidrato.end
-
-      this.acidos.end = Math.round(parseInt(valores.acidos_grasos) / 100) * 100;
-      this.acidos.max = this.acidos.end
     });
 
+    this.selectedSupermercados = this.supermercadoIds;
+  }
+
+  getTruncatedEnd(value: any) {
+    const num = parseFloat(value) || 0;
+
+    if (num >= 1000) {
+      return Math.ceil(num / 100) * 100; // Truncar a la centena
+    } else if (num >= 100) {
+      return Math.ceil(num / 10) * 10; // Truncar a la decena
+    } else {
+      return Math.ceil(num / 10) * 10; // Truncar a la unidad
+    }
   }
 
   toggleFiltros(): void {
@@ -270,7 +290,7 @@ export class HomeComponent implements OnInit {
 
     this.productService.getAllProducts(this.currentPage).subscribe((response:any)=> {
 
-      this.products = response.data;
+      this.products = response.productos;
       console.log('Productos cargados:', this.products);
       this.isLoading = false;
 
@@ -323,4 +343,57 @@ export class HomeComponent implements OnInit {
 
     this.visiblePages = Array.from({ length: end - start + 1 }, (_, i) => start + i);
   }
+
+
+
+  limpiarFiltros() {
+    this.precio.start = 0.00;
+    this.precio.end = Math.trunc(this.precio.max);
+
+    this.grasa.start = 0.00;
+    this.grasa.end = Math.trunc(this.grasa.max);
+
+    this.azucar.start = 0.00;
+    this.azucar.end = Math.trunc(this.azucar.max);
+
+    this.sal.start = 0.00;
+    this.sal.end = Math.trunc(this.sal.max);
+
+    this.proteinas.start = 0.00;
+    this.proteinas.end = Math.trunc(this.proteinas.max);
+
+    this.hidrato.start = 0.00;
+    this.hidrato.end = Math.trunc(this.hidrato.max);
+
+    this.acidos.start = 0.00;
+    this.acidos.end = Math.trunc(this.acidos.max);
+
+    this.fibra.start = 0.00;
+    this.fibra.end = Math.trunc(this.fibra.max);
+
+    // Reseteo de supermercados y categorías
+    this.selectedSupermercados = this.supermercadoIds; // todos
+    this.selectedCategoria = '';
+    this.selectedSubcategoria = '';
+    this.selectedSubcategoria2 = '';
+
+    this.categorias = [];
+    this.subcategorias = [];
+    this.subcategorias2 = [];
+
+    this.isLoading = true;
+    this.productService.getAllProducts(1).subscribe((response: any) => {
+      this.products = response.productos;
+      this.totalPages = response.total_paginas;
+      this.currentPage = response.pagina_actual || 1;
+      this.updateVisiblePages();
+      this.isLoading = false;
+    }, (error) => {
+      console.error('Error al cargar productos', error);
+      this.isLoading = false;
+    });
+  }
+
+
+
 }

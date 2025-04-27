@@ -17,11 +17,11 @@ export class ProductService {
   getAllProducts(currentPage: number): Observable<any> {
     return this.http.get<any>(this.apiUrl+'?page='+currentPage);
   }
-  
+
   filtrarProductos(filtros: any, page: number = 1) {
     return this.http.post(`http://127.0.0.1:8000/api/productos/filtrar?page=${page}`, filtros);
   }
-  
+
 
   // Método para obtener los productos similares a otro
   getProductsSimillarTo(id: string): Observable<Product[]> {
@@ -52,6 +52,7 @@ export class ProductService {
   getValoresMaximos(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/valores-max`);
   }
+
 
 
 }

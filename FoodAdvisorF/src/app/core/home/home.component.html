@@ -7,16 +7,17 @@
     <div class="form-group">
       <label for="supermercado">Supermercado:</label>
       <mat-select
-        [(value)]="selectedSupermercado"
+        [(value)]="selectedSupermercados"
         (selectionChange)="onSupermercadoChange()"
+        [multiple]="true"
         id="supermercado"
         name="supermercado">
-        <mat-option [value]="''">Todos</mat-option>
         <mat-option *ngFor="let id of supermercadoIds" [value]="id">
           {{ getSupermercadoNombre(id) }}
         </mat-option>
       </mat-select>
     </div>
+
 
     <div class="form-group">
       <label for="categoria">Categoría:</label>
@@ -25,7 +26,7 @@
         (selectionChange)="onCategoriaChange()"
         id="categoria"
         name="categoria"
-        [disabled]="!selectedSupermercado">
+        [disabled]="selectedSupermercados.length != 1">
         <mat-option [value]="''">Todas</mat-option>
         <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
           {{ categoria.nombre }}
@@ -66,12 +67,11 @@
     <div class="sidebar-buttons">
     <button (click)="toggleFiltros()">Filtros avanzados</button>
 
-
     <!-- Filtros avanzados -->
     <div *ngIf="mostrarFiltros" class="filtros-avanzados">
 
       <div class="form-group2">
-        <label for="precio">Precio:</label>
+        <label for="precio">Precio (€):</label>
         <div class="slider-num">
           <span class="fixed-width">{{ precio.start }}</span>
           <mat-slider
@@ -92,7 +92,7 @@
 
 
       <div class="form-group2">
-        <label for="grasas">Grasas:</label>
+        <label for="grasas">Grasas (por 100g):</label>
         <div class="slider-num">
           <span class="fixed-width">{{ grasa.start }}</span>
           <mat-slider id="grasas" color="primary"
@@ -107,7 +107,7 @@
       </div>
 
       <div class="form-group2">
-        <label for="azucares">Azucares:</label>
+        <label for="azucares">Azucares (por 100g):</label>
         <div class="slider-num">
           <span class="fixed-width">{{ azucar.start }}</span>
           <mat-slider id="azucares" color="primary"
@@ -122,7 +122,7 @@
       </div>
 
       <div class="form-group2">
-        <label for="sal">Sal:</label>
+        <label for="sal">Sal (por 100g):</label>
         <div class="slider-num">
           <span class="fixed-width">{{ sal.start }}</span>
           <mat-slider id="sal" color="primary"
@@ -137,7 +137,7 @@
       </div>
 
       <div class="form-group2">
-        <label for="proteinas">Proteinas:</label>
+        <label for="proteinas">Proteinas (por 100g):</label>
         <div class="slider-num">
           <span class="fixed-width">{{ proteinas.start }}</span>
           <mat-slider id="proteinas" color="primary"
@@ -152,7 +152,7 @@
       </div>
 
       <div class="form-group2">
-        <label for="hidrato">Carbohidratos:</label>
+        <label for="hidrato">Carbohidratos (por 100g):</label>
         <div class="slider-num">
           <span class="fixed-width">{{ hidrato.start }}</span>
           <mat-slider id="hidrato" color="primary"
@@ -167,7 +167,7 @@
       </div>
 
       <div class="form-group2">
-        <label for="acidos">Ácidos Grasos:</label>
+        <label for="acidos">Ácidos Grasos (por 100g):</label>
         <div class="slider-num">
           <span class="fixed-width">{{ acidos.start }}</span>
           <mat-slider id="acidos" color="primary"
@@ -181,13 +181,30 @@
         </div>
       </div>
 
+      <div class="form-group2">
+        <label for="fibras">Fibras (por 100g):</label>
+        <div class="slider-num">
+          <span class="fixed-width">{{ fibra.start }}</span>
+          <mat-slider id="fibras" color="primary"
+                      [min]="0.0"
+                      [max]="fibra.max"
+                      [step]="0.1" thumbLabel class="custom-slider">
+            <input class="input-slider" matSliderStartThumb [(ngModel)]="fibra.start">
+            <input class="input-slider" matSliderEndThumb [(ngModel)]="fibra.end"/>
+          </mat-slider>
+          <span class="fixed-width">{{ fibra.end }}</span>
+        </div>
+      </div>
+
     </div>
 
 
 
 
     <!-- Puedes agregar filtros aquí -->
-    <button id="btn-aplicar" (click)="aplicarFiltros()">Aplicar</button>
+      <button id="btn-aplicar" (click)="aplicarFiltros()">Aplicar</button>
+      <button id="btn-limpiar" (click)="limpiarFiltros()">Limpiar</button>
+
     </div>
   </div>
 </div>
@@ -202,6 +219,8 @@
   <span class="title-text">Productos</span>
   <!-- Botón para abrir el sidebar -->
   <button class="toggle-sidebar" (click)="toggleSidebar()">Filtros</button>
+  <button class="limpiar" (click)="limpiarFiltros()">Limpiar</button>
+
 </div>
 
 
@@ -226,7 +245,7 @@
   </div>
 </div>
 
-<div *ngIf="!isLoading" class="pagination">
+<div *ngIf="!isLoading && products.length != 0" class="pagination">
   <button (click)="initPage()" [disabled]="currentPage === 1">««</button>
 
   <button (click)="prevPage()" [disabled]="currentPage === 1">«</button>
@@ -243,3 +262,6 @@
 
 </div>
 
+<div *ngIf="!isLoading && products.length == 0" class="no-productos">
+  <h1>No hay resultados para tu búsqueda. Prueba con otros filtros.</h1>
+</div>
