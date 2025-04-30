@@ -20,7 +20,6 @@ export class AuthInterceptor implements HttpInterceptor {
       });
       return next.handle(authReq);
     }
-
     // If no token, just pass the original request
     return next.handle(req);
   }
