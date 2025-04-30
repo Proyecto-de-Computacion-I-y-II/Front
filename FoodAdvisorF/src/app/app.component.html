@@ -15,6 +15,10 @@
         <button class="search-button" (click)="handleSearch()">
           <mat-icon>search</mat-icon>
         </button>
+        <!--Icono de busqueda por voz-->
+        <button class="voice-button" (click)="startVoiceSearch()">
+          <mat-icon [class.mic-active]="isListening">mic</mat-icon>
+        </button>
       </div>
     </div>
 
