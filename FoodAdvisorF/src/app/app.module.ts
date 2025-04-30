@@ -25,11 +25,12 @@ import { RegisterComponent } from './security/register/register.component';
 import { TemporadaComponent } from './temporada/temporada.component';
 
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
-import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { SubproductosTemporadaComponent } from './subproductos-temporada/subproductos-temporada.component';
+import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { AdminComponent } from './security/admin/admin.component';
+import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
+import { SubproductosTemporadaComponent } from './subproductos-temporada/subproductos-temporada.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
     InicioComponent,
     ProductoDetalleComponent,
     SubproductosTemporadaComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AdminComponent
   ],
   imports: [
     MatExpansionModule,
