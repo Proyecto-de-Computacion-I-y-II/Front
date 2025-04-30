@@ -31,6 +31,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { AdminComponent } from './security/admin/admin.component';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { SubproductosTemporadaComponent } from './subproductos-temporada/subproductos-temporada.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import { SubproductosTemporadaComponent } from './subproductos-temporada/subprod
     MatButtonToggleGroup,
     MatDrawer,
     MatDrawerContainer,
+    MatCheckboxModule,
 
   ],
   providers: [
