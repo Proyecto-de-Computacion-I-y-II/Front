@@ -122,6 +122,8 @@ export class HomeComponent implements OnInit {
 
     this.isLoading = true;
 
+    this.initPage();
+
     this.productService.filtrarProductos(filtros, this.currentPage).subscribe(
       (response: any) => {
         this.products = response.productos;
