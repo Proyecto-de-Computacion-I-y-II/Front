@@ -6,12 +6,13 @@ import { Chart, ChartData, ChartOptions } from 'chart.js/auto';
 import { environment } from '../../../environments/environment';
 import { CestaService } from '../services/cesta/cesta.service';
 import { ProductService } from '../services/product/product.service';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-cesta',
   standalone: false,
   templateUrl: './cesta.component.html',
-  styleUrl: './cesta.component.css'
+  styleUrl: './cesta.component.css',
 })
 export class CestaComponent implements OnInit, AfterViewInit {
   productosEnCesta: any[] = [];
@@ -294,5 +295,15 @@ export class CestaComponent implements OnInit, AfterViewInit {
       total += producto.precio * producto.pivot.cantidad;
     }
     return total;
+  }
+
+  estaCompletado(producto: any): boolean {
+    return !!producto.completado;
+  }
+
+  toggleCompletado(producto: any, event: MatCheckboxChange): void {
+    producto.completado = event.checked;
+    // Aquí puedes llamar a un servicio para actualizar el estado en el backend si es necesario
+    console.log(`Producto ${producto.ID_prod} completado: ${producto.completado}`);
   }
 }

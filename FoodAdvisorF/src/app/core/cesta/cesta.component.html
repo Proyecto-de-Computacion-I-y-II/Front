@@ -46,6 +46,12 @@
     </div>
     <div *ngFor="let producto of productosEnCesta">
       <div class="grid-container">
+        <div class="grid-checkbox" *ngIf="esUltimaCesta">
+          <mat-checkbox
+            [checked]="estaCompletado(producto)"
+            (change)="toggleCompletado(producto, $event)"
+          ></mat-checkbox>
+        </div>
         <div class="grid-item">
           <div class="image-container">
             <img
@@ -60,17 +66,29 @@
           {{ getSupermercadoNombre(producto?.idSuper) }}
         </div>
         <div class="grid-item cantidad-control">
-          <button class="quantity-button minus-button" *ngIf="esUltimaCesta" (click)="decrementarCantidad(producto)">
+          <button
+            class="quantity-button minus-button"
+            *ngIf="esUltimaCesta"
+            (click)="decrementarCantidad(producto)"
+          >
             -
           </button>
           <span class="cantidad-texto">{{ producto?.pivot?.cantidad }}</span>
-          <button class="quantity-button plus-button" *ngIf="esUltimaCesta" (click)="incrementarCantidad(producto)">
+          <button
+            class="quantity-button plus-button"
+            *ngIf="esUltimaCesta"
+            (click)="incrementarCantidad(producto)"
+          >
             +
           </button>
         </div>
         <div class="grid-item">Precio/ud: {{ producto?.precio }} €</div>
         <div class="grid-item">
-          Total: {{ producto?.pivot?.cantidad * producto?.precio | number : "1.2-2" }} €
+          Total:
+          {{
+            producto?.pivot?.cantidad * producto?.precio | number : "1.2-2"
+          }}
+          €
         </div>
       </div>
     </div>
@@ -126,7 +144,6 @@
       </ng-template>
     </div>
 
-<!--
     <div class="purchase-button-container" *ngIf="esUltimaCesta">
       <div class="compra">
         <button class="btn btn-success" [routerLink]="['/login']">
@@ -134,9 +151,7 @@
         </button>
       </div>
     </div>
-  -->
   </div>
-
 
   <ng-template #cestaVacia>
     <div class="container">

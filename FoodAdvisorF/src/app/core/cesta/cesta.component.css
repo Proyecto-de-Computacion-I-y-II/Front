@@ -71,6 +71,16 @@ h1 {
   text-align: left;
 }
 
+.grid-checkbox {
+  display: flex; /* Para centrar el checkbox si es necesario */
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  padding: 5px; /* Añade un poco de espacio alrededor */
+  width: min-content; /* O un ancho fijo como 30px */
+  max-width: 3px; /* O un ancho fijo como 30px */
+}
+
+
 hr {
   margin: 20px 0;
   border: 0;
