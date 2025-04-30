@@ -6,6 +6,8 @@ import { environment } from './../environments/environment';
 import { UserService } from './core/services/user/user.service';
 import { CommunicationService } from './shared/services/communicacion/communication.service';
 
+declare var webkitSpeechRecognition: any;
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -23,7 +25,10 @@ export class AppComponent implements OnInit {
   showMobileMenu: boolean = false;
   showSearchBar: boolean = false;
   isMobileView: boolean = false;
+  isListening = false;
   private apiUrl = environment.apiUrl;
+
+  recognition: any; // Reconocimiento de voz
 
   constructor(
     private userService: UserService,
@@ -35,12 +40,13 @@ export class AppComponent implements OnInit {
     this.showHeader = true;
     this.showProfile = true;
 
-
     this.titleChangedSubscription = this.communicationService.headerShowed.subscribe((value) => {
       this.showHeader = value.showHeader;
       this.showProfile = value.logged;
       this.cdr.detectChanges();
     });
+
+    this.setupSpeechRecognition(); // Inicializa reconocimiento de voz
   }
 
   ngOnInit(): void {
@@ -52,39 +58,80 @@ export class AppComponent implements OnInit {
         this.hideSearch = currentUrl === '/login' || currentUrl === '/register' || currentUrl === '/inicio';
         this.hideLoginButton = currentUrl === '/login' || currentUrl === '/register';
 
-        // Cerrar menús al navegar
         this.closeMobileMenu();
         this.closeSearchBar();
         this.checkRouteAccess();
       }
     });
+
     this.checkRouteAccess();
   }
 
+  setupSpeechRecognition() {
+    const SpeechRecognition = (window as any)['SpeechRecognition'] || webkitSpeechRecognition;
+
+    //Configuracion
+    if (SpeechRecognition) {
+      this.recognition = new SpeechRecognition();
+      this.recognition.lang = 'es-ES';
+      this.recognition.interimResults = false;  //Solo devuelve resultados cuando terminas de hablar
+      this.recognition.maxAlternatives = 1; //Solo una interpretacion
+
+      //Recibir resultado
+      this.recognition.onresult = (event: any) => {
+        const transcript = event.results[0][0].transcript;  //Guarda el resultado en la variable transcript
+        // Muestra en consola lo que el micrófono ha detectado
+      console.log('Texto detectado:', transcript);
+
+      // Actualiza la búsqueda con el texto detectado
+      this.searchQuery = transcript;
+        this.handleSearch();
+      };
+
+      this.recognition.onerror = (event: any) => {
+        console.error('Error de reconocimiento de voz:', event.error);
+      };
+    }
+  }
+
+  startVoiceSearch() {
+    if (!this.recognition) {
+      alert('Tu navegador no soporta reconocimiento de voz.');
+      return;
+    }
+  
+    if (!this.isListening) {
+      this.recognition.start();  // Inicia el reconocimiento de voz
+      this.isListening = true;  // Cambia el estado a escuchando
+    } else {
+      // Detiene el reconocimiento de voz de inmediato y limpia el estado
+      this.recognition.abort();  // Usamos abort() para detener inmediatamente el reconocimiento
+      this.isListening = false;  // Cambia el estado a no escuchando
+  
+      // Aseguramos que el estado de "escuchando" se desactive correctamente
+      setTimeout(() => {
+        this.isListening = false;
+      }, 200);  // Ajusta este tiempo según sea necesario
+    }
+  }  
+
   checkRouteAccess() {
     const token = localStorage.getItem('token');
-
     if (!token) {
       const rutasProhibidas = ['/cestas', '/profile'];
       this.showProfile = false;
       const currentUrl = this.router.url;
 
-      // Redirect to login if trying to access restricted routes
       if (rutasProhibidas.some(ruta => currentUrl.startsWith(ruta))) {
         this.router.navigate(['/login']);
       }
     } else {
-      // If token exists, check user info
-      const headers = new HttpHeaders({
-        Authorization: `Bearer ${token}`
-      });
+      const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
       this.http.get(`${this.apiUrl}/usuario`, { headers }).subscribe({
-        next: (res) => {
-          this.showProfile = true;
-        },
+        next: () => this.showProfile = true,
         error: (err) => {
-          if (err.status === 401 && err.error?.message == 'El token ha expirado') {
+          if (err.status === 401 && err.error?.message === 'El token ha expirado') {
             this.showProfile = false;
             localStorage.removeItem('token');
             this.router.navigate(['/login']);
@@ -122,7 +169,6 @@ export class AppComponent implements OnInit {
     this.showSearchBar = !this.showSearchBar;
     if (this.showSearchBar) {
       this.closeMobileMenu();
-      // Enfocar el input de búsqueda cuando se muestra
       setTimeout(() => {
         const searchInput = document.querySelector('.search-input') as HTMLInputElement;
         if (searchInput) {
@@ -143,7 +189,6 @@ export class AppComponent implements OnInit {
       });
       this.closeSearchBar();
     }
-
     this.searchQuery = '';
   }
 
@@ -168,6 +213,4 @@ export class AppComponent implements OnInit {
       this.titleChangedSubscription.unsubscribe();
     }
   }
-
-
 }

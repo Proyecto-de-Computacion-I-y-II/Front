@@ -1,0 +1,67 @@
+<div class="titulo">
+    <h2 class="title-text">title</h2>
+    <!-- <p class="categoria">{{ product?.categoria }} > {{ product?.subcategoria }} > {{ product?.subsubcategoria }}</p> -->
+</div>
+
+<div class="grid-container">
+    <!-- Columna de la imagen -->
+    <div class="grid-item image-container">
+        <div class="loading-container">
+            <!-- Puedes usar un spinner o una barra de carga aquí -->
+            <div class="spinner"></div>
+        </div>
+        <div class = "image-container">
+        </div>
+    </div>
+
+    <!-- Columna de la información -->
+    <div class="grid-item info-container">
+        <h3>Datos del Producto</h3>
+
+
+        <hr>
+
+        <h3>Valor Nutricional</h3>
+
+          
+          <ng-template #noInfo>
+            <p>Sin información nutricional</p>
+          </ng-template>
+
+        <hr>
+        <h3>Ingredientes</h3>
+          <p>---</p>
+
+          <div>
+            <p>Ingerdientes</p>
+            <hr>
+          </div>
+
+          <ng-template #noIng>
+            <p>Sin ingredientes</p>
+          </ng-template>
+
+        <h3>Guardar en cesta</h3>
+
+    </div>
+</div>
+
+<div class="productos-similares">
+    <div class="hr-margin">
+        <hr>
+    </div>
+    <h2 class="title-text">Productos similares en este supermercado</h2>
+    <div *ngIf="true" class="loading-container">
+        <!-- Puedes usar un spinner o una barra de carga aquí -->
+        <div class="spinner"></div>
+    </div>
+
+    <div *ngIf="true" >
+
+        <div>
+            No hay productos similares disponibles.
+        </div>
+    </div>
+
+
+</div>

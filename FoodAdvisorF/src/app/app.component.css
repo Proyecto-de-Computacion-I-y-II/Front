@@ -81,8 +81,21 @@ html, body{
   border: none;
   cursor: pointer;
   color: #666;
-  padding: 0 0 0 10px;
+  padding: 0 0 0 0;
   flex-shrink: 0; /* Evita que el botón de búsqueda se encoja */
+}
+
+.voice-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 0 0 0 25px;
+  flex-shrink: 0; /* Evita que el botón de búsqueda se encoja */
+}
+
+.mic-active {
+  color: #f58634 !important;
 }
 
 .desktop-nav {
