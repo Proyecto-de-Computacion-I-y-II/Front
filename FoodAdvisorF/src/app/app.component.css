@@ -278,7 +278,7 @@ html, body{
   .desktop-nav {
     gap: 30px;
   }
-  
+
   .search-container {
     width: 320px;
   }
@@ -288,16 +288,16 @@ html, body{
   .custom-toolbar {
     padding: 15px 20px;
   }
-  
+
   .desktop-nav {
     gap: 20px;
     margin: 0 15px;
   }
-  
+
   .toolbar-right {
     gap: 15px;
   }
-  
+
   .user-name {
     max-width: 100px;
     overflow: hidden;
@@ -310,7 +310,7 @@ html, body{
   .custom-toolbar {
     padding: 12px 15px;
   }
-  
+
   .search-container {
     display: none;
     position: absolute;
@@ -322,31 +322,31 @@ html, body{
     z-index: 1000;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   }
-  
+
   .search-container.show-search {
     display: flex;
   }
-  
+
   .desktop-nav {
     display: none;
   }
-  
+
   .menu-button {
     display: flex;
   }
-  
+
   .search-icon-button {
     display: flex;
   }
-  
+
   .user-name {
     display: none;
   }
-  
+
   .toolbar-left {
     gap: 15px;
   }
-  
+
   /* Asegurar que los elementos de la derecha permanezcan visibles */
   .toolbar-right {
     position: relative;
@@ -360,7 +360,7 @@ html, body{
   .menu-button, .search-icon-button {
     display: none;
   }
-  
+
   .mobile-nav {
     display: none !important;
   }
@@ -370,16 +370,16 @@ html, body{
   .custom-toolbar {
     padding: 10px 12px;
   }
-  
+
   .logo {
     height: 40px;
   }
-  
+
   .cart-button, .user-avatar, .icon-button {
     width: 40px;
     height: 40px;
   }
-  
+
   .toolbar-right {
     gap: 10px; /* Reducido aún más para pantallas muy pequeñas */
   }
