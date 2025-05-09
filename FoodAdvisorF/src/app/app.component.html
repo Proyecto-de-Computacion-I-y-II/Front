@@ -27,6 +27,7 @@
       <a mat-button [routerLink]="['/inicio']" routerLinkActive="active">Inicio</a>
       <a mat-button [routerLink]="['/home']" routerLinkActive="active">Productos</a>
       <a mat-button [routerLink]="['/temporada']" routerLinkActive="active">Productos de temporada</a>
+      <a *ngIf="showProfile" class="admin" mat-button [routerLink]="['/ad-conf-vis']" routerLinkActive="active">Administrador</a>
     </nav>
 
     <div class="toolbar-right">
@@ -70,6 +71,7 @@
     <a mat-button [routerLink]="['/inicio']" routerLinkActive="active" (click)="closeMobileMenu()">Inicio</a>
     <a mat-button [routerLink]="['/home']" routerLinkActive="active" (click)="closeMobileMenu()">Productos</a>
     <a mat-button [routerLink]="['/temporada']" routerLinkActive="active" (click)="closeMobileMenu()">Productos de temporada</a>
+    <a *ngIf="showProfile" class="admin" mat-button [routerLink]="['/ad-conf-vis']" routerLinkActive="active" (click)="closeMobileMenu()">Administrador</a>
   </div>
 
   <!-- Overlay para cuando el menú está abierto -->
