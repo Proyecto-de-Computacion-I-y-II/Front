@@ -91,6 +91,12 @@ export class AppComponent implements OnInit {
       this.recognition.onerror = (event: any) => {
         console.error('Error de reconocimiento de voz:', event.error);
       };
+
+      this.recognition.onend = () => {
+        this.isListening = false;
+        this.cdr.detectChanges(); // Para actualizar la vista en angular
+      };
+      
     }
   }
 
@@ -101,17 +107,16 @@ export class AppComponent implements OnInit {
     }
   
     if (!this.isListening) {
-      this.recognition.start();  // Inicia el reconocimiento de voz
-      this.isListening = true;  // Cambia el estado a escuchando
+      this.recognition.start();  
+      this.isListening = true;  
     } else {
-      // Detiene el reconocimiento de voz de inmediato y limpia el estado
-      this.recognition.abort();  // Usamos abort() para detener inmediatamente el reconocimiento
-      this.isListening = false;  // Cambia el estado a no escuchando
+      this.recognition.stop();   
+      console.log();
   
       // Aseguramos que el estado de "escuchando" se desactive correctamente
-      setTimeout(() => {
-        this.isListening = false;
-      }, 200);  // Ajusta este tiempo según sea necesario
+      // setTimeout(() => {
+      //   this.isListening = false;
+      // }, 20);  // Tiempo
     }
   }  
 
