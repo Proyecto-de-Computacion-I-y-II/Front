@@ -135,6 +135,10 @@ html, body{
   background-color: #f58634;
 }
 
+.desktop-nav .admin.active::after {
+  background-color: #88CB74;
+}
+
 .toolbar-right {
   display: flex;
   align-items: center;
@@ -264,7 +268,7 @@ html, body{
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,0.3); /* Más transparente para ver el contenido */
+  background-color: rgba(226, 20, 20, 0.3); /* Más transparente para ver el contenido */
   z-index: 998;
   display: none;
 }
@@ -284,6 +288,10 @@ html, body{
 .mobile-nav a.active {
   color: #f58634;
   background-color: #f9f9f9;
+}
+
+.mobile-nav .admin.active {
+  color: #88CB74;
 }
 
 .content{

@@ -116,6 +116,31 @@
   transform: scale(1.02);
 }
 
+.stats-panel {
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  padding: 16px 24px;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+  color: #333;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.stats-panel p {
+  margin: 0;
+}
+
+
+.spinner-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
 
 .spinner {
   width: 48px;

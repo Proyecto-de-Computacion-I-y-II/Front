@@ -1,67 +1,75 @@
-<div class="titulo">
-    <h2 class="title-text">title</h2>
-    <!-- <p class="categoria">{{ product?.categoria }} > {{ product?.subcategoria }} > {{ product?.subsubcategoria }}</p> -->
-</div>
+<div class="admin-container">
+  <h1 class="admin-title">Listado de Cestas de Usuarios</h1>
 
-<div class="grid-container">
-    <!-- Columna de la imagen -->
-    <div class="grid-item image-container">
-        <div class="loading-container">
-            <!-- Puedes usar un spinner o una barra de carga aquí -->
-            <div class="spinner"></div>
+  <div class="stats-panel">
+    <p><strong>Total usuarios:</strong> {{ totalUsuarios }}</p>
+    <p><strong>Cestas del usuario:</strong> {{ usuarioSeleccionado ? (totalCestasPorUsuario[usuarioSeleccionado] || 0) : '—' }}</p>
+    <p><strong>Fechas distintas:</strong> {{ usuarioSeleccionado ? getFechas().length : '—' }}</p>
+    <p><strong>Productos en la cesta:</strong> {{ cestaSeleccionada ? productosCesta.length : '—' }}</p>
+  </div>
+
+  <div class="admin-panel">
+    <!-- Columna izquierda: Usuarios -->
+    <div class="usuarios-columna">
+      <ng-container *ngIf="!isLoadingUsuarios">
+        <div
+          class="usuario-box"
+          *ngFor="let id of usuariosUnicos"
+          [class.seleccionado]="usuarioSeleccionado === id"
+          (click)="seleccionarUsuario(id)">
+          <span>{{ obtenerNombreUsuario(id) }} ({{ totalCestasPorUsuario[id] || 0 }})</span>
+          <span class="flecha">{{ usuarioSeleccionado === id ? '▲' : '▼' }}</span>
         </div>
-        <div class = "image-container">
-        </div>
+      </ng-container>
+      <div *ngIf="isLoadingUsuarios" class="spinner"></div>
     </div>
 
-    <!-- Columna de la información -->
-    <div class="grid-item info-container">
-        <h3>Datos del Producto</h3>
+    <!-- Columna centro: Fechas agrupadas -->
+    <div class="cestas-columna" *ngIf="usuarioSeleccionado">
+      <ng-container *ngFor="let fecha of getFechas()">
+        <div
+          class="fecha-box"
+          (click)="toggleFechaExpandida(fecha)"
+          [class.expandida]="fechasVisibles.includes(fecha)">
+          <strong>{{ fecha }}</strong>
+          <span>{{ totalCestasPorDia[fecha] || 0 }}</span>
+        </div>
 
-
-        <hr>
-
-        <h3>Valor Nutricional</h3>
-
-          
-          <ng-template #noInfo>
-            <p>Sin información nutricional</p>
-          </ng-template>
-
-        <hr>
-        <h3>Ingredientes</h3>
-          <p>---</p>
-
-          <div>
-            <p>Ingerdientes</p>
-            <hr>
+        <div *ngIf="fechasVisibles.includes(fecha)" class="cestas-por-fecha">
+          <div
+            class="cesta-box"
+            *ngFor="let cesta of fechasAgrupadas[fecha]"
+            [class.seleccionado]="cestaSeleccionada?.ID_cesta === cesta.ID_cesta"
+            (click)="seleccionarCesta(cesta)">
+            Cesta ID: {{ cesta.ID_cesta }}
           </div>
-
-          <ng-template #noIng>
-            <p>Sin ingredientes</p>
-          </ng-template>
-
-        <h3>Guardar en cesta</h3>
-
-    </div>
-</div>
-
-<div class="productos-similares">
-    <div class="hr-margin">
-        <hr>
-    </div>
-    <h2 class="title-text">Productos similares en este supermercado</h2>
-    <div *ngIf="true" class="loading-container">
-        <!-- Puedes usar un spinner o una barra de carga aquí -->
-        <div class="spinner"></div>
-    </div>
-
-    <div *ngIf="true" >
-
-        <div>
-            No hay productos similares disponibles.
         </div>
+      </ng-container>
     </div>
 
+    <!-- Columna derecha: Productos y gráfico -->
+    <div class="productos-columna" *ngIf="cestaSeleccionada">
+      <div *ngIf="isLoadingProductos || isLoadingCestas" class="spinner-container">
+        <div class="spinner"></div>
+      </div>
 
+      <ng-container *ngIf="!isLoadingProductos && !isLoadingCestas">
+        <div class="grafico-circular" *ngIf="productosCesta.length > 0">
+          <p class="total-productos">Total de productos: {{ productosCesta.length }}</p>
+          <canvas #porcentajeChart></canvas>
+        </div>
+
+        <div class="mensaje-vacio" *ngIf="productosCesta.length === 0">
+          ⚠️ Esta cesta está vacía.
+        </div>
+
+        <div class="productos-grid" *ngIf="productosCesta.length > 0">
+          <div class="producto-card" *ngFor="let producto of productosCesta">
+            <p class="nombre">{{ producto.nombre }}</p>
+            <p class="precio">{{ producto.precio }}€</p>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
 </div>

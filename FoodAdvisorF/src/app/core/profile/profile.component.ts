@@ -35,13 +35,10 @@ export class ProfileComponent {
     const token = localStorage.getItem('token');
   
     if (token) {
+      const headers = { Authorization: `Bearer ${token}` };
       const apiUrl = `http://127.0.0.1:8000/api/usuario`;
   
-      this.http.get(apiUrl, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }).subscribe({
+      this.http.get(apiUrl, { headers}).subscribe({
         next: (data: any) => {
           this.userData = data;
           this.avatar = `https://ui-avatars.com/api/?name=${data.usuario.nombre}+${data.usuario.apellidos}&background=random&color=fff`;
