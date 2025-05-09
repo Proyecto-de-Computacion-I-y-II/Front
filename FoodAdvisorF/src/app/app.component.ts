@@ -27,6 +27,9 @@ export class AppComponent implements OnInit {
   isMobileView: boolean = false;
   isListening = false;
   private apiUrl = environment.apiUrl;
+  userData: any = null;
+  avatar: string = `https://ui-avatars.com/api/?name=${this.userData?.nombre}+${this.userData?.apellidos}&background=random&color=fff`;
+  
 
   recognition: any; // Reconocimiento de voz
 
@@ -52,6 +55,9 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.checkScreenSize();
 
+    this.loadUserData();
+
+
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const currentUrl = this.router.url;
@@ -65,6 +71,26 @@ export class AppComponent implements OnInit {
     });
 
     this.checkRouteAccess();
+  }
+
+  loadUserData() {
+    const token = localStorage.getItem('token');
+  
+    if (token) {
+      const apiUrl = `http://127.0.0.1:8000/api/usuario`;
+  
+      this.http.get(apiUrl, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }).subscribe({
+        next: (data: any) => {
+          this.userData = data;
+          this.avatar = `https://ui-avatars.com/api/?name=${data.usuario.nombre}+${data.usuario.apellidos}&background=random&color=fff`;
+        },
+        error: (err) => console.error('Error al obtener el usuario:', err)
+      });
+    }
   }
 
   setupSpeechRecognition() {
