@@ -9,6 +9,10 @@ html, body{
   min-height: 100vh;
 }
 
+.perfil:hover{
+  cursor: pointer;
+}
+
 .custom-toolbar {
   display: flex;
   justify-content: space-between;

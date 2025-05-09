@@ -240,6 +240,10 @@ export class AppComponent implements OnInit {
     }
   }
 
+  irPerfil(){
+    this.router.navigate(['/profile']);
+  }
+
   ngOnDestroy() {
     if (this.titleChangedSubscription) {
       this.titleChangedSubscription.unsubscribe();
