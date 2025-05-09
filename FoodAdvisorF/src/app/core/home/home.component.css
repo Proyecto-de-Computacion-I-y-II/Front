@@ -152,17 +152,9 @@ span {
 
 
 
-.fixed-width {
-  display: inline-block; /* Para que respete el ancho mínimo */
-  min-width: 4ch; /* Ocupa el espacio de 4 caracteres */
-  text-align: center; /* Centra el número dentro del span */
-}
 
-.input-fixed-width {
-  width: 30px;
-  text-align: center;
-  margin: 0 5px;
-}
+
+
 
 
 .btn-aplicar {
@@ -495,3 +487,33 @@ span {
   cursor: pointer;
   font-weight: bold;
 }
+
+
+
+.fixed-width {
+  width: 40px;
+  text-align: center;
+  font-size: 11px;
+  padding: 2px 4px;
+  margin: 0 5px;
+}
+
+
+
+
+
+/* Elimina las flechitas en Chrome, Safari, Edge */
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Elimina las flechitas en Firefox */
+.no-spinner {
+  -moz-appearance: textfield;
+}
+
+
+
+
