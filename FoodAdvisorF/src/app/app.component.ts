@@ -81,10 +81,11 @@ export class AppComponent implements OnInit {
       this.recognition.onresult = (event: any) => {
         const transcript = event.results[0][0].transcript;  //Guarda el resultado en la variable transcript
         // Muestra en consola lo que el micrófono ha detectado
+        this.searchQuery = transcript;
       console.log('Texto detectado:', transcript);
 
       // Actualiza la búsqueda con el texto detectado
-      this.searchQuery = transcript;
+      this.searchQuery = transcript.charAt(0).toUpperCase() + transcript.slice(1).toLowerCase();  //primera letra mayus
         this.handleSearch();
       };
 
@@ -194,7 +195,7 @@ export class AppComponent implements OnInit {
       });
       this.closeSearchBar();
     }
-    this.searchQuery = '';
+    // this.searchQuery = '';  no queremos que se limpie la barra despues de la busqueda
   }
 
   onSearchKeyUp(event: KeyboardEvent) {
