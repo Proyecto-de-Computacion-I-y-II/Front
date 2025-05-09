@@ -29,4 +29,10 @@ export class UserService extends BaseService<UserDTO>{
       })
     }).pipe(catchError(this.handleError));
   }
+
+  eliminarCuenta(token: string): Observable<any> {
+    return this.http.delete(`${this.basePath}/delete`).pipe(
+      catchError(this.handleError)
+    );
+  }
 }

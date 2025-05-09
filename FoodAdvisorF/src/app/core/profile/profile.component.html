@@ -74,8 +74,40 @@
 
     <!-- Botones -->
     <div class="profile-buttons">
-      <button class="compras" (click)="historialCompras()">Ver Historial de Compras</button>
+      <button class="compras" (click)="confirmarEliminarCuenta()">Eliminar Cuenta</button>
       <button class="cerrar-sesion" (click)="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+  </div>
+
+  <div
+    *ngIf="showDeleteConfirmation"
+    class="confirmation-overlay"
+    (click)="closeConfirmationOnOutsideClick($event)"
+  >
+    <div class="delete-confirmation-dialog">
+      <div class="delete-dialog-header">
+        <div class="delete-dialog-icon">
+          <mat-icon>delete</mat-icon>
+        </div>
+        <h2 class="delete-dialog-title">Confirmar eliminación</h2>
+      </div>
+
+      <div class="delete-dialog-content">
+        <p>
+          ¿Estás seguro de que deseas eliminar tu cuenta de FoodAdvisor?
+        </p>
+        <p>Esta acción no se puede deshacer.</p>
+      </div>
+
+      <div class="delete-dialog-actions">
+        <button class="cancel-button" (click)="cancelarEliminacion()">
+          Cancelar
+        </button>
+        <button class="confirm-delete-button" (click)="eliminarCuenta()">
+          <mat-icon>delete_forever</mat-icon>
+          Eliminar
+        </button>
+      </div>
     </div>
   </div>
 </div>

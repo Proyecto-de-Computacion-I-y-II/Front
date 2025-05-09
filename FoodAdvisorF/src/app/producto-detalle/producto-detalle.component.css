@@ -36,6 +36,7 @@ hr {
     display: flex;
     font-size: 15px;
     border-radius: 10px;
+    align-items: center;
     height: 70px;
     border: none;
     color: white;

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommunicationService } from '../../shared/services/communicacion/communication.service';
+import { UserService } from '../services/user/user.service';
 
 @Component({
   standalone: false,
@@ -13,11 +14,40 @@ export class ProfileComponent {
   userData: any = null;
   prodUser: number = -1;
   avatar:string = 'https://ui-avatars.com/api/?name=${{this.userData?.nombre}}+${{this.userData?.apellidos}}&background=random&color=fff'
+  showDeleteConfirmation: boolean = false;
 
-  constructor(private router: Router, private communicationService: CommunicationService, private http: HttpClient) {}
+  constructor(private router: Router, private communicationService: CommunicationService, private http: HttpClient, private userService: UserService) {}
 
-  historialCompras() {
-    this.router.navigate(['/cestas'])
+  eliminarCuenta() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      this.userService.eliminarCuenta(token).subscribe({
+        next: (response) => {
+          console.log('Cuenta eliminada:', response);
+          this.cerrarSesion();
+        },
+        error: (error) => {
+          console.error('Error al eliminar la cuenta:', error);
+        }
+      });
+    } else {
+      console.error('No se encontró el token en localStorage');
+    }
+  }
+
+  closeConfirmationOnOutsideClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (target.classList.contains('confirmation-overlay')) {
+      this.showDeleteConfirmation = false;
+    }
+  }
+
+  cancelarEliminacion() {
+    this.showDeleteConfirmation = false;
+  }
+
+  confirmarEliminarCuenta() {
+    this.showDeleteConfirmation = true;
   }
 
   cerrarSesion() {
