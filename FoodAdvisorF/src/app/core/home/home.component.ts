@@ -124,6 +124,7 @@ export class HomeComponent implements OnInit {
 
     this.initPage();
 
+
     this.productService.filtrarProductos(filtros, this.currentPage).subscribe(
       (response: any) => {
         this.products = response.productos;
@@ -202,7 +203,6 @@ export class HomeComponent implements OnInit {
 
 
   ngOnInit() {
-
 
 
 
@@ -409,6 +409,47 @@ export class HomeComponent implements OnInit {
       this.isLoading = false;
     });
   }
+
+  validateRango(precio: any, field: 'start' | 'end') {
+    let newValue = precio[field];
+
+    // Elimina cualquier caracter que no sea número o punto decimal
+    newValue = newValue.replace(/[^0-9.]/g, '');
+
+    // Si el número es mayor que el máximo permitido, se reemplaza por el valor máximo
+    const maxValue = field === 'start' ? precio.end : precio.max;
+
+    if (parseFloat(newValue) > maxValue) {
+      newValue = maxValue.toString(); // Reemplaza el valor por el máximo
+    }
+
+    // Si el valor ya es igual al máximo, evitar que se agreguen más dígitos
+    if (newValue === maxValue.toString()) {
+      precio[field] = maxValue.toString(); // Asigna el valor máximo y elimina lo que el usuario intentó agregar
+      return; // Salimos de la función
+    }
+
+    // Asigna el valor validado
+    precio[field] = newValue;
+  }
+
+
+
+  validateLetters(event: KeyboardEvent) {
+    const input = event.target as HTMLInputElement;
+    const charCode = event.keyCode || event.which;
+    const char = String.fromCharCode(charCode);
+
+
+    if (/[^0-9.]/.test(char)) {
+      event.preventDefault();
+      input.value = input.value.replace(/[^0-9.]/g, '');
+    }
+  }
+
+
+
+
 
 
 
