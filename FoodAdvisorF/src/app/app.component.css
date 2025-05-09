@@ -13,6 +13,12 @@ html, body{
   cursor: pointer;
 }
 
+.perfil img {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #37C666;
+}
+
 .custom-toolbar {
   display: flex;
   justify-content: space-between;
