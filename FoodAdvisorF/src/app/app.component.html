@@ -30,10 +30,16 @@
     </nav>
 
     <div class="toolbar-right">
-      <!-- Icono de búsqueda para móvil -->
-      <button *ngIf="isMobileView && !hideSearch" class="icon-button search-icon-button" (click)="toggleSearchBar()">
-        <mat-icon>search</mat-icon>
-      </button>
+      <!-- Iconos de búsqueda y micrófono para móvil -->
+<ng-container *ngIf="isMobileView && !hideSearch">
+  <button class="icon-button search-icon-button" (click)="toggleSearchBar()">
+    <mat-icon>search</mat-icon>
+  </button>
+  <button class="icon-button voice-icon-button" (click)="startVoiceSearch()">
+    <mat-icon [class.mic-active]="isListening">mic</mat-icon>
+  </button>
+</ng-container>
+
 
       <!-- Menú hamburguesa a la izquierda del carrito -->
       <button *ngIf="isMobileView" class="icon-button menu-button" (click)="toggleMobileMenu()">
