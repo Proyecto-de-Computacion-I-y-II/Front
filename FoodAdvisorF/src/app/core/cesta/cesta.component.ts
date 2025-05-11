@@ -41,7 +41,6 @@ export class CestaComponent implements OnInit, AfterViewInit {
         this.cestaId = +params['id'];
       }
     });
-
     this.idCestaUsuario = Number(this.route.snapshot.paramMap.get('id'));
     this.obtenerProductosDeLaCestaDesdeApi();
     this.obtenerPorcentajesDeLaCesta();
@@ -85,7 +84,7 @@ export class CestaComponent implements OnInit, AfterViewInit {
   }
 
   renderizarGrafico() {
-    if (!this.porcentajeChartCanvas || !this.porcentajesCesta || this.porcentajesCesta.length === 0 /* || this.esUltimaCesta */) {
+    if (!this.porcentajeChartCanvas || !this.porcentajesCesta || this.porcentajesCesta.length === 0) {
       return;
     }
 
@@ -100,7 +99,6 @@ export class CestaComponent implements OnInit, AfterViewInit {
       'rgba(255, 159, 64, 0.7)',
       'rgba(144, 238, 144, 0.7)'
     ];
-
     const borderColors = [
       'rgba(255, 99, 132, 1)',
       'rgba(54, 162, 235, 1)',
@@ -240,7 +238,6 @@ export class CestaComponent implements OnInit, AfterViewInit {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-
     this.http.delete(`${this.apiUrl}/cestas-compra/${this.cestaId}`, { headers }).subscribe({
       next: (response: any) => {
         console.log('Cesta eliminada correctamente:', response.mensaje);
@@ -297,13 +294,41 @@ export class CestaComponent implements OnInit, AfterViewInit {
     return total;
   }
 
-  estaCompletado(producto: any): boolean {
-    return !!producto.completado;
-  }
+ // Método para comprobar si un producto está marcado como comprado
+estaCompletado(producto: any): boolean {
+  return !!producto.pivot.comprado;
+}
 
-  toggleCompletado(producto: any, event: MatCheckboxChange): void {
-    producto.completado = event.checked;
-    // Aquí puedes llamar a un servicio para actualizar el estado en el backend si es necesario
-    console.log(`Producto ${producto.ID_prod} completado: ${producto.completado}`);
-  }
+// Método para manejar el cambio en el checkbox
+toggleCompletado(producto: any, event: MatCheckboxChange): void {
+  const isChecked = event.checked;
+  
+  this.http.post(`${this.apiUrl}/cestas/toggle-producto-comprado`, {
+    ID_cesta: this.idCestaUsuario,
+    ID_prod: producto.ID_prod,
+    comprado: isChecked
+  }).subscribe({
+    next: (response: any) => {
+      // Actualizar el estado localmente
+      producto.pivot.comprado = isChecked;
+      
+      this.snackBar.open(
+        isChecked ? 'Producto marcado como comprado' : 'Producto desmarcado como comprado', 
+        'Cerrar', 
+        { duration: 2000 }
+      );
+    },
+    error: (error) => {
+      console.error('Error al actualizar estado del producto:', error);
+      this.snackBar.open('Error al actualizar el estado del producto', 'Cerrar', {
+        duration: 3000
+      });
+      
+      // Revertir el estado del checkbox en caso de error
+      event.source.checked = !isChecked;
+    }
+  });
+}
+
+
 }
