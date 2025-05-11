@@ -197,22 +197,52 @@ export class AppComponent implements OnInit {
     this.showMobileMenu = false;
   }
 
-  toggleSearchBar() {
-    this.showSearchBar = !this.showSearchBar;
-    if (this.showSearchBar) {
-      this.closeMobileMenu();
-      setTimeout(() => {
-        const searchInput = document.querySelector('.search-input') as HTMLInputElement;
-        if (searchInput) {
-          searchInput.focus();
-        }
-      }, 100);
-    }
+toggleSearchBar() {
+  this.showSearchBar = !this.showSearchBar;
+  
+  if (this.showSearchBar) {
+    // Forzar repintado completo
+    document.documentElement.style.setProperty('--search-bg', '#ffffff');
+    
+    // Crear un overlay completamente opaco
+    const overlay = document.createElement('div');
+    overlay.className = 'search-overlay';
+    overlay.style.backgroundColor = '#ffffff';
+    overlay.addEventListener('click', () => this.closeSearchBar());
+    document.body.appendChild(overlay);
+    
+    this.closeMobileMenu();
+    
+    // Asegurar que la barra de búsqueda esté por encima del overlay
+    setTimeout(() => {
+      const searchContainer = document.querySelector('.search-container-mobile');
+      if (searchContainer) {
+        (searchContainer as HTMLElement).style.zIndex = '9999';
+      }
+      
+      const searchInput = document.querySelector('.search-input') as HTMLInputElement;
+      if (searchInput) {
+        searchInput.focus();
+      }
+    }, 50);
+  } else {
+    this.closeSearchBar();
   }
+}
 
-  closeSearchBar() {
-    this.showSearchBar = false;
+
+closeSearchBar() {
+  this.showSearchBar = false;
+  document.body.classList.remove('search-active');
+  
+  // Eliminar overlay
+  const overlay = document.querySelector('.search-overlay');
+  if (overlay) {
+    overlay.remove();
   }
+}
+
+
 
   handleSearch() {
     if (this.searchQuery.trim()) {
