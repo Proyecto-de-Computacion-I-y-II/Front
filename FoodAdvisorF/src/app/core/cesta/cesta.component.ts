@@ -52,7 +52,6 @@ export class CestaComponent implements OnInit, AfterViewInit {
   }
 
   obtenerProductosDeLaCestaDesdeApi() {
-    this.isLoading = true; // Iniciamos la carga, mostramos el spinner
     this.cestaService.obtenerProductosDeCesta(this.idCestaUsuario).subscribe({
       next: (data: any) => {
         if (data && data.cesta && data.cesta.productos && Array.isArray(data.cesta.productos)) {
@@ -165,9 +164,11 @@ export class CestaComponent implements OnInit, AfterViewInit {
 
   actualizarCestaEnApi(producto: any, cantidad: number) {
     this.cestaService.modificarCantidadCarrito(producto.ID_prod, cantidad);
-    this.snackBar.open("Cantidad actualizada", "Entendido", { duration: 2000 });
-    this.obtenerProductosDeLaCestaDesdeApi();
-    this.obtenerPorcentajesDeLaCesta();
+    setTimeout(() => {
+      this.obtenerProductosDeLaCestaDesdeApi();
+      this.obtenerPorcentajesDeLaCesta();
+      this.obtenerProductosRecomendados();
+    }, 100);
   }
 
   obtenerProductosRecomendados() {
