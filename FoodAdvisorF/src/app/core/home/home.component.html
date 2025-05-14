@@ -10,10 +10,26 @@
         [(value)]="selectedSupermercados"
         (selectionChange)="onSupermercadoChange()"
         [multiple]="true"
+        [disabled]="isLoading"
         id="supermercado"
         name="supermercado">
         <mat-option *ngFor="let id of supermercadoIds" [value]="id">
           {{ getSupermercadoNombre(id) }}
+        </mat-option>
+      </mat-select>
+    </div>
+
+
+    <div class="form-group">
+      <label for="niveles">Niveles Pirámide:</label>
+      <mat-select
+        [(value)]="selectedNiveles"
+        [multiple]="true"
+        [disabled]="isLoading"
+        id="niveles"
+        name="niveles">
+        <mat-option *ngFor="let nivel of this.niveles" [value]="nivel.idNivel">
+          {{ nivel.Nombre }}
         </mat-option>
       </mat-select>
     </div>
@@ -380,8 +396,8 @@
 
 
     <!-- Puedes agregar filtros aquí -->
-      <button id="btn-aplicar" (click)="aplicarFiltros()">Aplicar</button>
-      <button id="btn-limpiar" (click)="limpiarFiltros()">Limpiar</button>
+      <button id="btn-aplicar" [disabled]="isLoading" (click)="aplicarFiltros()">Aplicar</button>
+      <button id="btn-limpiar" [disabled]="isLoading" (click)="limpiarFiltros()">Limpiar</button>
 
     </div>
   </div>

@@ -7,6 +7,8 @@ import { Subcategoria2 } from '../../security/models/subcategoria2';
 import { CommunicationService } from '../../shared/services/communicacion/communication.service';
 import { ProductService } from '../services/product/product.service';
 import { SupermarketService } from '../services/supermarket/supermarket.service';
+import {NivelPiramide} from '../../security/models/nivel-piramide';
+import {NivelesPiramideService} from '../services/nivel-piramide/niveles-piramide.service';
 
 @Component({
   selector: 'app-home',
@@ -43,7 +45,8 @@ export class HomeComponent implements OnInit {
   selectedSupermercados: number[] = [];
   supermercadoIds: number[] = Object.keys(ProductService.supermercadoDiccionario).map(id => +id);
 
-
+  niveles :NivelPiramide[] = [];
+  selectedNiveles:number[] = [];
 
   mostrarFiltros: boolean = false;
 
@@ -58,13 +61,19 @@ export class HomeComponent implements OnInit {
   sidebarOpen = false;
 
   toggleSidebar() {
-    this.sidebarOpen = !this.sidebarOpen;
+    if(!this.isLoading) this.sidebarOpen = !this.sidebarOpen;
   }
 
   aplicarFiltros() {
     console.log('Aplicando filtros...');
 
     const filtros: any = {};
+
+
+    //filtro niveles
+    if (this.selectedNiveles.length > 0) {
+      filtros.idNivel = this.selectedNiveles;
+    }
 
     // Filtro por supermercado
     if (this.selectedSupermercados.length > 0) {
@@ -196,6 +205,7 @@ export class HomeComponent implements OnInit {
   constructor(private communicationService: CommunicationService,
               private productService: ProductService,
               private supermarketService: SupermarketService,
+              private nivelesService: NivelesPiramideService,
               private router: Router,
               private route: ActivatedRoute) {
   }
@@ -216,6 +226,12 @@ export class HomeComponent implements OnInit {
     this.isLoading = true;
 
 
+    this.nivelesService.getNiveles().subscribe(value => {
+      this.niveles = value;
+      this.niveles.pop();
+
+      this.selectedNiveles = this.niveles.map(nivel => nivel.idNivel);
+    });
 
     var charged_filter = false;
 
@@ -258,7 +274,6 @@ export class HomeComponent implements OnInit {
 
       }
     });
-
 
 
     this.selectedSupermercados = this.supermercadoIds;
