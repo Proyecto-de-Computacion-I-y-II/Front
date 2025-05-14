@@ -19,7 +19,6 @@
       </mat-select>
     </div>
 
-
     <div class="form-group">
       <label for="niveles">Niveles Pirámide:</label>
       <mat-select
@@ -408,14 +407,14 @@
 
 
 
-
+<div class="fondo">
 <div class="menu-title-2">
   <span class="title-text">{{ this.titulo }}</span>
   <!-- Botón para abrir el sidebar -->
   <button class="toggle-sidebar" (click)="toggleSidebar()">Filtros</button>
   <button class="limpiar" (click)="limpiarFiltros()">Limpiar</button>
-
 </div>
+
 
 
 <div *ngIf="isLoading" class="loading-container">
@@ -423,17 +422,19 @@
   <div class="spinner"></div>
 </div>
 
-<div *ngIf="!isLoading" class="product-grid">
-  <div class="product-card" *ngFor="let product of products" (click)="goToProductDetail(product.ID_prod)">
-    <img [src]="product.imagen || 'logo_fondo.png'" [alt]="product.nombre">
+<div class="product-container">
+  <div *ngIf="!isLoading" class="product-grid">
+    <div class="product-card" *ngFor="let product of products" (click)="goToProductDetail(product.ID_prod)">
+      <img [src]="product.imagen || 'logo_fondo.png'" [alt]="product.nombre">
 
-    <div class="product-info">
-      <div class="product-details">
-        <h3 class="product-name">{{  keepLastTwoWordsTogether(product.nombre) }}</h3>
+      <div class="product-info">
+        <div class="product-details">
+          <h3 class="product-name">{{  keepLastTwoWordsTogether(product.nombre) }}</h3>
 
-      </div>
-      <div class="product-price">
-        {{ product.precio }}€
+        </div>
+        <div class="product-price">
+          {{ product.precio }}€
+        </div>
       </div>
     </div>
   </div>
@@ -458,4 +459,5 @@
 
 <div *ngIf="!isLoading && products.length == 0" class="no-productos">
   <h1>No hay resultados para tu búsqueda. Prueba con otros filtros.</h1>
+</div>
 </div>

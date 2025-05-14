@@ -11,6 +11,10 @@
     overflow: hidden;
   }
 
+  .product-grid{
+    color: #f58634;
+  }
+
   .image-wrapper img.background {
     position: absolute;
     top: 0;
