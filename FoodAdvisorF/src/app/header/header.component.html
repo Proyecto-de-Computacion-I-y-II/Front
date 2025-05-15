@@ -57,10 +57,14 @@
     </ng-container>
 
     <ng-template #elseTemplate>
-      <button *ngIf="!hideLoginButton" mat-flat-button class="login-button" [routerLink]="['/login']">
-        Iniciar Sesión
-      </button>
+    <mat-icon class="perfil_antes" *ngIf="!hideLoginButton" [routerLink]="['/login']">account_circle</mat-icon>
     </ng-template>
+
+    <!-- <ng-template #elseTemplate>
+      <button *ngIf="!hideLoginButton" mat-flat-button class="login-button" [routerLink]="['/login']">
+       <mat-icon>account_circle</mat-icon>
+      </button>
+    </ng-template> -->
   </div>
 </mat-toolbar>
 

@@ -80,7 +80,7 @@
 
 
     <div class="sidebar-buttons">
-    <button (click)="toggleFiltros()">Filtros avanzados</button>
+    <button class="filtros_av" (click)="toggleFiltros()">Filtros avanzados</button>
 
     <!-- Filtros avanzados -->
     <div *ngIf="mostrarFiltros" class="filtros-avanzados">
@@ -391,10 +391,6 @@
 
     </div>
 
-
-
-
-    <!-- Puedes agregar filtros aquí -->
       <button id="btn-aplicar" [disabled]="isLoading" (click)="aplicarFiltros()">Aplicar</button>
       <button id="btn-limpiar" [disabled]="isLoading" (click)="limpiarFiltros()">Limpiar</button>
 

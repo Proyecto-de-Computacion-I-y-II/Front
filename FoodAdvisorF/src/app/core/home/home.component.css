@@ -286,6 +286,11 @@ span {
   min-height: 100vh;
 }
 
+.filtros_av{
+  background-color: #f3f3f3;
+  border-color: #2c9f51;
+}
+
 .pagination button {
   background-color: #f8f9fa;
   border: 1px solid #ccc;
