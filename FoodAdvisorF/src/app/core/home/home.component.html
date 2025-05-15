@@ -78,6 +78,7 @@
       </mat-select>
     </div>
 
+<hr>
 
     <div class="sidebar-buttons">
     <button class="filtros_av" (click)="toggleFiltros()">Filtros avanzados</button>
@@ -386,17 +387,17 @@
             inputmode="numeric"
             (input)="validateRango( this.fibra,'end')"
             (keyup)="validateLetters($event)"
-          />          </div>
+          />          
+        </div>
       </div>
-
     </div>
-
-      <button id="btn-aplicar" [disabled]="isLoading" (click)="aplicarFiltros()">Aplicar</button>
-      <button id="btn-limpiar" [disabled]="isLoading" (click)="limpiarFiltros()">Limpiar</button>
-
+ <div class="botones-bajos">
+      <button class="btn-aplicar" [disabled]="isLoading" (click)="aplicarFiltros()">Aplicar</button>
+      <button class="btn-limpiar" [disabled]="isLoading" (click)="limpiarFiltros()">Limpiar</button>
+    </div>
+    </div>
     </div>
   </div>
-</div>
 
 <!-- Fondo oscuro al abrir el sidebar -->
 <div class="sidebar-backdrop" *ngIf="sidebarOpen" (click)="toggleSidebar()"></div>
