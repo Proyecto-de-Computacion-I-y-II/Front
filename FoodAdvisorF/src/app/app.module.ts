@@ -32,6 +32,8 @@ import { AdminComponent } from './security/admin/admin.component';
 import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { SubproductosTemporadaComponent } from './subproductos-temporada/subproductos-temporada.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { HeaderComponent } from './header/header.component';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -48,7 +50,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ProductoDetalleComponent,
     SubproductosTemporadaComponent,
     NotFoundComponent,
-    AdminComponent
+    AdminComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     MatExpansionModule,
