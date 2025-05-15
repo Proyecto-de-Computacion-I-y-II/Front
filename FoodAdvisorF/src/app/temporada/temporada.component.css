@@ -10,8 +10,9 @@
   animation: rotation 1s linear infinite;
 }
 
-.fondo{
+.content{
 background-color: #f3f3f3;
+min-height: 100vh;
 }
 
 .spinner::after,
@@ -61,11 +62,7 @@ background-color: #f3f3f3;
     margin-left: 8px;
     font-size: 20px;
   }
-  
-  .menu-title-2 {
-    margin: 20px;
-  }
-  
+
   .loading-container {
     display: flex;
     justify-content: center;

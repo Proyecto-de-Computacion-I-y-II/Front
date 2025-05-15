@@ -7,10 +7,10 @@
 
 .fondo{
   background-color: #f3f3f3;
+  min-height: 100vh;
 }
 
 .titulo {
-  margin: 20px;
   display: flex;
   flex-direction: column;
 }
