@@ -14,6 +14,7 @@ import { UserDTO } from '../models/user-dto';
 })
 export class LoginComponent implements OnInit {
   user: User;
+  showPassword: boolean = false;
 
   constructor(private communicationService: CommunicationService, private snackBar: MatSnackBar,
               private userService: UserService, private router: Router) {

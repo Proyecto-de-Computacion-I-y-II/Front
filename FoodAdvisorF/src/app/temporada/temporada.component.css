@@ -9,6 +9,11 @@
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
+
+.fondo{
+background-color: #f3f3f3;
+}
+
 .spinner::after,
 .spinner::before {
   content: '';
@@ -76,19 +81,24 @@
   /* Cuadrícula subproductos */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 30px;
-  padding: 20px;
-  margin: 0 30px 40px 30px;
+  padding: 20px 60px 40px 60px;
   align-items: center;
+  max-width: 1600px;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
-/* Tarjeta subproducto */
+
 .product-card {
-  background: #ffffff;
-  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.20);
+  background: #ffffff !important;
+  border-radius: 7%;
   text-align: center;
-  border: 2px solid #2c9f51;
+  cursor: pointer;
+  /* border: 2px solid #2c9f51; */
   transition: transform 0.2s ease-in-out;
 }
 
@@ -97,41 +107,48 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Imagen del producto */
+
 .product-card img {
   width: 100%;
-  height: 150px;
+  border-top-left-radius: 23%;
+    border-top-right-radius: 23%;
   object-fit: contain;
-  cursor: pointer;
   border-bottom: 2px dotted #2c9f51;
   padding: 15px;
+
 }
 
-/* Información */
 .product-info {
-  background: #f1f1f1;
+  /* background: #f1f1f1 !important; */
+  height: 100%;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-template-rows: auto auto; /* Dos filas: una para el nombre, otra para el precio */
+  justify-items: center;         /* Centra contenido horizontalmente */
   padding: 8px;
+  text-align: center;
+  gap: 10px;
   min-height: 70px;
 }
 
 .product-details {
-  text-align: center;
+  text-align: left;
 }
 
 .product-name {
   font-size: 12px;
   font-weight: bold;
   margin: 0;
+
   display: -webkit-box;
+  -webkit-line-clamp: 3;            /* Limita a 3 líneas */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  word-break: break-word;
-  overflow-wrap: break-word;
+  word-break: break-word;           /* Rompe solo si necesario */
+  overflow-wrap: break-word;        /* Ayuda a evitar letras sueltas */
+
+  text-align: center;
 }
 
 .desktop-nav {
