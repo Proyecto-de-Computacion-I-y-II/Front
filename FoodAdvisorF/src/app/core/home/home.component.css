@@ -272,7 +272,7 @@ span {
 .pagination {
   display: flex;
   justify-content: center;
-  margin-bottom: 80px;
+  padding-bottom: 60px;
   min-width: 100%;
 }
 

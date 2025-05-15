@@ -13,6 +13,19 @@ html, body{
   cursor: pointer;
 }
 
+.perfil_antes:hover{
+    cursor:pointer;
+}
+
+.desktop-nav {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 40px;
+  white-space: nowrap;
+}
+
 .perfil img {
   border-radius: 50%;
   object-fit: cover;
