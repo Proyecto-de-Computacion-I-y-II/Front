@@ -1,15 +1,22 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+<a class="btn btn-outline-secondary ms-3 mt-3" [routerLink]="['/home']">
+  <i class="bi bi-arrow-left"></i> Volver
+</a>
+
 <div class="center">
   <img src="logo.png" alt="Food Advisor Logo" class="logo"/>
   <h3 style="margin: 20px 0">Inicio de Sesión</h3>
   <mat-form-field appearance="outline" subscriptSizing="dynamic" style="margin-bottom: 20px">
     <mat-label>Email</mat-label>
-    <input matInput [(ngModel)]="user.email">
+    <input matInput [(ngModel)]="user.email" (keydown.enter)="onSubmit()">
   </mat-form-field>
   <mat-form-field appearance="outline" subscriptSizing="dynamic" style="margin-bottom: 20px">
     <mat-label>Contraseña</mat-label>
-    <input matInput [type]="'password'" [(ngModel)]="user.password">
+    <input matInput [type]="'password'" [(ngModel)]="user.password" (keydown.enter)="onSubmit()">
   </mat-form-field>
   <button mat-flat-button style="background-color: #37C666; margin-bottom: 20px" (click)="onSubmit()">Iniciar Sesión</button>
-  <button mat-flat-button style="background-color: #FFAD71; margin-bottom: 20px" [routerLink]="['/register']">Crear Cuenta</button>
-  <button mat-flat-button [routerLink]="['/home']">Cancelar</button>
+
+  <h4> ¿Aún no tienes cuenta? </h4>
+  <button mat-flat-button style="background-color: #FFAD71; margin-bottom: 20px" [routerLink]="['/register']">Regístrate</button>
 </div>
