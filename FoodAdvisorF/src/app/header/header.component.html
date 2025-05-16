@@ -26,13 +26,15 @@
     </div>
   </div>
 
-  <nav class="desktop-nav">
+  <!-- MENÚ DE NAVEGACIÓN CENTRAL -->
+  <div class="desktop-nav">
     <a mat-button [routerLink]="['/inicio']" routerLinkActive="active">Inicio</a>
     <a mat-button [routerLink]="['/home']" routerLinkActive="active">Productos</a>
     <a mat-button [routerLink]="['/temporada']" routerLinkActive="active">Productos de temporada</a>
     <a *ngIf="showProfile" class="admin" mat-button [routerLink]="['/ad-conf-vis']" routerLinkActive="active">Administrador</a>
-  </nav>
+  </div>
 
+  <!-- ELEMENTOS DE LA DERECHA -->
   <div class="toolbar-right">
     <ng-container *ngIf="isMobileView && !hideSearch">
       <button class="icon-button search-icon-button" (click)="toggleSearchBar()">
@@ -57,14 +59,8 @@
     </ng-container>
 
     <ng-template #elseTemplate>
-    <mat-icon class="perfil_antes" *ngIf="!hideLoginButton" [routerLink]="['/login']">account_circle</mat-icon>
+      <mat-icon class="perfil_antes" *ngIf="!hideLoginButton" [routerLink]="['/login']">account_circle</mat-icon>
     </ng-template>
-
-    <!-- <ng-template #elseTemplate>
-      <button *ngIf="!hideLoginButton" mat-flat-button class="login-button" [routerLink]="['/login']">
-       <mat-icon>account_circle</mat-icon>
-      </button>
-    </ng-template> -->
   </div>
 </mat-toolbar>
 
