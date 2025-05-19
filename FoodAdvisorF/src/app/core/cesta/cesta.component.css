@@ -45,7 +45,31 @@ h1 {
   border-bottom: none;
 }
 
+.ultima {
+  background-color: white;
+  display: grid;
+  grid-template-columns: 60px repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+  align-items: center;
+  padding: 15px;
+  margin: 15px 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.ultima:last-child {
+  border-bottom: none;
+}
+
 .grid-item {
+  padding: 10px;
+  text-align: center;
+  font-size: 0.9em;
+  min-width: 0; /* Evita desbordamiento en contenedores pequeños */
+}
+
+.grid-checkbox {
   padding: 10px;
   text-align: center;
   font-size: 0.9em;
