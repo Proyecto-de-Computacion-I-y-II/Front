@@ -46,7 +46,7 @@
       <b> Total:</b> {{ calcularPrecioTotal() | number : "1.2-2" }} €
     </div>
     <div *ngFor="let producto of productosEnCesta">
-      <div class="grid-container">
+      <div [class]="esUltimaCesta ? 'ultima' : 'grid-container'">
         <div class="grid-checkbox" *ngIf="esUltimaCesta">
           <mat-checkbox
             [checked]="estaCompletado(producto)"
@@ -156,7 +156,7 @@
 
   <ng-template #cestaVacia>
     <div class="container">
-      <h1>
+      <h1 class="cesta-vacia">
         No se encontraron productos en su cesta. ¡Agregue alguno para realizar
         una compra!
       </h1>

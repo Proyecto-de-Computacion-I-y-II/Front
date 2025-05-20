@@ -26,6 +26,9 @@ export class CestaComponent implements OnInit, AfterViewInit {
   private cestaId: number = 0;
   isLoading: boolean = true;
   esUltimaCesta: boolean = false;
+  private actualizarDatosTimeout: any;
+  private actualizarCantidadTimeout: { [productId: number]: any } = {};
+  private readonly debounceTime = 500; // Esperar 500ms después del último cambio
 
   constructor(
     private cestaService: CestaService,
@@ -48,7 +51,7 @@ export class CestaComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // No llamamos a renderizarGrafico aquí inicialmente.
+    this.renderizarGrafico();
   }
 
   obtenerProductosDeLaCestaDesdeApi() {
@@ -153,30 +156,53 @@ export class CestaComponent implements OnInit, AfterViewInit {
   decrementarCantidad(producto: any) {
     if (producto.pivot.cantidad > 1) {
       producto.pivot.cantidad--;
-      this.actualizarCestaEnApi(producto, producto.pivot.cantidad);
+      this.debounceActualizarCantidad(producto);
     }
   }
 
   incrementarCantidad(producto: any) {
     producto.pivot.cantidad++;
-    this.actualizarCestaEnApi(producto, producto.pivot.cantidad);
+    this.debounceActualizarCantidad(producto);
+  }
+
+  private debounceActualizarCantidad(producto: any) {
+    const productId = producto.ID_prod;
+    if (this.actualizarCantidadTimeout[productId]) {
+      clearTimeout(this.actualizarCantidadTimeout[productId]);
+    }
+    this.actualizarCantidadTimeout[productId] = setTimeout(() => {
+      this.actualizarCestaEnApi(producto, producto.pivot.cantidad);
+      delete this.actualizarCantidadTimeout[productId]; // Limpiar el timeout después de la ejecución
+    }, this.debounceTime);
+
+    // Actualización optimista de la interfaz (esto ocurre inmediatamente)
+    this.actualizarInterfazCantidad(producto, producto.pivot.cantidad);
+  }
+
+  private actualizarInterfazCantidad(productoLocal: any, cantidad: number) {
+    const productoEnCesta = this.productosEnCesta.find(p => p.ID_prod === productoLocal.ID_prod);
+    if (productoEnCesta) {
+      productoEnCesta.pivot.cantidad = cantidad;
+    }
   }
 
   actualizarCestaEnApi(producto: any, cantidad: number) {
     this.cestaService.modificarCantidadCarrito(producto.ID_prod, cantidad);
-    setTimeout(() => {
-      this.obtenerProductosDeLaCestaDesdeApi();
+    this.debounceActualizarDatos();
+  }
+
+  private debounceActualizarDatos() {
+    if (this.actualizarDatosTimeout) {
+      clearTimeout(this.actualizarDatosTimeout);
+    }
+    this.actualizarDatosTimeout = setTimeout(() => {
       this.obtenerPorcentajesDeLaCesta();
       this.obtenerProductosRecomendados();
-    }, 100);
+      this.actualizarDatosTimeout = null;
+    }, this.debounceTime);
   }
 
   obtenerProductosRecomendados() {
-    if (this.esUltimaCesta) {
-      this.productosRecomendados = [];
-      return;
-    }
-
     this.cestaService.obtenerRecomendacionesCesta(this.idCestaUsuario).subscribe({
       next: (data) => {
         this.productosRecomendados = [];
@@ -295,41 +321,39 @@ export class CestaComponent implements OnInit, AfterViewInit {
     return total;
   }
 
- // Método para comprobar si un producto está marcado como comprado
-estaCompletado(producto: any): boolean {
-  return !!producto.pivot.comprado;
-}
+  // Método para comprobar si un producto está marcado como comprado
+  estaCompletado(producto: any): boolean {
+    return !!producto.pivot.comprado;
+  }
 
-// Método para manejar el cambio en el checkbox
-toggleCompletado(producto: any, event: MatCheckboxChange): void {
-  const isChecked = event.checked;
-  
-  this.http.post(`${this.apiUrl}/cestas/toggle-producto-comprado`, {
-    ID_cesta: this.idCestaUsuario,
-    ID_prod: producto.ID_prod,
-    comprado: isChecked
-  }).subscribe({
-    next: (response: any) => {
-      // Actualizar el estado localmente
-      producto.pivot.comprado = isChecked;
-      
-      this.snackBar.open(
-        isChecked ? 'Producto marcado como comprado' : 'Producto desmarcado como comprado', 
-        'Cerrar', 
-        { duration: 2000 }
-      );
-    },
-    error: (error) => {
-      console.error('Error al actualizar estado del producto:', error);
-      this.snackBar.open('Error al actualizar el estado del producto', 'Cerrar', {
-        duration: 3000
-      });
-      
-      // Revertir el estado del checkbox en caso de error
-      event.source.checked = !isChecked;
-    }
-  });
-}
+  // Método para manejar el cambio en el checkbox
+  toggleCompletado(producto: any, event: MatCheckboxChange): void {
+    const isChecked = event.checked;
 
+    this.http.post(`${this.apiUrl}/cestas/toggle-producto-comprado`, {
+      ID_cesta: this.idCestaUsuario,
+      ID_prod: producto.ID_prod,
+      comprado: isChecked
+    }).subscribe({
+      next: (response: any) => {
+        // Actualizar el estado localmente
+        producto.pivot.comprado = isChecked;
 
+        this.snackBar.open(
+          isChecked ? 'Producto marcado como comprado' : 'Producto desmarcado como comprado',
+          'Cerrar',
+          { duration: 2000 }
+        );
+      },
+      error: (error) => {
+        console.error('Error al actualizar estado del producto:', error);
+        this.snackBar.open('Error al actualizar el estado del producto', 'Cerrar', {
+          duration: 3000
+        });
+
+        // Revertir el estado del checkbox en caso de error
+        event.source.checked = !isChecked;
+      }
+    });
+  }
 }
