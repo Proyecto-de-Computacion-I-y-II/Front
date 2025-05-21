@@ -18,11 +18,10 @@ html, body{
 }
 
 .desktop-nav {
+  position: relative;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
-  align-items: center;
-  flex: 1;
-  gap: 40px;
 }
 
 .perfil img {
@@ -35,22 +34,23 @@ html, body{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
   background-color: white;
+  padding: 15px 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   position: sticky;
   top: 0;
   z-index: 1000;
+  height: auto;
+  min-height: 70px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.toolbar-left,
-.toolbar-right {
+.toolbar-left {
   display: flex;
   align-items: center;
-  flex: 1;
-}
-
-.toolbar-right {
-  justify-content: flex-end;
+  gap: 30px;
+  flex: 0 1 auto; /* Cambiado de flex: 1 para evitar que ocupe demasiado espacio */
 }
 
 .logo {

@@ -1,5 +1,8 @@
 .logo {
   height: 40px;
-  cursor: pointer;
-  flex-shrink: 0; /* Evita que el logo se encoja */
+  flex-shrink: 0;
+}
+
+.footer{
+  background-color: #eee;
 }

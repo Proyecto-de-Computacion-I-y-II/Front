@@ -27,8 +27,8 @@ export class AppComponent implements OnInit {
   isMobileView: boolean = false;
   isListening = false;
   private apiUrl = environment.apiUrl;
-  userData: any = null;
-  avatar: string = `https://ui-avatars.com/api/?name=${this.userData?.nombre}+${this.userData?.apellidos}&background=random&color=fff`;
+
+  
   
 
   recognition: any; // Reconocimiento de voz
@@ -85,8 +85,8 @@ export class AppComponent implements OnInit {
         }
       }).subscribe({
         next: (data: any) => {
-          this.userData = data;
-          this.avatar = `https://ui-avatars.com/api/?name=${data.usuario.nombre}+${data.usuario.apellidos}&background=random&color=fff`;
+          // this.userData = data;
+          // this.avatar = `https://ui-avatars.com/api/?name=${data.usuario.nombre}+${data.usuario.apellidos}&background=random&color=fff`;
         },
         error: (err) => console.error('Error al obtener el usuario:', err)
       });
