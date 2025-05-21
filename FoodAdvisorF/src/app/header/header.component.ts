@@ -9,7 +9,6 @@ import { Router, NavigationEnd } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
-
 declare var webkitSpeechRecognition: any;
 
 @Component({
@@ -31,8 +30,8 @@ export class HeaderComponent implements OnInit {
   userData: any = null;
   avatar: string = '';
   private apiUrl = environment.apiUrl;
-
   recognition: any;
+  isChromeBrowser: boolean = false;
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -43,6 +42,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checkIfChrome();
     this.checkScreenSize();
     this.loadUserData();
 
@@ -57,6 +57,12 @@ export class HeaderComponent implements OnInit {
         this.checkRouteAccess();
       }
     });
+  }
+
+  checkIfChrome() {
+    const userAgent = navigator.userAgent;
+    // Detecta Chrome excluyendo Edge y Opera
+    this.isChromeBrowser = /Chrome/.test(userAgent) && !/Edg|OPR/.test(userAgent);
   }
 
   loadUserData() {
@@ -92,20 +98,19 @@ export class HeaderComponent implements OnInit {
         this.handleSearch();
       };
 
-this.recognition.onerror = (event: any) => {
-  console.error('Error de reconocimiento de voz:', event.error);
+      this.recognition.onerror = (event: any) => {
+        console.error('Error de reconocimiento de voz:', event.error);
 
-  if (event.error === 'network') {
-    alert('Error de red: Verifica tu conexión a Internet.');
-  } else if (event.error === 'not-allowed') {
-    alert('Permiso denegado: Debes permitir el acceso al micrófono.');
-  } else if (event.error === 'no-speech') {
-    alert('No se detectó voz. Intenta hablar de nuevo.');
-  } else {
-    alert(`Error del reconocimiento de voz: ${event.error}`);
-  }
-};
-
+        if (event.error === 'network') {
+          alert('Error de red: Verifica tu conexión a Internet.');
+        } else if (event.error === 'not-allowed') {
+          alert('Permiso denegado: Debes permitir el acceso al micrófono.');
+        } else if (event.error === 'no-speech') {
+          alert('No se detectó voz. Intenta hablar de nuevo.');
+        } else {
+          alert(`Error del reconocimiento de voz: ${event.error}`);
+        }
+      };
 
       this.recognition.onend = () => {
         this.isListening = false;
