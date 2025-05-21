@@ -18,12 +18,10 @@ html, body{
 }
 
 .desktop-nav {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
+  margin: 0 auto;
   display: flex;
-  gap: 40px;
-  white-space: nowrap;
+  justify-content: center;
 }
 
 .perfil img {

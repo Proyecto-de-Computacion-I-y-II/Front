@@ -152,7 +152,7 @@ span {
 
 .botones-bajos{
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   align-items: stretch;
   margin-top: 10%;
 }
@@ -167,7 +167,7 @@ span {
   cursor: pointer;
   transition: background 0.3s ease-in-out;
   display: block;
-  margin: 40px auto; 
+  margin: 40px auto;
 }
 
 .btn-aplicar:hover {
@@ -263,12 +263,31 @@ span {
 
 
 
-.product-price {
-  font-size: 1.1rem;
+.price {
+  font-size: 1.5rem;
   font-weight: bold;
   color: #2c9f51;
+  margin-bottom: 0;
+
 }
 
+
+.product-price {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: center;
+  margin: 0;
+}
+
+.product-market {
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  color: #ff9400;
+}
 
 .pagination {
   display: flex;
@@ -469,7 +488,7 @@ span {
   cursor: pointer;
   transition: background 0.3s ease-in-out;
   display: block;
-  margin: 40px auto; 
+  margin: 40px auto;
   border: none;
 }
 
@@ -536,6 +555,7 @@ span {
 .no-spinner {
   -moz-appearance: textfield;
 }
+
 
 
 
