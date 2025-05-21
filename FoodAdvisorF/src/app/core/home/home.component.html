@@ -387,7 +387,7 @@
             inputmode="numeric"
             (input)="validateRango( this.fibra,'end')"
             (keyup)="validateLetters($event)"
-          />          
+          />
         </div>
       </div>
     </div>
@@ -427,10 +427,10 @@
       <div class="product-info">
         <div class="product-details">
           <h3 class="product-name">{{  keepLastTwoWordsTogether(product.nombre) }}</h3>
-
         </div>
         <div class="product-price">
-          {{ product.precio }}€
+          <h3 class="price">{{ product.precio }}€</h3>
+          <h3 class="product-market">{{this.getSupermercadoNombre(product.idSuper)}}</h3>
         </div>
       </div>
     </div>
