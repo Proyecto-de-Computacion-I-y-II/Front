@@ -92,9 +92,20 @@ export class HeaderComponent implements OnInit {
         this.handleSearch();
       };
 
-      this.recognition.onerror = (event: any) => {
-        console.error('Error de reconocimiento de voz:', event.error);
-      };
+this.recognition.onerror = (event: any) => {
+  console.error('Error de reconocimiento de voz:', event.error);
+
+  if (event.error === 'network') {
+    alert('Error de red: Verifica tu conexión a Internet.');
+  } else if (event.error === 'not-allowed') {
+    alert('Permiso denegado: Debes permitir el acceso al micrófono.');
+  } else if (event.error === 'no-speech') {
+    alert('No se detectó voz. Intenta hablar de nuevo.');
+  } else {
+    alert(`Error del reconocimiento de voz: ${event.error}`);
+  }
+};
+
 
       this.recognition.onend = () => {
         this.isListening = false;
