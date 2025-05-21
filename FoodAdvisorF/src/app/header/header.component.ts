@@ -33,18 +33,22 @@ export class HeaderComponent implements OnInit {
   recognition: any;
   isChromeBrowser: boolean = false;
 
-  constructor(
-    private cdr: ChangeDetectorRef,
-    private router: Router,
-    private http: HttpClient
-  ) {
-    this.setupSpeechRecognition();
-  }
+constructor(
+  private cdr: ChangeDetectorRef,
+  private router: Router,
+  private http: HttpClient
+) {
+  this.checkIfChrome();
+  this.setupSpeechRecognition();
+}
+
 
   ngOnInit(): void {
     this.checkIfChrome();
     this.checkScreenSize();
     this.loadUserData();
+
+    console.log('¿Es Chrome?', this.isChromeBrowser);
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -59,11 +63,12 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  checkIfChrome() {
-    const userAgent = navigator.userAgent;
-    // Detecta Chrome excluyendo Edge y Opera
-    this.isChromeBrowser = /Chrome/.test(userAgent) && !/Edg|OPR/.test(userAgent);
-  }
+checkIfChrome() {
+  const ua = navigator.userAgent;
+  // Detecta Chrome (no Edge, no Opera)
+  const isChrome = /Chrome/.test(ua) && !/Edg|OPR|Opera/.test(ua);
+  this.isChromeBrowser = isChrome;
+}
 
   loadUserData() {
     const token = localStorage.getItem('token');
