@@ -17,7 +17,7 @@
       <button class="search-button" (click)="handleSearch()">
         <mat-icon>search</mat-icon>
       </button>
-      <button class="voice-button" (click)="startVoiceSearch()">
+      <button *ngIf="isChromeBrowser" class="voice-button" (click)="startVoiceSearch()">
         <mat-icon [class.mic-active]="isListening">mic</mat-icon>
       </button>
       <button *ngIf="isMobileView" class="close-search-button" (click)="closeSearchBar()">
