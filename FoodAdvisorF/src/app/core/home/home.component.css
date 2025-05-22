@@ -170,21 +170,11 @@ span {
   margin: 40px auto;
 }
 
-.btn-aplicar:hover {
-  /* background-color: #88CB74 !important; */
-}
-
 .menu-title-2 .title-text {
   font-weight: bold;
   margin-left: 8px;
   font-size: 20px;
-
 }
-
-.menu-title-2 {
-  /* margin: 20px; */
-}
-
 
 /* PRODUCTOS */
 
@@ -461,24 +451,6 @@ span {
 
 }
 
-.sidebar-buttons button {
-  /* padding: 10px;
-  font-weight: bold;
-  font-size: 14px;
-  border: none;
-  border-radius: 8px;
-  background-color: #ff9f43;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  min-width: 250px; */
-}
-
-.sidebar-buttons button:hover {
-  /* background-color: #e07e23; */
-}
-
-
 .btn-limpiar {
   background-color: var(--naranja);
   color: var(--blanco);
@@ -539,9 +511,6 @@ span {
   padding: 2px 4px;
   margin: 0 5px;
 }
-
-
-
 
 
 /* Elimina las flechitas en Chrome, Safari, Edge */

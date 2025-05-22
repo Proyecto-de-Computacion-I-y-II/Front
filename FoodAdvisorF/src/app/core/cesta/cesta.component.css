@@ -89,7 +89,7 @@ h1 {
 .grid-item.precio-producto {
   text-align: right;
   font-weight: bold;
-  color: green;
+  color: var(--verde);
 }
 
 .grid-item.cantidad-producto {
@@ -163,7 +163,7 @@ hr {
 }
 
 .compra button:hover {
-  background-color: #1e7e34;
+  background-color: var(--verde);
 }
 
 .porcentaje button {
@@ -242,7 +242,7 @@ hr {
 .recommended-products-container {
   margin-top: 30px;
   padding: 15px;
-  border: 1px solid #eee;
+  border: 1px solid transparent;
   border-radius: 5px;
   text-align: left;
 }
@@ -257,13 +257,13 @@ hr {
   padding: 0;
 }
 
-.recommended-products-container li {
+/* .recommended-products-container li {
   padding: 8px 0;
   border-bottom: 1px dotted #ccc;
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
+} */
 
 .recommended-products-container li:last-child {
   border-bottom: none;
@@ -298,7 +298,7 @@ hr {
 }
 
 .card {
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden; /* Asegura que la imagen no se salga del borde */

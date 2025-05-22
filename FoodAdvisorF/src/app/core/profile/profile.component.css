@@ -109,14 +109,21 @@
   background-color: var(--rojo);
 }
 
+.profile-buttons .compras:hover {
+  background-color: var(--rojooscuro);
+}
+
 .profile-buttons .cerrar-sesion {
   background-color: var(--naranja);
+}
+
+.profile-buttons .cerrar-sesion:hover {
+  background-color: var(--naranjaoscuro);
 }
 
 
 
 .profile-buttons button:hover {
-  opacity: 0.9;
   transform: scale(1.02);
 }
 

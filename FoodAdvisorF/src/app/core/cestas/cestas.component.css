@@ -44,7 +44,7 @@
 h1 {
   font-size: 24px;
   margin-bottom: 30px;
-  color: #333;
+  color: var(--grisoscuro);
   font-weight: 600;
 }
 
