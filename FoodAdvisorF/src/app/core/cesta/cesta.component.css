@@ -8,13 +8,13 @@
 }
 
 .fondo{
-  background-color: #f3f3f3;
+  background-color: var(--fondogris);
 }
 
 .titulo .title-text {
   font-weight: bold;
   font-size: 24px;
-  color: #333;
+  color: var(--grisoscuro);
   margin-left: 10px;
 }
 
@@ -29,7 +29,7 @@ h1 {
 }
 
 .grid-container {
-  background-color: white;
+  background-color: var(--blanco);
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   gap: 10px;
@@ -46,7 +46,7 @@ h1 {
 }
 
 .ultima {
-  background-color: white;
+  background-color: var(--blanco);
   display: grid;
   grid-template-columns: 60px repeat(auto-fit, minmax(100px, 1fr));
   gap: 10px;
@@ -97,7 +97,7 @@ h1 {
 }
 
 .grid-item.supermercado-producto {
-  color: #777;
+
   font-size: 0.85em;
   text-align: left;
 }
@@ -158,8 +158,8 @@ hr {
 }
 
 .compra button {
-  background-color: #28a745;
-  color: white;
+  background-color: var(--verde);
+  color: var(--blanco);
 }
 
 .compra button:hover {
@@ -220,16 +220,16 @@ hr {
 }
 
 .minus-button {
-  color: #f58634;
+  color: var(--naranja);
   font-weight: bolder;
-  border-color: #f58634;
+  border-color: var(--naranja);
   border-width: 0.20em;
 }
 
 .plus-button {
-  color: #5cb85c;
+  color: var(--verde);
   font-weight: bolder;
-  border-color: #5cb85c;
+  border-color: var(--verde);
   border-width: 0.20em;
 }
 
@@ -270,7 +270,7 @@ hr {
 }
 
 .recommended-supermarket {
-  color: #777;
+
   font-size: 0.9em;
   margin-left: 10px;
 }
@@ -339,7 +339,7 @@ hr {
   align-items: center;
   justify-content: center;
   background-color: #e53935;
-  color: white;
+  color: var(--blanco);
   border: none;
   border-radius: 6px;
   padding: 10px 16px;
@@ -405,7 +405,7 @@ hr {
 }
 
 .delete-confirmation-dialog {
-  background-color: white;
+  background-color: var(--blanco);
   border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
   width: 100%;
@@ -485,7 +485,7 @@ hr {
 
 .confirm-delete-button {
   background-color: #e53935;
-  color: white;
+  color: var(--blanco);
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
@@ -510,7 +510,7 @@ hr {
 }
 
 .delete-confirmation-dialog {
-  background-color: white;
+  background-color: var(--blanco);
   border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
   width: 100%;
@@ -539,7 +539,7 @@ hr {
   margin: 0 30px 20px; /* Misma margen horizontal que el título y un poco de margen inferior */
   font-size: 1.3em; /* Un tamaño de fuente ligeramente mayor */
   font-weight: bold; /* Para que destaque */
-  color: #333; /* Mismo color que el título principal */
+  color: var(--grisoscuro); /* Mismo color que el título principal */
 }
 
 .total-cesta b {
@@ -548,18 +548,18 @@ hr {
 
 /* Estilos para la cesta vacía */
 .cesta-vacia {
-  color: #777;
+
   font-size: 1.5em;
   text-align: center;
   padding: 30px;
-  background-color: white;
+  background-color: var(--blanco);
   border-radius: 8px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin: 30px;
 }
 
 .container {
-  background-color: #f3f3f3; /* El mismo color de fondo que la clase .fondo */
+  background-color: var(--fondogris);
   padding-bottom: 20px; /* Añade un padding inferior para el espacio gris */
 }
 .loading-spinner-overlay {
@@ -582,7 +582,7 @@ hr {
   display: inline-block;
   position: relative;
   border: 6px solid; /* Aumentamos el grosor del borde */
-  border-color: #f58634 #f58634 transparent transparent;
+  border-color: var(--naranja) var(--naranja) transparent transparent;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
@@ -598,7 +598,7 @@ hr {
   bottom: 0;
   margin: auto;
   border: 6px solid; /* Aumentamos el grosor del borde */
-  border-color: transparent transparent #5cb85c #5cb85c;
+  border-color: transparent transparent var(--verde) var(--verde);
   width: 80px; /* Aumentamos el tamaño */
   height: 80px; /* Aumentamos el tamaño */
   border-radius: 50%;
@@ -609,7 +609,7 @@ hr {
 .spinner-large::before {
   width: 64px; /* Aumentamos el tamaño */
   height: 64px; /* Aumentamos el tamaño */
-  border-color: #f58634 #f58634 transparent transparent;
+  border-color: var(--naranja) var(--naranja) transparent transparent;
   animation: rotation 1.5s linear infinite;
 }
 

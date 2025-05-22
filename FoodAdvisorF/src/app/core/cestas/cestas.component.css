@@ -6,7 +6,7 @@
 }
 
 .fondo{
-  background-color: #f3f3f3;
+  background-color: var(--fondogris);
   min-height: 100vh;
 }
 
@@ -17,8 +17,8 @@
 
 .cesta-actual{
   display: inline-block;
-  color: #f58634;
-  border:2px solid #69b550;
+  color: var(--naranja);
+  border:2px solid var(--verde);
   border-radius: 5px;
   padding: 0.25em;
   height: 15%;
@@ -104,7 +104,7 @@ h1 {
   padding: 28px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
   transition: all 0.3s ease;
-  background-color: white;
+  background-color: var(--blanco);
   position: relative;
   overflow: hidden;
   margin: 0 auto; /* Centrado horizontal */
@@ -176,7 +176,7 @@ h1 {
 
 .cesta-info p::before {
   content: "•";
-  color: #69b550;
+  color: var(--verde);
   margin-right: 10px;
   font-size: 18px;
 }
@@ -188,8 +188,8 @@ h1 {
 }
 
 .btn-detalles {
-  background-color: #69b550;
-  color: white;
+  background-color: var(--verde);
+  color: var(--blanco);
   border: none;
   padding: 12px 24px;
   border-radius: 6px;
@@ -204,10 +204,10 @@ h1 {
 }
 
 .btn-crear-cesta {
-  background-color: #69b550;
+  background-color: var(--verde);
   justify-self: flex-end;
   align-self: flex-end;
-  color: white;
+  color: var(--blanco);
   text-align: center;
   border: none;
   border-radius: 6px;
@@ -228,7 +228,7 @@ h1 {
 }
 
 .create-confirmation-dialog {
-  background-color: white;
+  background-color: var(--blanco);
   border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
   width: 100%;
@@ -261,7 +261,7 @@ h1 {
 
 .create-dialog-icon {
   background-color: #d5f0cc;
-  color: #69b550;
+  color: var(--verde);
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -310,8 +310,8 @@ h1 {
 }
 
 .confirm-create-button {
-  background-color: #69b550;
-  color: white;
+  background-color: var(--verde);
+  color: var(--blanco);
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
@@ -359,7 +359,7 @@ h1 {
 }
 
 .fecha-info {
-  color: #777;
+
   font-style: italic;
 }
 
@@ -371,7 +371,7 @@ h1 {
   display: inline-block;
   position: relative;
   border: 3px solid;
-  border-color: #f58634 #f58634 transparent transparent;
+  border-color: var(--naranja) var(--naranja) transparent transparent;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
@@ -386,7 +386,7 @@ h1 {
   bottom: 0;
   margin: auto;
   border: 3px solid;
-  border-color: transparent transparent #5cb85c #5cb85c;
+  border-color: transparent transparent var(--verde) var(--verde);
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -396,7 +396,7 @@ h1 {
 .spinner::before {
   width: 32px;
   height: 32px;
-  border-color: #f58634 #f58634 transparent transparent;
+  border-color: var(--naranja) var(--naranja) transparent transparent;
   animation: rotation 1.5s linear infinite;
 }
 

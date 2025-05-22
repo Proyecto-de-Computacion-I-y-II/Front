@@ -27,14 +27,14 @@ html, body{
 .perfil img {
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #37C666;
+  border: 3px solid var(--verde);
 }
 
 .custom-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: var(--blanco);
   padding: 15px 30px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   position: sticky;
@@ -92,7 +92,7 @@ html, body{
   outline: none;
   flex-grow: 1;
   font-size: 15px;
-  color: #333;
+  color: var(--grisoscuro);
   padding: 8px 0;
   width: 100%;
 }
@@ -116,7 +116,7 @@ html, body{
 }
 
 .mic-active {
-  color: #f58634 !important;
+  color: var(--naranja) !important;
 }
 
 .desktop-nav {
@@ -128,7 +128,7 @@ html, body{
 }
 
 .desktop-nav a {
-  color: #333;
+  color: var(--grisoscuro);
   text-decoration: none;
   font-weight: 500;
   padding: 5px 0;
@@ -143,11 +143,11 @@ html, body{
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #f58634;
+  background-color: var(--naranja);
 }
 
 .desktop-nav .admin.active::after {
-  background-color: #88CB74;
+  background-color: var(--verde);
 }
 
 .toolbar-right {
@@ -162,7 +162,7 @@ html, body{
   background: none;
   border: none;
   cursor: pointer;
-  color: #333;
+  color: var(--grisoscuro);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -177,7 +177,7 @@ html, body{
 }
 
 .cart-button {
-  background-color: #88CB74;
+  background-color: var(--verde);
   border-radius: 50%;
   width: 45px;
   height: 45px;
@@ -190,7 +190,7 @@ html, body{
 }
 
 .cart-button mat-icon {
-  color: black;
+  color: var(--negro);
   font-size: 22px;
 }
 
@@ -210,8 +210,8 @@ html, body{
 }
 
 .login-button {
-  background-color: #f58634;
-  color: white;
+  background-color: var(--naranja);
+  color: var(--blanco);
   padding: 8px 20px;
   font-size: 15px;
   flex-shrink: 0; /* Evita que el botón de login se encoja */
@@ -236,7 +236,7 @@ html, body{
   display: block;
   width: 100%;
   height: 3px;
-  background-color: #333;
+  background-color: var(--grisoscuro);
   border-radius: 3px;
   transition: all 0.3s ease;
 }
@@ -257,7 +257,7 @@ html, body{
 .mobile-nav {
   display: none;
   flex-direction: column;
-  background-color: white;
+  background-color: var(--blanco);
   position: fixed;
   top: 70px; /* Ajusta según la altura de tu header */
   left: 0;
@@ -291,18 +291,18 @@ html, body{
 .mobile-nav a {
   padding: 18px 25px;
   border-bottom: 1px solid #eee;
-  color: #333;
+  color: var(--grisoscuro);
   text-decoration: none;
   font-size: 16px;
 }
 
 .mobile-nav a.active {
-  color: #f58634;
+  color: var(--naranja);
   background-color: #f9f9f9;
 }
 
 .mobile-nav .admin.active {
-  color: #88CB74;
+  color: var(--verde);
 }
 
 .content{
@@ -433,7 +433,7 @@ html, body{
   top: 0;
   left: 0;
   right: 0;
-  background-color: #ffffff !important;
+  background-color: var(--blanco) !important;
   padding: 12px 16px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.3);
   z-index: 9999; /* Valor muy alto para asegurar que esté por encima de todo */
@@ -444,7 +444,7 @@ html, body{
   width: 100%;
   box-sizing: border-box;
   /* Fondo sólido adicional para evitar transparencia */
-  background-image: linear-gradient(to bottom, #ffffff, #ffffff);
+  background-image: linear-gradient(to bottom, var(--blanco), var(--blanco));
 }
 
 /* Eliminar cualquier transparencia */
@@ -459,15 +459,15 @@ html, body{
   border-radius: 22px;
   padding: 0 20px;
   font-size: 16px;
-  background-color: #ffffff !important;
-  color: #333333;
+  background-color: var(--blanco) !important;
+  color: var(--grisoscuro);
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
   width: 100%;
 }
 
 .search-container-mobile .search-button {
-  background-color: #4caf50 !important;
-  color: white;
+  background-color: var(--verde) !important;
+  color: var(--blanco);
   border: none;
   width: 44px;
   height: 44px;
@@ -503,6 +503,6 @@ html, body{
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ffffff !important;
+  background-color: var(--blanco) !important;
   z-index: 9998;
 }

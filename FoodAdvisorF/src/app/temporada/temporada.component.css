@@ -5,13 +5,13 @@
   display: inline-block;
   position: relative;
   border: 3px solid;
-  border-color: #f58634 #f58634 transparent transparent;
+  border-color: var(--naranja) var(--naranja) transparent transparent;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
 
 .content{
-background-color: #f3f3f3;
+background-color: var(--fondogris);
 min-height: 100vh;
 }
 
@@ -26,7 +26,7 @@ min-height: 100vh;
   bottom: 0;
   margin: auto;
   border: 3px solid;
-  border-color: transparent transparent #5cb85c #5cb85c;
+  border-color: transparent transparent var(--verde) var(--verde);
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -36,7 +36,7 @@ min-height: 100vh;
 .spinner::before {
   width: 32px;
   height: 32px;
-  border-color: #f58634 #f58634 transparent transparent;
+  border-color: var(--naranja) var(--naranja) transparent transparent;
   animation: rotation 1.5s linear infinite;
 }
 
@@ -70,6 +70,7 @@ min-height: 100vh;
     height: 30vh;
   }
 
+
   /* .subtitle-container {
     display: flex;
     margin-left: 5vh;
@@ -91,7 +92,7 @@ min-height: 100vh;
 
 .product-card {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.20);
-  background: #ffffff !important;
+  background: var(--blanco) !important;
   border-radius: 7%;
   text-align: center;
   cursor: pointer;
@@ -110,7 +111,7 @@ min-height: 100vh;
   border-top-left-radius: 23%;
     border-top-right-radius: 23%;
   object-fit: contain;
-  border-bottom: 2px dotted #2c9f51;
+  border-bottom: 2px dotted var(--verde);
   padding: 15px;
 
 }
@@ -164,7 +165,7 @@ min-height: 100vh;
 
 
 .desktop-nav a {
-  color: #333;
+  color: var(--grisoscuro);
   text-decoration: none;
   font-weight: 500;
   padding: 5px 0;
@@ -179,7 +180,7 @@ min-height: 100vh;
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #f58634;
+  background-color: var(--naranja);
 }
 
 .wrapper {

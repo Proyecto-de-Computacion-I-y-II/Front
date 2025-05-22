@@ -7,12 +7,11 @@
   .image-wrapper {
     position: relative;
     width: 100%;
-    height: 90vh;
     overflow: hidden;
   }
 
   .product-grid{
-    color: #f58634;
+    color: var(--naranja);
   }
 
   .image-wrapper img.background {
@@ -41,8 +40,8 @@
   }
 
   .logo-container {
-    background-color: white;
-    padding: 0.1  rem;
+    background-color: var(--blanco);
+    padding: 0.1 rem;
     border-radius: 1rem;
     display: flex;
     justify-content: center;
@@ -73,11 +72,11 @@
   }
 
   .title span.food {
-    color: #f58634;
+    color: var(--naranja);
   }
 
   .title span.advisor {
-    color: #69b550;
+    color: var(--verde);
   }
 
   .description {

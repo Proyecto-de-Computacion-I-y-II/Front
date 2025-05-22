@@ -20,7 +20,7 @@ mat-icon {
   margin-left: 100px;
   margin-right: 100px;
   padding: 10px;
-  background-color: #ffffff;
+  background-color: var(--blanco);
 }
 
 .columns-container {
@@ -82,18 +82,18 @@ select {
 /* Estilo para los mat-select */
 mat-select {
   border-radius: 8px;
-  background-color: #F3F3F3; /* Fondo gris claro */
+  background-color: var(--fondogris); /* Fondo gris claro */
   width: 100%;
   max-width: 360px;
   font-size: 12px;
   padding: 6px;
-  border: 1px groove #2c9f51;
+  border: 1px groove var(--verde);
 }
 
 
 
 mat-select .mat-select-arrow {
-  color: black;
+  color: var(--negro);
 }
 
 
@@ -158,8 +158,8 @@ span {
 }
 
 .btn-aplicar {
-  background-color: #88CB74;
-  color: white;
+  background-color: var(--verde);
+  color: var(--blanco);
   padding: 10px 20px;
   border-radius: 25px;
   font-size: 16px;
@@ -203,7 +203,7 @@ span {
 
 .product-card {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.20);
-  background: #ffffff !important;
+  background: var(--blanco) !important;
   border-radius: 7%;
   text-align: center;
   cursor: pointer;
@@ -222,7 +222,7 @@ span {
   border-top-left-radius: 23%;
     border-top-right-radius: 23%;
   object-fit: contain;
-  border-bottom: 2px dotted #2c9f51;
+  border-bottom: 2px dotted var(--verde);
   padding: 15px;
 
 }
@@ -266,7 +266,7 @@ span {
 .price {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #2c9f51;
+  color: var(--verde);
   margin-bottom: 0;
 
 }
@@ -286,7 +286,7 @@ span {
   font-weight: bold;
   text-align: center;
   margin: 0;
-  color: #ff9400;
+  color: var(--naranja);
 }
 
 .pagination {
@@ -302,12 +302,12 @@ span {
 }
 
 .fondo{
-  background-color: #f3f3f3;
+  background-color: var(--fondogris);
   min-height: 100vh;
 }
 
 .filtros_av{
-  border: 1px solid #2c9f51;
+  border: 1px solid var(--verde);
   width: 100%;
 }
 
@@ -321,8 +321,8 @@ span {
 }
 
 .pagination button.active {
-  background-color: #ff9f43;
-  color: white;
+  background-color: var(--naranja);
+  color: var(--blanco);
   font-weight: bold;
 }
 
@@ -347,7 +347,7 @@ span {
   display: inline-block;
   position: relative;
   border: 3px solid;
-  border-color: #f58634 #f58634 transparent transparent;
+  border-color: var(--naranja) var(--naranja) transparent transparent;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
@@ -362,7 +362,7 @@ span {
   bottom: 0;
   margin: auto;
   border: 3px solid;
-  border-color: transparent transparent #5cb85c #5cb85c;
+  border-color: transparent transparent var(--verde) var(--verde);
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -372,7 +372,7 @@ span {
 .spinner::before {
   width: 32px;
   height: 32px;
-  border-color: #f58634 #f58634 transparent transparent;
+  border-color: var(--naranja) var(--naranja) transparent transparent;
   animation: rotation 1.5s linear infinite;
 }
 
@@ -400,8 +400,8 @@ span {
 .toggle-sidebar {
   margin: 16px;
   padding: 8px 12px;
-  background-color: #f58634;
-  color: white;
+  background-color: var(--naranja);
+  color: var(--blanco);
   border: none;
   cursor: pointer;
   font-weight: bold;
@@ -480,8 +480,8 @@ span {
 
 
 .btn-limpiar {
-  background-color: #f58634;
-  color: white;
+  background-color: var(--naranja);
+  color: var(--blanco);
   padding: 10px 20px;
   border-radius: 25px;
   font-size: 16px;
@@ -523,8 +523,8 @@ span {
 
 .limpiar {
   padding: 8px 12px;
-  background-color: #5cb85c;
-  color: white;
+  background-color: var(--verde);
+  color: var(--blanco);
   border: none;
   cursor: pointer;
   font-weight: bold;
@@ -555,8 +555,3 @@ span {
 .no-spinner {
   -moz-appearance: textfield;
 }
-
-
-
-
-
