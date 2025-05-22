@@ -16,3 +16,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 * {
   font-family: 'Poppins', sans-serif;
 }
+
+button {
+  transition: transform 0.2s ease;
+  border-radius: 7px;
+  box-shadow: 0 1px 3px var(--negro);
+}
+
+button:hover {
+  transform: scale(1.02);
+}
