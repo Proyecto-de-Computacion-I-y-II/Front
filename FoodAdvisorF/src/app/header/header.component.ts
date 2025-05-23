@@ -39,17 +39,15 @@ export class HeaderComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private http: HttpClient,
-    private configuracionService: ConfiguracionService // ✅ INYECTAR EL SERVICIO
+    private configuracionService: ConfiguracionService
   ) {
     this.checkIfChrome();
     this.setupSpeechRecognition();
   }
 
   ngOnInit(): void {
-    // ✅ REEMPLAZAR colorHeader() CON EL SERVICIO
     this.headerBackgroundColor = this.configuracionService.getHeaderColor();
     
-    // ✅ ASEGURAR QUE EL COLOR SE ACTUALICE CUANDO ESTÉ DISPONIBLE
     this.updateHeaderColorFromService();
     
     this.checkIfChrome();
@@ -72,7 +70,6 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  // ✅ MÉTODO PARA ACTUALIZAR EL COLOR DESDE EL SERVICIO
   private updateHeaderColorFromService(): void {
     // Esto asegura que el componente tenga el color más actualizado
     setTimeout(() => {
@@ -81,13 +78,21 @@ export class HeaderComponent implements OnInit {
       console.log('🎨 Color del header actualizado desde servicio:', this.headerBackgroundColor);
     }, 100);
   }
+checkIfChrome() {
+  const ua = navigator.userAgent;
+  const isChrome = /Chrome/.test(ua) && !/Edg|OPR|Opera/.test(ua);
 
-  checkIfChrome() {
-    const ua = navigator.userAgent;
-    // Detecta Chrome (no Edge, no Opera)
-    const isChrome = /Chrome/.test(ua) && !/Edg|OPR|Opera/.test(ua);
+  const isBraveCandidate = (navigator as any).brave && typeof (navigator as any).brave.isBrave === 'function';
+
+  if (isBraveCandidate) {
+    (navigator as any).brave.isBrave().then((isBrave: boolean) => {
+      this.isChromeBrowser = isChrome && !isBrave;
+      this.cdr.detectChanges(); // Asegura que Angular actualice la vista si cambia el valor
+    });
+  } else {
     this.isChromeBrowser = isChrome;
   }
+}
 
   loadUserData() {
     const token = localStorage.getItem('token');
