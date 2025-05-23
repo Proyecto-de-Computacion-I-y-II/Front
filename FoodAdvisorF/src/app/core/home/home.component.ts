@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Categoria } from '../../security/models/categoria';
+import { NivelPiramide } from '../../security/models/nivel-piramide';
 import { Product } from '../../security/models/product';
 import { Subcategoria } from '../../security/models/subcategoria';
 import { Subcategoria2 } from '../../security/models/subcategoria2';
 import { CommunicationService } from '../../shared/services/communicacion/communication.service';
+import { NivelesPiramideService } from '../services/nivel-piramide/niveles-piramide.service';
 import { ProductService } from '../services/product/product.service';
 import { SupermarketService } from '../services/supermarket/supermarket.service';
-import {NivelPiramide} from '../../security/models/nivel-piramide';
-import {NivelesPiramideService} from '../services/nivel-piramide/niveles-piramide.service';
 
 @Component({
   selector: 'app-home',
@@ -65,10 +65,9 @@ export class HomeComponent implements OnInit {
   }
 
   aplicarFiltros() {
-    console.log('Aplicando filtros...');
 
     const filtros: any = {};
-
+    console.log('currentPage', this.currentPage);
 
     //filtro niveles
     if (this.selectedNiveles.length > 0) {
@@ -127,22 +126,20 @@ export class HomeComponent implements OnInit {
       filtros.nombre = this.nombre;
     }
 
-    console.log('Filtros enviados:', filtros);
 
+    
     this.isLoading = true;
-
-    this.initPage();
 
 
     this.productService.filtrarProductos(filtros, this.currentPage).subscribe(
       (response: any) => {
         this.products = response.productos;
         this.totalPages = response.total_paginas || 1;
+        console.log('pagina_actual', response.pagina_actual);
         this.currentPage = response.pagina_actual || 1;
         this.updateVisiblePages();
         this.isLoading = false;
         this.sidebarOpen = false;
-        console.log(this.products);
       },
       (error) => {
         console.error('Error al aplicar filtros', error);
@@ -210,12 +207,7 @@ export class HomeComponent implements OnInit {
               private route: ActivatedRoute) {
   }
 
-
-
   ngOnInit() {
-
-
-
     let loggedIn: boolean = false;
     if (localStorage.getItem('token')) {
       loggedIn = true;
@@ -265,7 +257,6 @@ export class HomeComponent implements OnInit {
       if (charged_filter) {
         this.route.queryParams.subscribe(params => {
           this.nombre = params['search'] || '';
-          console.log('Búsqueda en HomeComponent:', this.nombre);
           if(this.nombre != '') {
             this.titulo = "Resultados para ''" + this.nombre + "''";
           }
@@ -300,7 +291,6 @@ export class HomeComponent implements OnInit {
 
   // Función para redirigir al detalle del producto
   goToProductDetail(productId: number) {
-    console.log('Navegando a producto con ID:', productId);
     this.router.navigate(['/producto-detalle', productId]);
   }
 
@@ -312,7 +302,6 @@ export class HomeComponent implements OnInit {
   changePage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
       this.isLoading = true;
-
       this.currentPage = page;
       this.updatePagedProducts();
     }
@@ -321,7 +310,7 @@ export class HomeComponent implements OnInit {
   updatePagedProducts() {
     this.isLoading = true;
 
-   this.aplicarFiltros();
+    this.aplicarFiltros();
 
     this.updateVisiblePages();
   }
@@ -364,8 +353,6 @@ export class HomeComponent implements OnInit {
     }
 
     this.visiblePages = Array.from({ length: end - start + 1 }, (_, i) => start + i);
-
-
   }
 
 
