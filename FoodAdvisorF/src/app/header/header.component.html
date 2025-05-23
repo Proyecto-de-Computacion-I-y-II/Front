@@ -1,4 +1,4 @@
-<mat-toolbar class="custom-toolbar" *ngIf="showHeader">
+<mat-toolbar class="custom-toolbar" *ngIf="showHeader" [ngStyle]="{'background-color': headerBackgroundColor}">
   <div class="toolbar-left">
     <img src="logo.png" alt="Food Advisor Logo" class="logo" [routerLink]="['/home']" />
 
@@ -69,7 +69,7 @@
 </mat-toolbar>
 
 <!-- Menú móvil -->
-<div class="mobile-nav" [ngClass]="{'show-mobile-menu': showMobileMenu}">
+<div class="mobile-nav" [ngClass]="{'show-mobile-menu': showMobileMenu}" [ngStyle]="{'background-color': headerBackgroundColor}">
   <a mat-button [routerLink]="['/inicio']" routerLinkActive="active" (click)="closeMobileMenu()">Inicio</a>
   <a mat-button [routerLink]="['/home']" routerLinkActive="active" (click)="closeMobileMenu()">Productos</a>
   <a mat-button [routerLink]="['/temporada']" routerLinkActive="active" (click)="closeMobileMenu()">Productos de temporada</a>

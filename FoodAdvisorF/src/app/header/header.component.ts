@@ -32,6 +32,7 @@ export class HeaderComponent implements OnInit {
   private apiUrl = environment.apiUrl;
   recognition: any;
   isChromeBrowser: boolean = false;
+  headerBackgroundColor: string = '#FFFFFF';
 
 constructor(
   private cdr: ChangeDetectorRef,
@@ -44,11 +45,13 @@ constructor(
 
 
   ngOnInit(): void {
+    this.colorHeader();
     this.checkIfChrome();
     this.checkScreenSize();
     this.loadUserData();
 
     console.log('¿Es Chrome?', this.isChromeBrowser);
+    console.log('Color del header:', this.headerBackgroundColor);
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -243,5 +246,31 @@ checkIfChrome() {
 
   irPerfil() {
     this.router.navigate(['/profile']);
+  }
+
+  colorHeader(): void {
+    // Llama a la API para obtener el color del header
+    const url = `${this.apiUrl}/configuracion/color-header`;
+
+    this.http.get<any>(url).subscribe({
+      next: (response) => {
+        // Tu API devuelve una propiedad 'valor' que contiene el color.
+        if (response && response.valor) {
+          console.log('Respuesta de la API:', response);
+          this.headerBackgroundColor = response.valor;
+          console.log('Color del header actualizado a:', this.headerBackgroundColor);
+        } else {
+          // Esto puede ocurrir si la API devuelve un objeto vacío o una estructura diferente.
+          console.warn('La respuesta de la API no contiene el valor de color esperado.', response);
+          this.headerBackgroundColor = '#FFFFFF'; // Color por defecto en caso de respuesta inesperada
+        }
+      },
+      error: (error) => {
+        console.error('Error al obtener el color del header desde la API:', error);
+        // Establece un color de fallback (blanco) si la llamada a la API falla por completo.
+        this.headerBackgroundColor = '#FFFFFF';
+      }
+    });
+    console.log('Color del header actual:', this.headerBackgroundColor);
   }
 }

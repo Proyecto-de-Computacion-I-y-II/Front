@@ -34,7 +34,6 @@ html, body{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--blanco);
   padding: 15px 30px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   position: sticky;
@@ -259,7 +258,6 @@ html, body{
 .mobile-nav {
   display: none;
   flex-direction: column;
-  background-color: var(--blanco);
   position: fixed;
   top: 70px; /* Ajusta según la altura de tu header */
   left: 0;
