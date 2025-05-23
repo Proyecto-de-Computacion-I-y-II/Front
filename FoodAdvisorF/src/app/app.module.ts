@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { FormsModule } from '@angular/forms';
@@ -38,6 +38,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AjustesComponent } from './core/ajustes/ajustes.component';
 
+// ✅ IMPORTAR EL SERVICIO Y LA FUNCIÓN FACTORY
+import { ConfiguracionService, initializeConfig } from './services/configuracion.service';
 
 @NgModule({
   declarations: [
@@ -80,12 +82,23 @@ import { AjustesComponent } from './core/ajustes/ajustes.component';
     MatCheckboxModule,
     MatListModule,
     MatProgressSpinnerModule
-
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
-     } // Proper registration for class-based interceptor
+    { 
+      provide: HTTP_INTERCEPTORS, 
+      useClass: AuthInterceptor, 
+      multi: true
+    },
+    // ✅ AÑADIR EL SERVICIO DE CONFIGURACIÓN
+    ConfiguracionService,
+    // ✅ CONFIGURAR APP_INITIALIZER PARA CARGAR EL COLOR ANTES DE RENDERIZAR
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeConfig,
+      deps: [ConfiguracionService],
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

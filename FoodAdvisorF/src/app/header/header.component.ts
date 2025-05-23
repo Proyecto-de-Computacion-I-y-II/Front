@@ -8,6 +8,7 @@ import {
 import { Router, NavigationEnd } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { ConfiguracionService } from '../services/configuracion.service'; // ✅ IMPORTAR EL SERVICIO
 
 declare var webkitSpeechRecognition: any;
 
@@ -34,18 +35,23 @@ export class HeaderComponent implements OnInit {
   isChromeBrowser: boolean = false;
   headerBackgroundColor: string = '#FFFFFF';
 
-constructor(
-  private cdr: ChangeDetectorRef,
-  private router: Router,
-  private http: HttpClient
-) {
-  this.checkIfChrome();
-  this.setupSpeechRecognition();
-}
-
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private router: Router,
+    private http: HttpClient,
+    private configuracionService: ConfiguracionService // ✅ INYECTAR EL SERVICIO
+  ) {
+    this.checkIfChrome();
+    this.setupSpeechRecognition();
+  }
 
   ngOnInit(): void {
-    this.colorHeader();
+    // ✅ REEMPLAZAR colorHeader() CON EL SERVICIO
+    this.headerBackgroundColor = this.configuracionService.getHeaderColor();
+    
+    // ✅ ASEGURAR QUE EL COLOR SE ACTUALICE CUANDO ESTÉ DISPONIBLE
+    this.updateHeaderColorFromService();
+    
     this.checkIfChrome();
     this.checkScreenSize();
     this.loadUserData();
@@ -66,12 +72,22 @@ constructor(
     });
   }
 
-checkIfChrome() {
-  const ua = navigator.userAgent;
-  // Detecta Chrome (no Edge, no Opera)
-  const isChrome = /Chrome/.test(ua) && !/Edg|OPR|Opera/.test(ua);
-  this.isChromeBrowser = isChrome;
-}
+  // ✅ MÉTODO PARA ACTUALIZAR EL COLOR DESDE EL SERVICIO
+  private updateHeaderColorFromService(): void {
+    // Esto asegura que el componente tenga el color más actualizado
+    setTimeout(() => {
+      this.headerBackgroundColor = this.configuracionService.getHeaderColor();
+      this.cdr.detectChanges(); // Forzar detección de cambios
+      console.log('🎨 Color del header actualizado desde servicio:', this.headerBackgroundColor);
+    }, 100);
+  }
+
+  checkIfChrome() {
+    const ua = navigator.userAgent;
+    // Detecta Chrome (no Edge, no Opera)
+    const isChrome = /Chrome/.test(ua) && !/Edg|OPR|Opera/.test(ua);
+    this.isChromeBrowser = isChrome;
+  }
 
   loadUserData() {
     const token = localStorage.getItem('token');
@@ -246,31 +262,5 @@ checkIfChrome() {
 
   irPerfil() {
     this.router.navigate(['/profile']);
-  }
-
-  colorHeader(): void {
-    // Llama a la API para obtener el color del header
-    const url = `${this.apiUrl}/configuracion/color-header`;
-
-    this.http.get<any>(url).subscribe({
-      next: (response) => {
-        // Tu API devuelve una propiedad 'valor' que contiene el color.
-        if (response && response.valor) {
-          console.log('Respuesta de la API:', response);
-          this.headerBackgroundColor = response.valor;
-          console.log('Color del header actualizado a:', this.headerBackgroundColor);
-        } else {
-          // Esto puede ocurrir si la API devuelve un objeto vacío o una estructura diferente.
-          console.warn('La respuesta de la API no contiene el valor de color esperado.', response);
-          this.headerBackgroundColor = '#FFFFFF'; // Color por defecto en caso de respuesta inesperada
-        }
-      },
-      error: (error) => {
-        console.error('Error al obtener el color del header desde la API:', error);
-        // Establece un color de fallback (blanco) si la llamada a la API falla por completo.
-        this.headerBackgroundColor = '#FFFFFF';
-      }
-    });
-    console.log('Color del header actual:', this.headerBackgroundColor);
   }
 }
