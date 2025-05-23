@@ -1,3 +1,39 @@
+h2 {
+  font-family: 'Poppins', sans-serif;
+}
+
+.heading {
+  text-align: center;
+  font-size: 4rem;
+  color: var(--grisoscuro); 
+  padding: 1rem;
+  margin: 2rem 0;
+  background: var(--verdeclaro);
+}
+
+h2.heading {
+  font-size: 2rem;
+  font-weight: 200;
+}
+
+h2.heading span {
+  font-size: 2rem;
+  color: var(--verde);
+  font-weight: 600;
+}
+
+  .separator {
+    width: 2px;
+    background-color: #ccc;
+    height: 200px; /* altura de la línea, ajusta según contenido */
+    align-self: center;
+  }
+
+p{
+  font-family: 'Inter', sans-serif;
+  font-weight: 200;
+}
+
 .image-wrapper {
   position: relative;
   width: 100%;
