@@ -271,4 +271,13 @@ export class AdminComponent implements OnInit {
       options: chartOptions
     });
   }
+
+  obtenerInicialesUsuario(id: number): string {
+    const nombreCompleto = this.obtenerNombreUsuario(id);
+    if (!nombreCompleto) return '';
+    const palabras = nombreCompleto.trim().split(' ');
+    const iniciales = palabras.slice(0, 2).map(p => p[0].toUpperCase()).join('');
+    return iniciales;
+  }
+
 }

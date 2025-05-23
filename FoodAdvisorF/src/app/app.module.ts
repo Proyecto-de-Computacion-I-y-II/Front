@@ -34,6 +34,9 @@ import { SubproductosTemporadaComponent } from './subproductos-temporada/subprod
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AjustesComponent } from './core/ajustes/ajustes.component';
 
 
 @NgModule({
@@ -52,7 +55,8 @@ import { FooterComponent } from './footer/footer.component';
     NotFoundComponent,
     AdminComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    AjustesComponent
   ],
   imports: [
     MatExpansionModule,
@@ -74,11 +78,14 @@ import { FooterComponent } from './footer/footer.component';
     MatDrawer,
     MatDrawerContainer,
     MatCheckboxModule,
+    MatListModule,
+    MatProgressSpinnerModule
 
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true } // Proper registration for class-based interceptor
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true
+     } // Proper registration for class-based interceptor
   ],
   bootstrap: [AppComponent]
 })

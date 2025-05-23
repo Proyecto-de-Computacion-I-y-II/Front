@@ -1,19 +1,51 @@
+/* ---------- CONTENEDOR GENERAL ---------- */
 .admin-container {
-  padding: 30px;
-  background-color: #f4f4f4;
-  min-height: 100vh;
+  padding: 2rem;
+  background-color: #f7f7f7;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-user {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-self: center;
+  gap: 10px;
+  width: 100%;
 }
 
 .admin-title {
+  margin-bottom: 2rem;
   text-align: center;
-  font-size: 2.5rem;
   font-weight: 700;
+ 
   margin-bottom: 40px;
   color: var(--grisoscuro);
+
+  font-size: 2rem;
+
 }
 
+/* ---------- PANEL DE ESTADÍSTICAS ---------- */
+.stats-panel {
+  max-width: 400px;
+  margin: 0 auto 2rem auto;
+  padding: 1.5rem;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* ---------- PANEL PRINCIPAL ---------- */
 .admin-panel {
   display: flex;
+ 
   justify-content: start;
   align-items: flex-start;
   gap: 40px;
@@ -79,10 +111,14 @@
 
 .productos-grid {
   display: flex;
+
+
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 2rem;
+  justify-content: center;
 }
 
+ 
 .producto-card {
   flex: 0 0 calc(25% - 20px); /* 4 por fila con espacio */
   max-width: 200px;
@@ -127,42 +163,92 @@
   background-color: #fff6f6;
   border: 2px solid #ffcccc;
   padding: 20px;
+}
+/* ---------- COLUMNA IZQUIERDA: USUARIOS ---------- */
+.usuarios-columna {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  min-width: 260px;
+  background-color: #ffffff;
+
   border-radius: 10px;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
+  padding: 0.5rem 0.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.fecha-box {
-  background-color: #f0f0f0;
-  border: 2px solid #aaa;
-  padding: 16px 20px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  display: flex;
-  justify-content: space-between;
+/* “Botones” de usuario */
+mat-list-item {
+  display: flex !important;
   align-items: center;
+  padding: 0.75rem 1rem !important;
+  margin: 0 !important;
+  border-radius: 20px !important;
+  min-height: 70px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s ease !important;
+}
+mat-list-item + mat-list-item {
+  margin-top: 0.5rem !important;
+}
+mat-list-item:hover {
+  background-color: #f5f5f5 !important;
+}
+mat-list-item.seleccionado {
+  background-color: #d0f5d0 !important;
 }
 
+ 
 .fecha-box.expandida {
   background-color: #d9fdd3;
   border-color: var(--verde);
+
+/* Avatar de Angular Material */
+.mat-list-avatar {
+  background-color: #e0e0e0 !important;
+  color: #424242 !important;
+  flex-shrink: 0;
+
 }
 
-.cestas-por-fecha {
-  margin-left: 10px;
-  margin-bottom: 20px;
+/* Contenedor nombre + badge + chevron */
+.usuario-info {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  overflow: hidden;
+}
+.usuario-nombre {
+  font-weight: 600;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.usuario-cestas {
+  background: #f5f5f5;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 0.875rem;
+  color: #616161;
+  flex-shrink: 0;
+}
+.chevron {
+  font-size: 24px;
+  color: #757575;
+  flex-shrink: 0;
 }
 
-
-.spinner-container{
-  text-align: center;
+/* ---------- SPINNER DE CARGA ---------- */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  padding: 16px;
 }
 
+ 
 .spinner {
   width: 48px;
   height: 48px;
@@ -201,15 +287,64 @@
   animation: rotation 1.5s linear infinite;
 }
 
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
+/* ---------- COLUMNA CENTRAL: CESTAS ---------- */
+.cestas-columna {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+  width: 100%;
+  min-width: 260px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 0.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Ajustes generales al accordion */
+mat-accordion {
+  width: 100%;
+}
+
+/* “Botones” de fecha (expansion-panels) */
+.cesta-panel {
+  width: 100%;
+  margin: 0;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s ease;
+
+
+  /* Header como botón */
+  ::ng-deep .mat-expansion-panel-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 0.75rem 1rem !important;
+    min-height: 70px !important;
+    background: #fff !important;
+    cursor: pointer;
   }
-  100% {
-    transform: rotate(360deg);
+  
+  ::ng-deep .mat-expansion-panel-header:hover {
+    background: #f5f5f5 !important;
+  }
+  ::ng-deep .mat-expansion-panel-header.mat-expanded {
+    background: #d0f5d0 !important;
+  }
+
+  /* Título y descripción sin wrap */
+  ::ng-deep .mat-panel-title,
+  ::ng-deep .mat-panel-description {
+    font-weight: 600;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
 
+ 
 @keyframes rotationBack {
   0% {
     transform: rotate(0deg);
@@ -217,4 +352,53 @@
   100% {
     transform: rotate(-360deg);
   }
+}
+
+/* Lista de cestas dentro de cada panel */
+.cesta-item {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem !important;
+  margin: 0 !important;
+  border-radius: 20px !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  cursor: pointer !important;
+  transition: background-color 0.2s ease !important;
+}
+.cesta-item + .cesta-item {
+  margin-top: 0.5rem !important;
+}
+.cesta-item:hover {
+  background: #f5f5f5 !important;
+}
+.cesta-item.seleccionado {
+  background: #d0f5d0 !important;
+}
+.cesta-item .cesta-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cesta-item .chevron-small {
+  font-size: 24px;
+  color: #757575;
+}
+
+/* ---------- ADAPTACIÓN RESPONSIVE ---------- */
+@media (max-width: 1200px) {
+  .usuarios-columna,
+  .cestas-columna {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .usuarios-columna,
+  .cestas-columna {
+    grid-template-columns: 1fr;
+  }
+}
+
 }

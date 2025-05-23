@@ -1,75 +1,114 @@
 <div class="admin-container">
-  <h1 class="admin-title">Listado de Cestas de Usuarios</h1>
+  <h1 class="admin-title mat-display-1">Listado de Cestas de Usuarios</h1>
 
-  <div class="stats-panel">
+  <!-- Panel de estadísticas -->
+  <mat-card class="stats-panel">
     <p><strong>Total usuarios:</strong> {{ totalUsuarios }}</p>
     <p><strong>Cestas del usuario:</strong> {{ usuarioSeleccionado ? (totalCestasPorUsuario[usuarioSeleccionado] || 0) : '—' }}</p>
     <p><strong>Fechas distintas:</strong> {{ usuarioSeleccionado ? getFechas().length : '—' }}</p>
     <p><strong>Productos en la cesta:</strong> {{ cestaSeleccionada ? productosCesta.length : '—' }}</p>
-  </div>
+  </mat-card>
 
-  <div class="admin-panel">
+  <div class="admin-panel mat-elevation-z2">
+    
     <!-- Columna izquierda: Usuarios -->
-    <div class="usuarios-columna">
-      <ng-container *ngIf="!isLoadingUsuarios">
-        <div
-          class="usuario-box"
-          *ngFor="let id of usuariosUnicos"
-          [class.seleccionado]="usuarioSeleccionado === id"
-          (click)="seleccionarUsuario(id)">
-          <span>{{ obtenerNombreUsuario(id) }} ({{ totalCestasPorUsuario[id] || 0 }})</span>
-          <span class="flecha">{{ usuarioSeleccionado === id ? '▲' : '▼' }}</span>
-        </div>
-      </ng-container>
-      <div *ngIf="isLoadingUsuarios" class="spinner"></div>
+<!-- Columna izquierda: Usuarios (Angular Material List mejorada) -->
+<div class="container">
+<mat-nav-list class="usuarios-columna">
+  <ng-container *ngIf="!isLoadingUsuarios; else loadingUsuarios">
+    <mat-list-item
+      *ngFor="let id of usuariosUnicos"
+      [class.seleccionado]="usuarioSeleccionado === id"
+      (click)="seleccionarUsuario(id)"
+    >
+      <!-- Contenedor flex para nombre + contador -->
+      <div class="usuario-info">
+        <span class="usuario-cestas">{{ totalCestasPorUsuario[id] || 0 }}</span>
+        <span class="usuario-nombre">{{ obtenerNombreUsuario(id) }}</span>
+        <mat-icon class="chevron">expand_more</mat-icon>
+      </div>
+
+    </mat-list-item>
+  </ng-container>
+
+  <ng-template #loadingUsuarios>
+    <div class="spinner-container">
+      <mat-progress-spinner mode="indeterminate" diameter="30"></mat-progress-spinner>
     </div>
+  </ng-template>
+</mat-nav-list>
 
-    <!-- Columna centro: Fechas agrupadas -->
-    <div class="cestas-columna" *ngIf="usuarioSeleccionado">
-      <ng-container *ngFor="let fecha of getFechas()">
-        <div
-          class="fecha-box"
-          (click)="toggleFechaExpandida(fecha)"
-          [class.expandida]="fechasVisibles.includes(fecha)">
-          <strong>{{ fecha }}</strong>
-          <span>{{ totalCestasPorDia[fecha] || 0 }}</span>
-        </div>
 
-        <div *ngIf="fechasVisibles.includes(fecha)" class="cestas-por-fecha">
-          <div
-            class="cesta-box"
+
+    <!-- Columna central: Fechas y cestas -->
+<!-- Columna central: Fechas y cestas -->
+<mat-nav-list class="cestas-columna" *ngIf="usuarioSeleccionado">
+    <ng-container *ngFor="let fecha of getFechas()">
+      <mat-expansion-panel
+        class="cesta-panel"
+        [expanded]="fechasVisibles.includes(fecha)"
+        (opened)="toggleFechaExpandida(fecha)"
+        (closed)="toggleFechaExpandida(fecha)"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title class="fecha-titulo">
+                <span class="fecha-dia">{{ fecha | date:'d' }}</span>
+                <span class="fecha-mes-ano">{{ fecha | date:'MMMM y':'':'es-ES' }}</span>
+          </mat-panel-title>
+          <mat-panel-description class="fecha-descripcion">
+            {{ totalCestasPorDia[fecha] || 0 }} cestas
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-list dense>
+          <mat-list-item
             *ngFor="let cesta of fechasAgrupadas[fecha]"
-            [class.seleccionado]="cestaSeleccionada?.ID_cesta === cesta.ID_cesta"
-            (click)="seleccionarCesta(cesta)">
-            Cesta ID: {{ cesta.ID_cesta }}
-          </div>
-        </div>
-      </ng-container>
-    </div>
+            class="cesta-item"
+            [class.seleccionado]="
+              cestaSeleccionada?.ID_cesta === cesta.ID_cesta
+            "
+            (click)="seleccionarCesta(cesta)"
+          >
+            <div class="cesta-info">
+              <span class="cesta-text">Cesta ID: {{ cesta.ID_cesta }}</span>
+              <mat-icon class="chevron-small">chevron_right</mat-icon>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </mat-expansion-panel>
+    </ng-container>
+</mat-nav-list>
+
+
 
     <!-- Columna derecha: Productos y gráfico -->
     <div class="productos-columna" *ngIf="cestaSeleccionada">
       <div *ngIf="isLoadingProductos || isLoadingCestas" class="spinner-container">
-        <div class="spinner"></div>
+        <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
       </div>
 
       <ng-container *ngIf="!isLoadingProductos && !isLoadingCestas">
-        <div class="grafico-circular" *ngIf="productosCesta.length > 0">
+        <!-- Gráfico -->
+        <mat-card class="grafico-circular" *ngIf="productosCesta.length > 0">
           <p class="total-productos">Total de productos: {{ productosCesta.length }}</p>
           <canvas #porcentajeChart></canvas>
-        </div>
+        </mat-card>
 
-        <div class="mensaje-vacio" *ngIf="productosCesta.length === 0">
+        <!-- Mensaje de cesta vacía -->
+        <mat-card class="mensaje-vacio" *ngIf="productosCesta.length === 0">
           ⚠️ Esta cesta está vacía.
-        </div>
+        </mat-card>
 
+        <!-- Productos -->
         <div class="productos-grid" *ngIf="productosCesta.length > 0">
-          <div class="producto-card" *ngFor="let producto of productosCesta">
-            <p class="nombre">{{ producto.nombre }}</p>
-            <p class="precio">{{ producto.precio }}€</p>
-          </div>
+          <mat-card class="producto-card" *ngFor="let producto of productosCesta">
+            <mat-card-title>{{ producto.nombre }}</mat-card-title>
+            <mat-card-content>{{ producto.precio }} €</mat-card-content>
+          </mat-card>
         </div>
       </ng-container>
     </div>
+    </div>
+
   </div>
 </div>
