@@ -8,7 +8,7 @@ h2 {
   color: var(--grisoscuro); 
   padding: 1rem;
   margin: 2rem 0;
-  background: var(--verdeclaro);
+  
 }
 
 h2.heading {
@@ -16,8 +16,53 @@ h2.heading {
   font-weight: 200;
 }
 
+.seccion.container {
+  display: flex;
+  align-items: center;   /* Centrado vertical */
+  justify-content: center; /* Centrado horizontal (si aplica) */
+  flex-direction: column;
+  text-align: center;
+}
+
+.row.align-items-center {
+  width: 100%;
+}
+
+.card {
+  font-size: 0.9rem; /* Reduce el texto */
+  padding: 1rem !important; /* Reduce el padding interno */
+}
+
+.card i {
+  font-size: 2rem; /* Íconos más pequeños */
+  margin-bottom: 0.5rem;
+}
+
+img.img-fluid {
+  max-width: 30rem; /* Controla imágenes */
+  height: auto;
+}
+
+
+
+#info.seccion.container{
+  height: 15vh;
+}
+
+#info2.seccion.container{
+  height: 15vh;
+}
+
+#empresas.seccion.container{
+  height: 10vh;
+}
+#empresas h2.heading {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+
 h2.heading span {
-  font-size: 2rem;
   color: var(--verde);
   font-weight: 600;
 }
