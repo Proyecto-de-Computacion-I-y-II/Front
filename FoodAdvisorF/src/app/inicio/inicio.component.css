@@ -43,25 +43,6 @@ img.img-fluid {
   height: auto;
 }
 
-
-
-#info.seccion.container{
-  height: 15vh;
-}
-
-#info2.seccion.container{
-  height: 15vh;
-}
-
-#empresas.seccion.container{
-  height: 10vh;
-}
-#empresas h2.heading {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-
 h2.heading span {
   color: var(--verde);
   font-weight: 600;
@@ -69,7 +50,7 @@ h2.heading span {
 
   .separator {
     width: 2px;
-    background-color: #ccc;
+    background-color: var(--grisoscuro);
     height: 200px; /* altura de la línea, ajusta según contenido */
     align-self: center;
   }
