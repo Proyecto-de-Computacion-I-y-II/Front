@@ -8,7 +8,7 @@ h3{
 }
 
 hr {
-    color:#37C666;
+    color:#5cb85c;
     opacity: 1;
 }
 
@@ -44,7 +44,7 @@ hr {
     cursor: pointer;
     transition: 0.3s;
     width: 100%;
-    background-color: #37C666;
+    background-color: #5cb85c;
     justify-content: center;
 }
 

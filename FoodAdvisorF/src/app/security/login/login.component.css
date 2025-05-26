@@ -7,5 +7,10 @@
 }
 
 .field{
-  width: 15%;
+  width: 20%;
+}
+
+.show-password{
+  overflow: hidden;
+  padding-right: 5px;
 }
