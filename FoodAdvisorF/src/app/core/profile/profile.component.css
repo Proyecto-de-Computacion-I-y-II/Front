@@ -41,11 +41,6 @@
   color: var(--grisoscuro);
 }
 
-/* .profile-id {
-  font-size: 13px;
-  color: #777;
-} */
-
 .profile-right {
   display: flex;
   flex-direction: column;
@@ -54,7 +49,7 @@
 
 .profile-section {
   background-color: var(--blanco);
-  border: 1.5px solid #e0e0e0;
+  border: 1.5px solid var(--grisclaro);
   padding: 20px 30px;
   border-radius: 12px;
   box-shadow: 0 3px 10px rgba(0,0,0,0.04);
@@ -76,7 +71,7 @@
 
 .title-sub {
   font-weight: 500;
-  color: #444;
+  color: var(--grisoscuro);
 }
 
 .subtitle {
@@ -128,7 +123,7 @@
 
 .stats-panel {
   background-color: var(--blanco);
-  border: 2px solid #ccc;
+  border: 2px solid var(--grisclaro);
   border-radius: 12px;
   padding: 16px 24px;
   margin-bottom: 20px;
@@ -143,14 +138,12 @@
   margin: 0;
 }
 
-
 .spinner-container {
   width: 100%;
   display: flex;
   justify-content: center;
   padding: 20px;
 }
-
 
 .delete-confirmation-dialog {
   background-color: var(--blanco);
@@ -174,16 +167,16 @@
 }
 
 .delete-dialog-header {
-  background-color: #f5f5f5;
+  background-color: var(--busqueda);
   padding: 16px 20px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--footer);
 }
 
 .delete-dialog-icon {
-  background-color: #ffebee;
-  color: #e53935;
+  background-color: var(--busqueda);
+  color: var(--rojo);
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -202,7 +195,7 @@
 
 .delete-dialog-content {
   padding: 20px;
-  color: #555;
+  color: var(--grisoscuro);
   font-size: 15px;
   line-height: 1.5;
 }
@@ -217,7 +210,7 @@
 
 .cancel-button {
   background-color: transparent;
-  color: #555;
+  color: var(--grisoscuro);
   border: 1px solid #d5d5d5;
   padding: 8px 16px;
   border-radius: 4px;
@@ -232,7 +225,7 @@
 }
 
 .confirm-delete-button {
-  background-color: #e53935;
+  background-color: var(--rojo);
   color: var(--blanco);
   border: none;
   padding: 8px 16px;
@@ -270,7 +263,7 @@
 
 
 .confirm-delete-button:hover {
-  background-color: #c62828;
+  background-color: var(--rojooscuro);
 }
 
 .confirm-delete-button mat-icon {

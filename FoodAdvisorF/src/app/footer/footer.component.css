@@ -4,5 +4,5 @@
 }
 
 .footer{
-  background-color: #eee;
+  background-color: var(--footer)
 }

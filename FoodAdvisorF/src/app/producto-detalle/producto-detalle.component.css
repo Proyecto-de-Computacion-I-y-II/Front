@@ -8,7 +8,7 @@ h3{
 }
 
 hr {
-    color:#37C666;
+    color:var(--verde);
     opacity: 1;
 }
 
@@ -22,7 +22,7 @@ hr {
 
 .categoria {
     font-size: 14px;
-    color: gray;
+    color: var(--grisclaro);
 }
 
 .cantidad, .carrito {
@@ -39,12 +39,12 @@ hr {
     align-items: center;
     height: 70px;
     border: none;
-    color: white;
+    color: var(--blanco);
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
     width: 100%;
-    background-color: #37C666;
+    background-color: var(--verde);
     justify-content: center;
 }
 
@@ -53,12 +53,12 @@ hr {
     font-size: 15px;
     border-radius: 10px;
     border: none;
-    color: white;
+    color: var(--blanco);
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
     width: 100%;
-    background-color: #74b58ada;
+    background-color: var(--verde);
 }
 
 .btn-add:hover {
@@ -69,9 +69,9 @@ transform: scale(1.02);
 .quantity-button {
     width: 25px;
     height: 25px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--grisclaro);
     border-radius: 50%;
-    background-color: #f8f8f8;
+    background-color: var(--fondogris);
     cursor: pointer;
     display: flex;
     justify-content: center;
@@ -104,16 +104,16 @@ transform: scale(1.02);
 }
 
 .minus-button {
-    color: #f58634;
+    color: vaar(--naranja);
     font-weight: bolder;
-    border-color: #f58634;
+    border-color: var(--naranja);
     border-width: 0.20em;
 }
 
 .plus-button {
-    color: #5cb85c;
+    color: var(--verde);
     font-weight: bolder;
-    border-color: #5cb85c;
+    border-color: var(--verde);
     border-width: 0.20em;
 }
 
@@ -140,7 +140,6 @@ transform: scale(1.02);
     justify-content: center;
     align-items: center;
     align-content: center;
-    background-color: #f8f8f8;
     padding: 20px;
     border-radius: 10px;
 }
@@ -183,7 +182,7 @@ transform: scale(1.02);
 }
 
 .quantity {
-    background-color: #f1f1f1;
+    background-color: var(--fondogris);
     padding: 10px 0px;
     text-align: center;
     border-radius: 5px;
@@ -192,8 +191,8 @@ transform: scale(1.02);
     width: 3em;
 
     /* Border adjustments */
-    border-left: 0.2em solid #f58634;
-    border-right: 0.2em solid #5cb85c;
+    border-left: 0.2em solid var(--naranja);
+    border-right: 0.2em solid var(--verde);
 }
 
 
@@ -212,7 +211,7 @@ transform: scale(1.02);
     display: inline-block;
     position: relative;
     border: 3px solid;
-    border-color: #f58634 #f58634 transparent transparent;
+    border-color: var(--naranja) var(--naranja) transparent transparent;
     box-sizing: border-box;
     animation: rotation 1s linear infinite;
 }
@@ -227,7 +226,7 @@ transform: scale(1.02);
     bottom: 0;
     margin: auto;
     border: 3px solid;
-    border-color: transparent transparent #5cb85c #5cb85c;
+    border-color: transparent transparent var(--verde vaar(--verde));
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -237,7 +236,7 @@ transform: scale(1.02);
 .spinner::before {
     width: 32px;
     height: 32px;
-    border-color: #f58634 #f58634 transparent transparent;
+    border-color: var(--naranja) var(--naranja) transparent transparent;
     animation: rotation 1.5s linear infinite;
 }
 
@@ -281,11 +280,11 @@ transform: scale(1.02);
 }
 
 .product-card {
-background: #ffffff !important;
+background: var(--blanco) !important;
 border-radius: 5px;
 text-align: center;
 cursor: pointer;
-border: 2px solid #2c9f51;
+border: 2px solid var(--verde);
 transition: transform 0.2s ease-in-out;
 }
 
@@ -298,13 +297,13 @@ box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 .product-card img {
 width: 100%;
 object-fit: contain;
-border-bottom: 2px dotted #2c9f51;
+border-bottom: 2px dotted var(--verde);
 padding: 15px;
 
 }
 
 .product-info {
-background: #f1f1f1 !important;
+background: var(--fondogris) !important;
 height: 100%;
 width: 100%;
 display: flex;
@@ -313,10 +312,7 @@ align-items: center;
 padding: 8px;
 gap: 10px;
 min-height: 70px;
-
 }
-
-
 
 .product-name {
 font-size: 12px;
@@ -335,22 +331,18 @@ overflow-wrap: break-word;        /* Ayuda a evitar letras sueltas */
 .product-price {
 font-size: 1.1rem;
 font-weight: bold;
-color: #2c9f51;
+color: var(--verde);
 }
-
 
 .no-similares{
     margin-left: 5em;
 }
 
-
-
-
 /* HTML: <div class="loader"></div> */
 .loader {
     height: 30px;
     aspect-ratio: 2.5;
-    --_g: no-repeat radial-gradient(farthest-side,#f58434da 90%,#0000);
+    --_g: no-repeat radial-gradient(farthest-side,var(--naranja) 90%,var(--negro));
     background:var(--_g), var(--_g), var(--_g), var(--_g);
     background-size: 20% 50%;
     animation: l43 1s infinite linear; 

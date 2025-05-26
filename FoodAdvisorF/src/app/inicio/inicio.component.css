@@ -51,7 +51,7 @@ h2.heading span {
 .separator{
   width: 2px;
   height: 150px;
-  background-color: #ccc;
+  background-color: var(--grisclaro);
   margin: 0 auto;
 }
 
