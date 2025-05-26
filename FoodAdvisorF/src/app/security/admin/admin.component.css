@@ -329,6 +329,13 @@
   justify-content: center;
 }
 
+.btn-estadisticas {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
 /* — Responsive — */
 @media (max-width: 900px) {
   .cestas-grid { grid-template-columns: repeat(2,1fr); }

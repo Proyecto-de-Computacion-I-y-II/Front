@@ -41,8 +41,11 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 
+
 // ✅ IMPORTAR EL SERVICIO Y LA FUNCIÓN FACTORY
 import { ConfiguracionService, initializeConfig } from './services/configuracion.service';
+import { StatsAdminComponent } from './core/stats-admin/stats-admin.component';
+import { MatTableModule } from '@angular/material/table';
 
 registerLocaleData(localeEs, 'es-ES');
 
@@ -63,9 +66,11 @@ registerLocaleData(localeEs, 'es-ES');
     AdminComponent,
     HeaderComponent,
     FooterComponent,
-    AjustesComponent
+    AjustesComponent,
+    StatsAdminComponent
   ],
   imports: [
+    MatTableModule,
     MatProgressBarModule,
     MatExpansionModule,
     BrowserModule,
