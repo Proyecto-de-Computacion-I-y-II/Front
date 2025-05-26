@@ -98,4 +98,17 @@ export class CestaService {
       // Puedes incluir otros datos del producto si tu API los necesita
     });
   }
+
+  /**
+   * Envía una solicitud DELETE a la API para eliminar un producto específico de una cesta.
+   * Asume una URL RESTful como `/cestas-compra/{cestaId}/productos/{productId}`.
+   *
+   * @param productId El ID del producto a eliminar.
+   * @param cestaId El ID de la cesta de la que se eliminará el producto.
+   * @returns Un Observable con la respuesta de la API.
+   */
+  eliminarProductoDeCesta(productId: number): Observable<any> {
+    const url = `${this.apiUrl}/cestas-compra/delete-producto/${productId}`;
+    return this.http.delete(url);
+  }
 }

@@ -39,7 +39,7 @@ h2.heading {
 }
 
 img.img-fluid {
-  max-width: 30rem; /* Controla imágenes */
+  max-width: 15rem; /* Controla imágenes */
   height: auto;
 }
 

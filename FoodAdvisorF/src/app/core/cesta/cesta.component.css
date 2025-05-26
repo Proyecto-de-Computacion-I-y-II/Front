@@ -562,6 +562,45 @@ hr {
   background-color: var(--fondogris);
   padding-bottom: 20px; /* Añade un padding inferior para el espacio gris */
 }
+
+.delete-product-button {
+  background-color: var(--rojo); 
+  color: white;
+  border: none;
+  padding: 8px 12px; /* Un poco de padding */
+  border-radius: 4px; /* Bordes ligeramente redondeados */
+  cursor: pointer;
+  display: flex; /* Para alinear el icono y el texto (si lo añades) */
+  align-items: center;
+  justify-content: center;
+  font-size: 14px; /* Tamaño de fuente para el texto si lo hubiera */
+  transition: background-color 0.3s ease; /* Transición suave para el hover */
+}
+
+.delete-product-button mat-icon {
+  font-size: 18px; /* Ajusta el tamaño del icono de Material */
+  margin-right: 4px; /* Espacio entre el icono y el texto si lo añades */
+}
+
+.delete-product-button:hover {
+  background-color: #c82333; /* Rojo más oscuro al pasar el ratón */
+}
+
+.delete-product-button:active {
+  background-color: #bd2130; /* Rojo aún más oscuro al hacer clic */
+}
+
+.grid-item a {
+  color: var(--bs-gray-900); /* Usa la variable CSS de Bootstrap para el color */
+  text-decoration: none; /* Elimina el subrayado por defecto */
+}
+
+.grid-item a:hover,
+.grid-item a:focus {
+  color: var(--bs-primary, #007bff); /* Opcional: Cambia a un color primario de Bootstrap al pasar el ratón */
+  text-decoration: underline; /* Añade subrayado al pasar el ratón */
+}
+
 .loading-spinner-overlay {
   position: fixed; /* Para que cubra toda la ventana */
   top: 0;

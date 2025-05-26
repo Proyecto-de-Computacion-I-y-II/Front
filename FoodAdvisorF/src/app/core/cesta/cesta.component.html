@@ -1,172 +1,219 @@
 <div class="fondo">
 <div class="titulo">
   <span class="title-text d-inline-block px-5">Mi carrito de la compra</span>
+    <button class="delete-cart-button" (click)="confirmDeleteCart()">
+      <mat-icon>delete</mat-icon>
+      <span class="delete-cart-text">Borrar cesta</span>
+    </button>
 
-  <button class="delete-cart-button" (click)="confirmDeleteCart()">
-    <mat-icon>delete</mat-icon>
-    <span class="delete-cart-text">Borrar cesta</span>
-  </button>
-
-  <div
-    *ngIf="showDeleteConfirmation"
-    class="confirmation-overlay"
-    (click)="closeConfirmationOnOutsideClick($event)"
-  >
-    <div class="delete-confirmation-dialog">
-      <div class="delete-dialog-header">
-        <div class="delete-dialog-icon">
-          <mat-icon>delete</mat-icon>
+    <div
+      *ngIf="showDeleteConfirmation"
+      class="confirmation-overlay"
+      (click)="closeConfirmationOnOutsideClick($event)"
+    >
+      <div class="delete-confirmation-dialog">
+        <div class="delete-dialog-header">
+          <div class="delete-dialog-icon">
+            <mat-icon>delete</mat-icon>
+          </div>
+          <h2 class="delete-dialog-title">Confirmar eliminación</h2>
         </div>
-        <h2 class="delete-dialog-title">Confirmar eliminación</h2>
-      </div>
 
-      <div class="delete-dialog-content">
-        <p>
-          ¿Estás seguro de que deseas borrar todos los productos de tu cesta?
-        </p>
-        <p>Esta acción no se puede deshacer.</p>
-      </div>
+        <div class="delete-dialog-content">
+          <p>
+            ¿Estás seguro de que deseas borrar todos los productos de tu cesta?
+          </p>
+          <p>Esta acción no se puede deshacer.</p>
+        </div>
 
-      <div class="delete-dialog-actions">
-        <button class="cancel-button" (click)="cancelDeleteCart()">
-          Cancelar
-        </button>
-        <button class="confirm-delete-button" (click)="acceptDeleteCart()">
-          <mat-icon>delete_forever</mat-icon>
-          Eliminar
-        </button>
+        <div class="delete-dialog-actions">
+          <button class="cancel-button" (click)="cancelDeleteCart()">
+            Cancelar
+          </button>
+          <button class="confirm-delete-button" (click)="acceptDeleteCart()">
+            <mat-icon>delete_forever</mat-icon>
+            Eliminar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div
+      *ngIf="showDeleteConfirmationProduct"
+      class="confirmation-overlay"
+      (click)="closeConfirmationOnOutsideClickProduct($event)"
+    >
+      <div class="delete-confirmation-dialog">
+        <div class="delete-dialog-header">
+          <div class="delete-dialog-icon">
+            <mat-icon>delete</mat-icon>
+          </div>
+          <h2 class="delete-dialog-title">Confirmar eliminación de producto</h2>
+        </div>
+
+        <div class="delete-dialog-content">
+          <p>
+            ¿Estás seguro de que deseas eliminar
+            <br />
+            "<b>{{ productToDelete?.nombre }}</b>"
+            <br />
+            de tu cesta?
+          </p>
+          <p>Esta acción no se puede deshacer.</p>
+        </div>
+
+        <div class="delete-dialog-actions">
+          <button class="cancel-button" (click)="cancelDeleteProduct()">
+            Cancelar
+          </button>
+          <button class="confirm-delete-button" (click)="acceptDeleteProduct()">
+            <mat-icon>delete_forever</mat-icon>
+            Eliminar
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<div *ngIf="!isLoading; else loadingSpinner">
-  <div *ngIf="productosEnCesta.length > 0; else cestaVacia">
-    <div class="total-cesta">
-      <b> Total:</b> {{ calcularPrecioTotal() | number : "1.2-2" }} €
-    </div>
-    <div *ngFor="let producto of productosEnCesta">
-      <div [class]="esUltimaCesta ? 'ultima' : 'grid-container'">
-        <div class="grid-checkbox" *ngIf="esUltimaCesta">
-          <mat-checkbox
-            [checked]="estaCompletado(producto)"
-            (change)="toggleCompletado(producto, $event)"
-          ></mat-checkbox>
-        </div>
-        <div class="grid-item">
-          <div class="image-container">
-            <img
-              [src]="producto?.imagen || 'logo_fondo.png'"
-              [alt]="producto?.nombre"
-              class="img-fluid w-75 img"
-            />
+  <div *ngIf="!isLoading; else loadingSpinner">
+    <div *ngIf="productosEnCesta.length > 0; else cestaVacia">
+      <div class="total-cesta">
+        <b> Total:</b> {{ calcularPrecioTotal() | number : "1.2-2" }} €
+      </div>
+      <div *ngFor="let producto of productosEnCesta">
+        <div [class]="esUltimaCesta ? 'ultima' : 'grid-container'">
+          <div class="grid-checkbox" *ngIf="esUltimaCesta">
+            <mat-checkbox
+              [checked]="estaCompletado(producto)"
+              (change)="toggleCompletado(producto, $event)"
+            ></mat-checkbox>
+          </div>
+          <div class="grid-item">
+            <div class="image-container">
+              <img
+                [src]="producto?.imagen || 'logo_fondo.png'"
+                [alt]="producto?.nombre"
+                class="img-fluid w-75 img"
+              />
+            </div>
+          </div>
+          <div class="grid-item">
+            <a [routerLink]="['/producto-detalle', producto?.ID_prod]">
+              {{ producto?.nombre }}
+            </a>
+          </div>
+          <div class="grid-item">
+            {{ getSupermercadoNombre(producto?.idSuper) }}
+          </div>
+          <div class="grid-item cantidad-control">
+            <button
+              class="quantity-button minus-button"
+              *ngIf="esUltimaCesta"
+              (click)="decrementarCantidad(producto)"
+            >
+              -
+            </button>
+            <span class="cantidad-texto">{{ producto?.pivot?.cantidad }}</span>
+            <button
+              class="quantity-button plus-button"
+              *ngIf="esUltimaCesta"
+              (click)="incrementarCantidad(producto)"
+            >
+              +
+            </button>
+          </div>
+          <div class="grid-item">Precio/ud: {{ producto?.precio }} €</div>
+          <div class="grid-item">
+            Total:
+            {{
+              producto?.pivot?.cantidad * producto?.precio | number : "1.2-2"
+            }}
+            €
+          </div>
+          <div class="grid-item" *ngIf="esUltimaCesta">
+            <button
+              class="delete-product-button"
+              (click)="confirmDeleteProduct(producto)"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
           </div>
         </div>
-        <div class="grid-item">{{ producto?.nombre }}</div>
-        <div class="grid-item">
-          {{ getSupermercadoNombre(producto?.idSuper) }}
-        </div>
-        <div class="grid-item cantidad-control">
-          <button
-            class="quantity-button minus-button"
-            *ngIf="esUltimaCesta"
-            (click)="decrementarCantidad(producto)"
-          >
-            -
-          </button>
-          <span class="cantidad-texto">{{ producto?.pivot?.cantidad }}</span>
-          <button
-            class="quantity-button plus-button"
-            *ngIf="esUltimaCesta"
-            (click)="incrementarCantidad(producto)"
-          >
-            +
-          </button>
-        </div>
-        <div class="grid-item">Precio/ud: {{ producto?.precio }} €</div>
-        <div class="grid-item">
-          Total:
-          {{
-            producto?.pivot?.cantidad * producto?.precio | number : "1.2-2"
-          }}
-          €
-        </div>
       </div>
-    </div>
 
-    <div class="total-cesta">
-      <b> Total:</b> {{ calcularPrecioTotal() | number : "1.2-2" }} €
-    </div>
-    <hr />
+      <div class="total-cesta">
+        <b> Total:</b> {{ calcularPrecioTotal() | number : "1.2-2" }} €
+      </div>
+      <hr />
 
-    <div class="chart-container">
-      <canvas #porcentajeChart></canvas>
-    </div>
+      <div class="chart-container">
+        <canvas #porcentajeChart></canvas>
+      </div>
 
-    <div class="recommended-products-container" *ngIf="esUltimaCesta">
-      <h2>Productos Recomendados para Equilibrar tu Cesta</h2>
-      <div
-        *ngIf="
-          productosRecomendados && productosRecomendados.length > 0;
-          else noRecommendations
-        "
-        class="row row-cols-1 row-cols-md-4 g-4"
-      >
-        <div *ngFor="let recomendado of productosRecomendados" class="col">
-          <div class="card h-100">
-            <img
-              [src]="recomendado?.imagen"
-              [alt]="recomendado?.nombre"
-              class="card-img-top product-image"
-            />
-            <div class="card-body">
-              <h5 class="card-title">{{ recomendado?.nombre }}</h5>
-              <p class="card-text">Precio: {{ recomendado?.precio }} €</p>
-              <p class="card-text">
-                Supermercado: {{ recomendado?.nombreSupermercado }}
-              </p>
-              <p class="card-text">
-                <small class="text-muted"
-                  >Nivel Pirámide: {{ recomendado?.nombreNivel }}</small
+      <div class="recommended-products-container" *ngIf="esUltimaCesta">
+        <h2>Productos Recomendados para Equilibrar tu Cesta</h2>
+        <div
+          *ngIf="
+            productosRecomendados && productosRecomendados.length > 0;
+            else noRecommendations
+          "
+          class="row row-cols-1 row-cols-md-4 g-4"
+        >
+          <div *ngFor="let recomendado of productosRecomendados" class="col">
+            <div class="card h-100">
+              <img
+                [src]="recomendado?.imagen"
+                [alt]="recomendado?.nombre"
+                class="card-img-top product-image"
+              />
+              <div class="card-body">
+                <h5 class="card-title">{{ recomendado?.nombre }}</h5>
+                <p class="card-text">Precio: {{ recomendado?.precio }} €</p>
+                <p class="card-text">
+                  Supermercado: {{ recomendado?.nombreSupermercado }}
+                </p>
+                <p class="card-text">
+                  <small class="text-muted"
+                    >Nivel Pirámide: {{ recomendado?.nombreNivel }}</small
+                  >
+                </p>
+                <button
+                  class="btn btn-sm btn-outline-success"
+                  (click)="agregarProductoRecomendado(recomendado)"
                 >
-              </p>
-              <button
-                class="btn btn-sm btn-outline-success"
-                (click)="agregarProductoRecomendado(recomendado)"
-              >
-                Añadir a la Cesta
-              </button>
+                  Añadir a la Cesta
+                </button>
+              </div>
             </div>
           </div>
         </div>
+        <ng-template #noRecommendations>
+          <p>La cesta se encuentra equilibrada.</p>
+        </ng-template>
       </div>
-      <ng-template #noRecommendations>
-        <p>La cesta se encuentra equilibrada.</p>
-      </ng-template>
+
+      <div class="purchase-button-container" *ngIf="esUltimaCesta">
+        <div class="compra">
+          <button class="btn btn-success" [routerLink]="['/login']">
+            Seguir Comprando
+          </button>
+        </div>
+      </div>
     </div>
 
-    <div class="purchase-button-container" *ngIf="esUltimaCesta">
-      <div class="compra">
-        <button class="btn btn-success" [routerLink]="['/login']">
-          Seguir Comprando
-        </button>
+    <ng-template #cestaVacia>
+      <div class="container">
+        <h1 class="cesta-vacia">
+          No se encontraron productos en su cesta. ¡Agregue alguno para
+          realizar una compra!
+        </h1>
       </div>
-    </div>
+    </ng-template>
   </div>
 
-  <ng-template #cestaVacia>
-    <div class="container">
-      <h1 class="cesta-vacia">
-        No se encontraron productos en su cesta. ¡Agregue alguno para realizar
-        una compra!
-      </h1>
+  <ng-template #loadingSpinner>
+    <div class="loading-spinner-overlay">
+      <div class="spinner-large"></div>
     </div>
   </ng-template>
-</div>
-
-<ng-template #loadingSpinner>
-  <div class="loading-spinner-overlay">
-    <div class="spinner-large"></div>
-  </div>
-</ng-template>
 </div>
