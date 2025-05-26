@@ -1,33 +1,42 @@
-<div class="center">
-  <img src="logo.png" alt="Food Advisor Logo" class="logo"/>
-  <h3 style="margin: 20px 0">Registro de Usuario</h3>
-  <div style="display: flex; width: 40%; justify-content: space-between">
-    <div style="display: flex; flex-direction: column">
-      <mat-form-field appearance="outline" subscriptSizing="dynamic" style="margin-bottom: 20px">
-        <mat-label>Nombre</mat-label>
-        <input matInput [(ngModel)]="user.name">
-      </mat-form-field>
-      <mat-form-field appearance="outline" subscriptSizing="dynamic" style="margin-bottom: 20px">
-        <mat-label>Apellidos</mat-label>
-        <input matInput [(ngModel)]="user.lastName">
-      </mat-form-field>
-      <mat-form-field appearance="outline" subscriptSizing="dynamic" style="margin-bottom: 20px">
-        <mat-label>Email</mat-label>
-        <input matInput [(ngModel)]="user.email">
-      </mat-form-field>
-    </div>
-    <div style="display: flex; flex-direction: column">
-      <mat-form-field appearance="outline" subscriptSizing="dynamic" style="margin-bottom: 20px">
-        <mat-label>Contraseña</mat-label>
-        <input matInput [type]="'password'" [(ngModel)]="user.password">
-      </mat-form-field>
-      <mat-form-field appearance="outline" subscriptSizing="dynamic" style="margin-bottom: 20px">
-        <mat-label>Confirmar Contraseña</mat-label>
-        <input matInput [type]="'password'" [(ngModel)]="passwordValidator">
-      </mat-form-field>
-      <div class="botones">
-        <button mat-flat-button class="registro" style="background-color: #37C666" (click)="register()"><mat-icon>shopping_cart</mat-icon>¡Crear y Comprar!</button>
-        <button mat-flat-button class="cancelaar" [routerLink]="['/login']">Cancelar</button>
+<div class="page-background">
+  <div class="center">
+    <div class="form-box">
+      <img src="logo.png" alt="Food Advisor Logo" class="logo" />
+      <h3 style="margin: 20px 0">Registro de Usuario</h3>
+      <div class="form-container">
+        <div class="column">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Nombre</mat-label>
+            <input matInput [(ngModel)]="user.name">
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Apellidos</mat-label>
+            <input matInput [(ngModel)]="user.lastName">
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Email</mat-label>
+            <input matInput [(ngModel)]="user.email">
+          </mat-form-field>
+        </div>
+        <div class="column">
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Contraseña</mat-label>
+            <input matInput [type]="'password'" [(ngModel)]="user.password">
+          </mat-form-field>
+          <mat-form-field appearance="outline" subscriptSizing="dynamic">
+            <mat-label>Confirmar Contraseña</mat-label>
+            <input matInput [type]="'password'" [(ngModel)]="passwordValidator">
+          </mat-form-field>
+          <div class="botones">
+            <button mat-flat-button class="cancelar" [routerLink]="['/login']">
+              Cancelar
+            </button>
+            <button mat-flat-button class="confirmar" (click)="register()">
+              <mat-icon>shopping_cart</mat-icon>¡Crear y Comprar!
+            </button>
+
+          </div>
+        </div>
       </div>
     </div>
   </div>

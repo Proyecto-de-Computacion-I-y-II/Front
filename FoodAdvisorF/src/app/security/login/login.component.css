@@ -1,15 +1,22 @@
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh; /* Alto completo de la ventana */
+  background-color: var(--fondogris); 
+}
+
 .login-container {
-  width: 400px;
+  width: 25%;
   max-width: 90%;
-  min-height: 0%;
-  margin: 2rem auto 0 auto;
+  padding: 30px;
   border: 1px solid var(--grisclaro);
-  border-radius: 8px;
+  border-radius: 10px;
+  background-color: var(--blanco);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--blanco);
 }
 
 .btn.login {
@@ -22,10 +29,6 @@
   background-color: var(--verde);
   margin-bottom: 3%;
   color: var(--blanco);
-}
-
-.login-wrapper {
-  background-color: var(--fondogris);
 }
 
 button[mat-icon-button] {
