@@ -22,6 +22,10 @@ export class CestaComponent implements OnInit, AfterViewInit {
   chart: Chart | null = null;
   productosRecomendados: any[] = [];
   showDeleteConfirmation: boolean = false;
+  // Nuevas propiedades para la confirmación de eliminación de un solo producto
+  showDeleteConfirmationProduct: boolean = false;
+  productToDelete: any = null; // Almacena el producto que se va a eliminar
+
   private apiUrl = environment.apiUrl;
   private cestaId: number = 0;
   isLoading: boolean = true;
@@ -237,6 +241,7 @@ export class CestaComponent implements OnInit, AfterViewInit {
       });
   }
 
+  // --- Funciones para la eliminación de la cesta completa ---
   confirmDeleteCart(): void {
     this.showDeleteConfirmation = true;
   }
@@ -257,7 +262,7 @@ export class CestaComponent implements OnInit, AfterViewInit {
     }
 
     if (!this.cestaId) {
-      alert('No se pudo identificar la cesta para eliminar.');
+      this.snackBar.open('No se pudo identificar la cesta para eliminar.', 'Cerrar', { duration: 3000 });
       this.showDeleteConfirmation = false;
       return;
     }
@@ -275,12 +280,62 @@ export class CestaComponent implements OnInit, AfterViewInit {
       error: (error) => {
         console.error('Error al eliminar la cesta:', error);
         const errorMsg = error.error?.mensaje ?? 'Error al eliminar la cesta.';
-        alert(errorMsg);
+        this.snackBar.open(errorMsg, 'Cerrar', { duration: 3000 });
         this.showDeleteConfirmation = false;
       }
     });
   }
 
+  // --- Funciones para la eliminación de un producto individual ---
+  /**
+   * Muestra el diálogo de confirmación para eliminar un producto individual.
+   * @param product El objeto producto a eliminar.
+   */
+  confirmDeleteProduct(product: any): void {
+    this.productToDelete = product; // Almacena el producto que se va a eliminar
+    this.showDeleteConfirmationProduct = true; // Muestra el diálogo
+  }
+
+  /**
+   * Cancela la eliminación de un producto individual y oculta el diálogo.
+   */
+  cancelDeleteProduct(): void {
+    this.showDeleteConfirmationProduct = false;
+    this.productToDelete = null; // Limpia el producto guardado
+  }
+
+  /**
+   * Acepta la eliminación de un producto individual y llama al servicio.
+   */
+  acceptDeleteProduct(): void {
+    if (!this.productToDelete) {
+      this.snackBar.open('No se seleccionó ningún producto para eliminar.', 'Cerrar', { duration: 3000 });
+      this.showDeleteConfirmationProduct = false;
+      return;
+    }
+  
+    // Se ha quitado 'this.idCestaUsuario' de la llamada al servicio
+    this.cestaService.eliminarProductoDeCesta(this.productToDelete.ID_prod).subscribe({
+      next: (response) => {
+        this.snackBar.open('Producto eliminado de la cesta correctamente', 'Cerrar', { duration: 2000 });
+        // Filtra los productos en la cesta para quitar el que se eliminó, actualizando la UI
+        this.productosEnCesta = this.productosEnCesta.filter(p => p.ID_prod !== this.productToDelete!.ID_prod); // Nota el '!' para asegurar que no es null
+        this.showDeleteConfirmationProduct = false;
+        this.productToDelete = null; // Limpia el producto guardado
+  
+        // Vuelve a calcular los porcentajes y obtener recomendaciones para actualizar la interfaz
+        this.obtenerPorcentajesDeLaCesta();
+        this.obtenerProductosRecomendados();
+      },
+      error: (error) => {
+        console.error('Error al eliminar el producto de la cesta:', error);
+        this.snackBar.open('Error al eliminar el producto de la cesta', 'Cerrar', { duration: 3000 });
+        this.showDeleteConfirmationProduct = false;
+      }
+    });
+  }
+
+  // --- Métodos Auxiliares ---
   private obtenerIdCestaActual(): number {
     const cestaInfo = localStorage.getItem('cestaInfo');
     if (cestaInfo) {
@@ -306,10 +361,26 @@ export class CestaComponent implements OnInit, AfterViewInit {
     localStorage.removeItem('cestaInfo');
   }
 
+  /**
+   * Cierra el diálogo de confirmación de eliminación de cesta al hacer clic fuera.
+   * @param event El evento del clic.
+   */
   closeConfirmationOnOutsideClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (target.classList.contains('confirmation-overlay')) {
       this.showDeleteConfirmation = false;
+    }
+  }
+
+  /**
+   * Cierra el diálogo de confirmación de eliminación de producto al hacer clic fuera.
+   * @param event El evento del clic.
+   */
+  closeConfirmationOnOutsideClickProduct(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (target.classList.contains('confirmation-overlay')) {
+      this.showDeleteConfirmationProduct = false;
+      this.productToDelete = null; // Limpia el producto guardado
     }
   }
 
