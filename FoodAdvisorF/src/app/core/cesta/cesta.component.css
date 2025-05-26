@@ -590,6 +590,17 @@ hr {
   background-color: #bd2130; /* Rojo aún más oscuro al hacer clic */
 }
 
+.grid-item a {
+  color: var(--bs-gray-900); /* Usa la variable CSS de Bootstrap para el color */
+  text-decoration: none; /* Elimina el subrayado por defecto */
+}
+
+.grid-item a:hover,
+.grid-item a:focus {
+  color: var(--bs-primary, #007bff); /* Opcional: Cambia a un color primario de Bootstrap al pasar el ratón */
+  text-decoration: underline; /* Añade subrayado al pasar el ratón */
+}
+
 .loading-spinner-overlay {
   position: fixed; /* Para que cubra toda la ventana */
   top: 0;

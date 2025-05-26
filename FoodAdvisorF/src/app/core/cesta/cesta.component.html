@@ -98,7 +98,11 @@
               />
             </div>
           </div>
-          <div class="grid-item">{{ producto?.nombre }}</div>
+          <div class="grid-item">
+            <a [routerLink]="['/producto-detalle', producto?.ID_prod]">
+              {{ producto?.nombre }}
+            </a>
+          </div>
           <div class="grid-item">
             {{ getSupermercadoNombre(producto?.idSuper) }}
           </div>
