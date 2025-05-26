@@ -103,18 +103,9 @@
   background-color: var(--rojo);
 }
 
-.profile-buttons .compras:hover {
-  background-color: var(--rojooscuro);
-}
-
 .profile-buttons .cerrar-sesion {
   background-color: var(--naranja);
 }
-
-.profile-buttons .cerrar-sesion:hover {
-  background-color: var(--naranjaoscuro);
-}
-
 
 
 .profile-buttons button:hover {
@@ -259,11 +250,6 @@
   overflow: hidden;
   animation: dialog-fade-in 0.3s ease;
   position: relative;
-}
-
-
-.confirm-delete-button:hover {
-  background-color: var(--rojooscuro);
 }
 
 .confirm-delete-button mat-icon {
