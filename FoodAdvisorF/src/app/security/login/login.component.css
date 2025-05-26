@@ -1,11 +1,29 @@
-.center {
-  height: calc(100vh - 64px);
+.login-container {
+  width: 400px;
+  max-width: 90%;
+  min-height: 90%;
+  margin: 2rem auto;
+  padding: 2rem;
+  border: 1px solid var(--grisclaro);
+  border-radius: 8px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: var(--blanco);
+}
+
+button[mat-icon-button] {
+  border: none !important;
+  outline: none;
+  box-shadow: none;
 }
 
 .field{
-  width: 15%;
+  width: 70%;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
 }

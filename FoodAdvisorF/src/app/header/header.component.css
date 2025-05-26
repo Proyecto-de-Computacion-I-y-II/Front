@@ -98,7 +98,7 @@ html, body{
 .search-button {
   background: none;
   border: none;
-    box-shadow: none !important;
+  box-shadow: none !important;
   cursor: pointer;
   color: var(--grisoscuro);
   padding: 0 0 0 0;
@@ -414,6 +414,7 @@ html, body{
 
   .logo {
     height: 40px;
+    border-radius: 10%;
   }
 
   .cart-button, .user-avatar, .icon-button {
@@ -505,3 +506,17 @@ html, body{
   background-color: var(--blanco) !important;
   z-index: 9998;
 }
+
+  .toolbar-right .icon-button,
+  .toolbar-right .cart-button,
+  .toolbar-right .perfil,
+  .toolbar-right .perfil_antes {
+    border: none !important;
+    box-shadow: none !important;
+    background: none !important;
+  }
+
+  .toolbar-right .icon-button mat-icon,
+  .toolbar-right .cart-button mat-icon {
+    color: var(--grisoscuro);
+  }
