@@ -16,3 +16,9 @@
 .cancelar{
   background-color: red;
 }
+
+.logo {
+  max-width: 35%;
+  max-height: 35%;
+  margin-bottom: 20px;
+}

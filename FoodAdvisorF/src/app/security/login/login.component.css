@@ -35,5 +35,17 @@ button[mat-icon-button] {
 }
 
 .field{
-  width: 70%;
+  width: 20%;
+  min-width: 200px;
+}
+
+.show-password{
+  overflow: hidden;
+  padding-right: 5px;
+}
+
+.logo {
+  max-width: 35%;
+  max-height: 35%;
+  margin-bottom: 20px;
 }
