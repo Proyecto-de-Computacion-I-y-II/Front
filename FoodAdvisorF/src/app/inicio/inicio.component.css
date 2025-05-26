@@ -55,6 +55,10 @@ h2.heading span {
   margin: 0 auto;
 }
 
+.btn {
+  background-color: var(--verde);
+}
+
 p{
   font-family: 'Inter', sans-serif;
   font-weight: 200;

@@ -30,3 +30,13 @@ button {
 button:hover {
   transform: scale(1.02);
 }
+
+.btn {
+  transition: transform 0.2s ease;
+  border-radius: 7px;
+  box-shadow: 0 1px 3px var(--negro);
+}
+
+.btn:hover {
+  transform: scale(1.02);
+}
