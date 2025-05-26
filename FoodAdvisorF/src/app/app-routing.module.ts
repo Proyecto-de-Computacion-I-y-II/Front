@@ -12,6 +12,7 @@ import { LoginComponent } from './security/login/login.component';
 import { RegisterComponent } from './security/register/register.component';
 import { SubproductosTemporadaComponent } from './subproductos-temporada/subproductos-temporada.component';
 import { TemporadaComponent } from './temporada/temporada.component';
+import {MapComponent} from './core/map/map.component';
 
 const routes: Routes = [
   { path: 'inicio', component: InicioComponent},
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent},
   { path: 'cestas/:id', component: CestaComponent},
   { path: 'cestas', component: CestasComponent},
+  { path: 'mapa', component: MapComponent},
   { path: 'producto-detalle/:id', component: ProductoDetalleComponent,
     runGuardsAndResolvers: 'always'
   },

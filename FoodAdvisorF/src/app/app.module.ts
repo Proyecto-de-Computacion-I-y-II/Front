@@ -34,6 +34,17 @@ import { SubproductosTemporadaComponent } from './subproductos-temporada/subprod
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { MapComponent } from './core/map/map.component';
+import {GoogleMapsModule} from '@angular/google-maps';
+import {
+  MatCell, MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow, MatHeaderRowDef,
+  MatRow, MatRowDef,
+  MatTable
+} from '@angular/material/table';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AjustesComponent } from './core/ajustes/ajustes.component';
@@ -58,6 +69,8 @@ import { ConfiguracionService, initializeConfig } from './services/configuracion
     AdminComponent,
     HeaderComponent,
     FooterComponent,
+    MapComponent,
+    FooterComponent,
     AjustesComponent
   ],
   imports: [
@@ -80,14 +93,25 @@ import { ConfiguracionService, initializeConfig } from './services/configuracion
     MatDrawer,
     MatDrawerContainer,
     MatCheckboxModule,
+    GoogleMapsModule,
+    MatTable,
+    MatHeaderCell,
+    MatCell,
+    MatColumnDef,
+    MatHeaderRow,
+    MatRow,
+    MatHeaderCellDef,
+    MatCellDef,
+    MatHeaderRowDef,
+    MatRowDef,
     MatListModule,
     MatProgressSpinnerModule
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
-    { 
-      provide: HTTP_INTERCEPTORS, 
-      useClass: AuthInterceptor, 
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
       multi: true
     },
     // ✅ AÑADIR EL SERVICIO DE CONFIGURACIÓN
