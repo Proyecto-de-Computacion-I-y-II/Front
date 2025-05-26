@@ -37,8 +37,8 @@
     <mat-accordion *ngIf="!loading2 && !error2" multi>
       <mat-expansion-panel *ngFor="let grp of porSuper">
         <mat-expansion-panel-header>
-          <mat-panel-title>Supermercado ID {{ grp.supermercado }}</mat-panel-title>
-          <mat-panel-description>Top {{ grp.productos.length }} productos</mat-panel-description>
+          <mat-panel-title>{{ grp.supermercado }}</mat-panel-title>
+          <mat-panel-description>{{ grp.productos.length }} productos</mat-panel-description>
         </mat-expansion-panel-header>
         <table mat-table [dataSource]="grp.productos" class="mat-elevation-z2 full-width">
           <ng-container matColumnDef="producto">
