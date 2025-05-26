@@ -48,12 +48,12 @@ h2.heading span {
   font-weight: 600;
 }
 
-  .separator {
-    width: 2px;
-    background-color: var(--grisoscuro);
-    height: 200px; /* altura de la línea, ajusta según contenido */
-    align-self: center;
-  }
+.separator{
+  width: 2px;
+  height: 150px;
+  background-color: #ccc;
+  margin: 0 auto;
+}
 
 p{
   font-family: 'Inter', sans-serif;
@@ -100,3 +100,10 @@ p{
   background-color: var(--fondogris);
 }
 
+#empresas img {
+  transition: transform 0.2s ease;
+}
+
+#empresas img:hover {
+  transform: scale(1.1);
+}
