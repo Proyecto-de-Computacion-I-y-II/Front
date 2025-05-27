@@ -1,5 +1,5 @@
 # Use official Node image
-FROM node:20 as builder
+FROM node:20
 
 # Set working directory
 WORKDIR /app
@@ -15,6 +15,3 @@ COPY . .
 
 # Build Angular project
 RUN npm run build
-
-FROM caddy:alpine
-COPY --from=builder /app/dist/food-advisor-f/browser /usr/share/caddy
