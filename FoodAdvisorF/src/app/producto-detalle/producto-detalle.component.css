@@ -12,6 +12,18 @@ hr {
     opacity: 1;
 }
 
+.no-image-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  color: var(--grisclaro);
+  font-style: italic;
+  font-size: 14px;
+  padding: 10px;
+}
+
 .title-text {
     font-size: 24px;
     font-weight: bold;
