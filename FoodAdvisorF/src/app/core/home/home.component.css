@@ -208,6 +208,7 @@ span {
   box-sizing: border-box;
   background-color: var(--blanco);
   border-radius: 10px;
+    transition: transform 0.2s ease-in-out;
 }
 
 
@@ -215,6 +216,7 @@ span {
 .product-card:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 .no-image-text {

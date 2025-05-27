@@ -1,4 +1,14 @@
+<div class="mb-3">
+  <a href="/admin" class="btn volver btn-outline-primary">
+    Volver
+  </a>
+</div>
+
 <div class="estad-container">
+
+  <!-- Botón de volver atrás -->
+
+
 
   <!-- 1) Supermercados más populares -->
   <section class="card-section">
@@ -20,11 +30,7 @@
     </div>
 
     <!-- si todo OK, mostramos la gráfica -->
-    <canvas
-      #superPopChart
-      *ngIf="!loading1 && !error1"
-      class="chart-canvas"
-    ></canvas>
+    <canvas #superPopChart *ngIf="!loading1 && !error1" class="chart-canvas"></canvas>
   </section>
 
   <!-- 2) Productos más vendidos por supermercado -->
@@ -57,38 +63,37 @@
   </section>
 
   <!-- 3) Productos más vendidos por nivel de pirámide -->
-<section>
-  <h2>Productos más vendidos por nivel de pirámide</h2>
+  <section>
+    <h2>Productos más vendidos por nivel de pirámide</h2>
 
-  <div *ngIf="loading3" class="section-spinner">
-    <div class="spinner spinner-large"></div>
-  </div>
-  <div *ngIf="error3" class="error">{{ error3 }}</div>
+    <div *ngIf="loading3" class="section-spinner">
+      <div class="spinner spinner-large"></div>
+    </div>
+    <div *ngIf="error3" class="error">{{ error3 }}</div>
 
-  <table mat-table [dataSource]="piramideTopRows" class="mat-elevation-z2 full-width"
-         *ngIf="!loading3 && !error3">
-    <!-- Columna Nivel -->
-    <ng-container matColumnDef="nivel">
-      <th mat-header-cell *matHeaderCellDef>Nivel</th>
-      <td mat-cell *matCellDef="let row">{{ row.nivel }}</td>
-    </ng-container>
+    <table mat-table [dataSource]="piramideTopRows" class="mat-elevation-z2 full-width" *ngIf="!loading3 && !error3">
+      <!-- Columna Nivel -->
+      <ng-container matColumnDef="nivel">
+        <th mat-header-cell *matHeaderCellDef>Nivel</th>
+        <td mat-cell *matCellDef="let row">{{ row.nivel }}</td>
+      </ng-container>
 
-    <!-- Columna Producto -->
-    <ng-container matColumnDef="producto">
-      <th mat-header-cell *matHeaderCellDef>Producto top</th>
-      <td mat-cell *matCellDef="let row">{{ row.producto }}</td>
-    </ng-container>
+      <!-- Columna Producto -->
+      <ng-container matColumnDef="producto">
+        <th mat-header-cell *matHeaderCellDef>Producto top</th>
+        <td mat-cell *matCellDef="let row">{{ row.producto }}</td>
+      </ng-container>
 
-    <!-- Columna Cantidad -->
-    <ng-container matColumnDef="cantidad">
-      <th mat-header-cell *matHeaderCellDef>Cantidad</th>
-      <td mat-cell *matCellDef="let row">{{ row.cantidad }}</td>
-    </ng-container>
+      <!-- Columna Cantidad -->
+      <ng-container matColumnDef="cantidad">
+        <th mat-header-cell *matHeaderCellDef>Cantidad</th>
+        <td mat-cell *matCellDef="let row">{{ row.cantidad }}</td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="['nivel','producto','cantidad']"></tr>
-    <tr mat-row        *matRowDef="let row; columns:['nivel','producto','cantidad']"></tr>
-  </table>
-</section>
+      <tr mat-header-row *matHeaderRowDef="['nivel','producto','cantidad']"></tr>
+      <tr mat-row *matRowDef="let row; columns:['nivel','producto','cantidad']"></tr>
+    </table>
+  </section>
 
   <!-- 4) Supermercados más equilibrados -->
   <section>

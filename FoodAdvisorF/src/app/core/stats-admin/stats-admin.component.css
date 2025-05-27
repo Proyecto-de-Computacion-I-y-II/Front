@@ -1,7 +1,15 @@
 .estad-container {
   max-width: 900px;
   margin: 2rem auto;
-  padding: 0 1rem;
+  padding: 
+  0 1rem;
+}
+
+.btn.volver{
+  font-weight: bold;
+  margin-top: 20px;
+  margin-left: 20px;
+  font-size: 20px;
 }
 
 /* — Elimina estas reglas fullscreen — */
