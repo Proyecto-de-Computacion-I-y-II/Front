@@ -27,22 +27,24 @@ z-index: 0;
 }
 
 .btn-volver{
+    padding: 20px;
     display: flex;
     font-size: 15px;
     border-radius: 10px;
-    border-width: 2.5px;
-    border-color: #f58634;
-    height: 4em;
-    min-width: 14em;
-    color: white;
+    max-width: 30%;
+    align-items: center;
+    height: 70px;
+    border: none;
+    color: var(--blanco);
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
-    width: 20%;
-    background-color: #37C666;
+    width: 100%;
+    background-color: var(--verde);
     justify-content: center;
-    align-items: center;
 }
+
+
 
 .content-container {
 position: relative;

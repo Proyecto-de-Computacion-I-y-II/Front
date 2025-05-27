@@ -2,6 +2,7 @@
 import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Chart, ChartData, ChartOptions } from 'chart.js/auto';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-admin',
@@ -46,7 +47,7 @@ export class AdminComponent implements OnInit {
   @ViewChild('porcentajeChart', { static: false }) porcentajeChartCanvas!: ElementRef;
   private chart: Chart<'pie'> | null = null;
 
-  private apiBase = 'http://127.0.0.1:8000/api';
+  private apiBase = environment.apiUrl;
   private headers!: HttpHeaders;
 
   constructor(

@@ -1,12 +1,12 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectorRef,
-  HostListener,
-  Input
-} from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  ChangeDetectorRef,
+  Component,
+  HostListener,
+  Input,
+  OnInit
+} from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { ConfiguracionService } from '../services/configuracion.service'; // ✅ IMPORTAR EL SERVICIO
 
@@ -34,6 +34,7 @@ export class HeaderComponent implements OnInit {
   recognition: any;
   isChromeBrowser: boolean = false;
   headerBackgroundColor: string = '#FFFFFF';
+  profileIsAdmin: boolean = false; // Para verificar si el usuario es administrador
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -109,7 +110,8 @@ export class HeaderComponent implements OnInit {
           const nombre = encodeURIComponent(data.usuario.nombre || '');
           const apellidos = encodeURIComponent(data.usuario.apellidos || '');
           this.avatar = `https://ui-avatars.com/api/?name=${nombre}+${apellidos}&background=random&color=fff`;
-
+          this.profileIsAdmin = data.usuario.rol === 'admin'; // Verifica si el usuario es administrador
+          console.log('Datos del usuario cargados:', this.userData);
           this.showProfile = true;
         },
         error: () => {

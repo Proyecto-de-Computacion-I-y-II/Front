@@ -9,13 +9,12 @@
 
 /* — Header con título y botón — */
 .page-header {
-  position: relative;
-  margin-bottom: 2rem;
   padding: 0 1rem;             /* un pequeño padding lateral */
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;     /* por defecto centra el title-container */
-  flex-wrap: wrap;
+  flex-wrap: wrap-reverse;
 }
 
 /* src/styles.scss */
@@ -60,7 +59,6 @@
 
 /* El botón “Ajustes” se posiciona arriba a la derecha */
 .btn-ajustes {
-  position: absolute;
   right: 1rem;
   top: 50%;
   transform: translateY(-50%);
@@ -331,7 +329,6 @@
 }
 
 .btn-estadisticas {
-  position: absolute;
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);

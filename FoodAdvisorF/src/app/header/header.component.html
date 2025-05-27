@@ -31,7 +31,7 @@
     <a mat-button [routerLink]="['/home']" routerLinkActive="active">Productos</a>
     <a mat-button [routerLink]="['/temporada']" routerLinkActive="active">Productos de temporada</a>
     <a mat-button [routerLink]="['/mapa']" routerLinkActive="active">Mapa</a>
-    <a *ngIf="showProfile" class="admin" mat-button [routerLink]="['/ad-conf-vis']" routerLinkActive="active">Administrador</a>
+    <a *ngIf="showProfile && profileIsAdmin" class="admin" mat-button [routerLink]="['/ad-conf-vis']" routerLinkActive="active">Administrador</a>
   </nav>
 
   <div class="toolbar-right">
@@ -75,7 +75,7 @@
   <a mat-button [routerLink]="['/home']" routerLinkActive="active" (click)="closeMobileMenu()">Productos</a>
   <a mat-button [routerLink]="['/temporada']" routerLinkActive="active" (click)="closeMobileMenu()">Productos de temporada</a>
   <a mat-button [routerLink]="['/mapa']" routerLinkActive="active" (click)="closeMobileMenu()">Mapa</a>
-  <a *ngIf="showProfile" class="admin" mat-button [routerLink]="['/ad-conf-vis']" routerLinkActive="active" (click)="closeMobileMenu()">Administrador</a>
+  <a *ngIf="showProfile === true && profileIsAdmin === true" class="admin" mat-button [routerLink]="['/ad-conf-vis']" routerLinkActive="active" (click)="closeMobileMenu()">Administrador</a>
 </div>
 
 <!-- Overlay -->

@@ -11,6 +11,12 @@
   animation: rotation 1s linear infinite;
 }
 
+.fondo{
+  background-color: var(--fondogris);
+  min-height: 90vh;
+  min-weight: 100%;
+}
+
 .spinner::after,
 .spinner::before {
   content: '';
@@ -45,10 +51,7 @@
 }
 
 /* Layout general */
-.content {
-  background-color: var(--fondogris);
-  min-height: 100vh;
-}
+
 
 /* Título y nav */
 .menu-title-2 .title-text {

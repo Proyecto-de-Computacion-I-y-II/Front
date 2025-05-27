@@ -1,27 +1,29 @@
-<div *ngIf="isLoading" class="loading-container">
-  <div class="spinner"></div>
-</div>
+<div class="fondo">
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+  </div>
 
-<div *ngIf="!isLoading">
-  <div class="product-grid" *ngIf="detalles.length">
-    <div class="product-card" *ngFor="let detalle of detalles" (click)="goToProductDetail(detalle.id)">
-      <ng-container *ngIf="detalle.imagen; else noImage">
-        <img [src]="detalle.imagen" [alt]="detalle.nombre"/>
-      </ng-container>
+  <div *ngIf="!isLoading">
+    <div class="product-grid" *ngIf="detalles.length">
+      <div class="product-card" *ngFor="let detalle of detalles" (click)="goToProductDetail(detalle.id)">
+        <ng-container *ngIf="detalle.imagen; else noImage">
+          <img [src]="detalle.imagen" [alt]="detalle.nombre" />
+        </ng-container>
 
-      <ng-template #noImage>
-        <div #noImageRef class="no-image-text" style="display:none;">
-          Imagen no disponible
-        </div>
-      </ng-template>
+        <ng-template #noImage>
+          <div #noImageRef class="no-image-text" style="display:none;">
+            Imagen no disponible
+          </div>
+        </ng-template>
 
-      <div class="product-info">
-        <div class="product-divider"></div>
-        <div class="product-details">
-          <h3 class="product-name">{{ detalle.nombre }}</h3>
+        <div class="product-info">
+          <div class="product-divider"></div>
+          <div class="product-details">
+            <h3 class="product-name">{{ detalle.nombre }}</h3>
+          </div>
         </div>
       </div>
-    </div>
 
+    </div>
   </div>
 </div>
