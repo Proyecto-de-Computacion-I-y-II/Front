@@ -3,9 +3,18 @@
 </div>
 
 <div *ngIf="!isLoading">
-<div class="product-grid" *ngIf="detalles.length">
+  <div class="product-grid" *ngIf="detalles.length">
     <div class="product-card" *ngFor="let detalle of detalles" (click)="goToProductDetail(detalle.id)">
-      <img [src]="detalle.imagen || 'logo_fondo.png'" [alt]="detalle.nombre">
+      <ng-container *ngIf="detalle.imagen; else noImage">
+        <img [src]="detalle.imagen" [alt]="detalle.nombre"/>
+      </ng-container>
+
+      <ng-template #noImage>
+        <div #noImageRef class="no-image-text" style="display:none;">
+          Imagen no disponible
+        </div>
+      </ng-template>
+
       <div class="product-info">
         <div class="product-divider"></div>
         <div class="product-details">
@@ -13,5 +22,6 @@
         </div>
       </div>
     </div>
-  </div>  
+
+  </div>
 </div>

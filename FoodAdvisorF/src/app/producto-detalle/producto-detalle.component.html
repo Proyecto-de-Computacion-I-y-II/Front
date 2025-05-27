@@ -10,9 +10,17 @@
             <!-- Puedes usar un spinner o una barra de carga aquí -->
             <div class="spinner"></div>
         </div>
-        <div *ngIf="!isLoading" class = "image-container">
-            <img [src]="product?.imagen || 'logo_fondo.png' " [alt]="product?.nombre" class="img-fluid w-75 img" />
+        <div *ngIf="!isLoading" class="image-container">
+            <ng-container *ngIf="product?.imagen; else noImage">
+                <img [src]="product?.imagen" [alt]="product?.nombre" class="img-fluid w-75 img">
+            </ng-container>
+            <ng-template #noImage>
+                <div #noImageRef class="no-image-text">
+                    Imagen no disponible
+                </div>
+            </ng-template>
         </div>
+
     </div>
 
     <!-- Columna de la información -->
@@ -22,7 +30,8 @@
             <p *ngIf="!product"><strong>Precio promedio: </strong> ---</p>
             <p *ngIf="product"><strong>Precio promedio: </strong> {{ product.precio + '€' || '---' }}</p>
             <p *ngIf="!product"><strong>Supermercado: </strong>---</p>
-            <p *ngIf="product" class="superName"><strong>Supermercado: </strong>{{ getSupermercadoNombre(product.idSuper) }}</p>
+            <p *ngIf="product" class="superName"><strong>Supermercado: </strong>{{
+                getSupermercadoNombre(product.idSuper) }}</p>
         </div>
 
         <hr>
@@ -35,39 +44,38 @@
             <p><strong>Sal:</strong> {{ product?.sal || '---' }}</p>
             <p><strong>Hidratos-carbono:</strong> {{ product?.hidratos_carbono || '---' }} </p>
             <p><strong>Proteínas:</strong> {{ product?.proteinas || '---' }} </p>
-          </div>
-          
-          <ng-template #noInfo>
+        </div>
+
+        <ng-template #noInfo>
             <p>Sin información nutricional</p>
-          </ng-template>
+        </ng-template>
 
         <hr>
         <h3>Ingredientes</h3>
-          <p *ngIf="isLoading">---</p>
+        <p *ngIf="isLoading">---</p>
 
-          <div *ngIf="!hasIngredientes(); else noIng">
+        <div *ngIf="!hasIngredientes(); else noIng">
             <p>{{ product?.ingredientes }}</p>
             <hr>
-          </div>
+        </div>
 
-          <ng-template #noIng>
+        <ng-template #noIng>
             <p>Sin ingredientes</p>
-          </ng-template>
+        </ng-template>
 
         <h3>Guardar en cesta</h3>
         <div class="purchase-container">
             <div class="cantidad">
-            <button class="quantity-button minus-button" (click)="restarCantidad()">-</button>
-            <span class="quantity">{{ cantidad }}</span>
-            <button class="quantity-button plus-button" (click)="sumarCantidad()">+</button>
+                <button class="quantity-button minus-button" (click)="restarCantidad()">-</button>
+                <span class="quantity">{{ cantidad }}</span>
+                <button class="quantity-button plus-button" (click)="sumarCantidad()">+</button>
             </div>
             <div class="carrito">
-                <button 
-                (click)="agregarAlCarrito()" 
-                [ngClass]="{'btn-loading': isLoading || isStoring, 'btn-add': !isLoading}">
-                <span *ngIf="!isStoring">Añadir a la cesta actual</span>
-                <div *ngIf="isStoring" class="loader"></div>
-              </button>
+                <button (click)="agregarAlCarrito()"
+                    [ngClass]="{'btn-loading': isLoading || isStoring, 'btn-add': !isLoading}">
+                    <span *ngIf="!isStoring">Añadir a la cesta actual</span>
+                    <div *ngIf="isStoring" class="loader"></div>
+                </button>
             </div>
         </div>
     </div>
@@ -83,19 +91,19 @@
         <div class="spinner"></div>
     </div>
 
-    <div *ngIf="!isLoadingSimillars" >
+    <div *ngIf="!isLoadingSimillars">
         <div *ngIf="products.length > 0" class="product-grid">
             <div class="product-card" *ngFor="let product of products" (click)="goToProductDetail(product.ID_prod)">
                 <img *ngIf="!forceLogoPng" [src]="product.imagen || 'logo_fondo.png'" [alt]="product.nombre">
                 <img *ngIf="forceLogoPng" [src]="'logo_fondo.png'" [alt]="product.nombre">
-            
+
                 <div class="product-info">
-                <div class="product-details">
-                    <h3 class="product-name">{{  keepLastTwoWordsTogether(product.nombre) }}</h3>
-                </div>
-                <div class="product-price">
-                    {{ product.precio }}€
-                </div>
+                    <div class="product-details">
+                        <h3 class="product-name">{{ keepLastTwoWordsTogether(product.nombre) }}</h3>
+                    </div>
+                    <div class="product-price">
+                        {{ product.precio }}€
+                    </div>
                 </div>
             </div>
         </div>
