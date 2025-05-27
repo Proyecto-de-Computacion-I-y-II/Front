@@ -47,9 +47,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.headerBackgroundColor = this.configuracionService.getHeaderColor();
-    
+
     this.updateHeaderColorFromService();
-    
+
     this.checkIfChrome();
     this.checkScreenSize();
     this.loadUserData();
@@ -78,25 +78,25 @@ export class HeaderComponent implements OnInit {
       console.log('🎨 Color del header actualizado desde servicio:', this.headerBackgroundColor);
     }, 100);
   }
-checkIfChrome() {
-  const ua = navigator.userAgent;
-  const isChrome = /Chrome/.test(ua) && !/Edg|OPR|Opera/.test(ua);
+  checkIfChrome() {
+    const ua = navigator.userAgent;
+    const isChrome = /Chrome/.test(ua) && !/Edg|OPR|Opera/.test(ua);
 
-  const isBraveCandidate = (navigator as any).brave && typeof (navigator as any).brave.isBrave === 'function';
-  //navigator es un objeto del navegador que contiene info sobre el mismo
-  //Brave agrega su propia propiedad especial: navigator.brave
-  //navigator.brave.isBrave() es una función que solo existe en Brave y devuelve una promesa que
-  //se resuelve con true si es Brave y con false si no lo es (aunque es poco común)
+    const isBraveCandidate = (navigator as any).brave && typeof (navigator as any).brave.isBrave === 'function';
+    //navigator es un objeto del navegador que contiene info sobre el mismo
+    //Brave agrega su propia propiedad especial: navigator.brave
+    //navigator.brave.isBrave() es una función que solo existe en Brave y devuelve una promesa que
+    //se resuelve con true si es Brave y con false si no lo es (aunque es poco común)
 
-  if (isBraveCandidate) {
-    (navigator as any).brave.isBrave().then((isBrave: boolean) => { //se maneja la promesa
-      this.isChromeBrowser = isChrome && !isBrave;  //se asigna SOLO si es chrome
-      this.cdr.detectChanges(); // Asegura que Angular actualice la vista si cambia el valor
-    });
-  } else {
-    this.isChromeBrowser = isChrome;
+    if (isBraveCandidate) {
+      (navigator as any).brave.isBrave().then((isBrave: boolean) => { //se maneja la promesa
+        this.isChromeBrowser = isChrome && !isBrave;  //se asigna SOLO si es chrome
+        this.cdr.detectChanges(); // Asegura que Angular actualice la vista si cambia el valor
+      });
+    } else {
+      this.isChromeBrowser = isChrome;
+    }
   }
-}
 
   loadUserData() {
     const token = localStorage.getItem('token');
@@ -106,7 +106,10 @@ checkIfChrome() {
       }).subscribe({
         next: (data: any) => {
           this.userData = data;
-          this.avatar = `https://ui-avatars.com/api/?name=${data.usuario.nombre}+${data.usuario.apellidos}&background=random&color=fff`;
+          const nombre = encodeURIComponent(data.usuario.nombre || '');
+          const apellidos = encodeURIComponent(data.usuario.apellidos || '');
+          this.avatar = `https://ui-avatars.com/api/?name=${nombre}+${apellidos}&background=random&color=fff`;
+
           this.showProfile = true;
         },
         error: () => {

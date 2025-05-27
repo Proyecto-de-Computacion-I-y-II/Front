@@ -7,9 +7,10 @@
   gap: 40px;
   padding: 40px 80px;
   align-items: start;
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 100%;
+  min-height: 90vh;
   box-sizing: border-box;
+  background-color: var(--fondogris);
 }
 
 .profile-left {
