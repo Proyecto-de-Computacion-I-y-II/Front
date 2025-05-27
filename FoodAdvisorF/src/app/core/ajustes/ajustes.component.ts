@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpClient, HttpHeaders }       from '@angular/common/http';
-import { Subscription, forkJoin }        from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription, forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-ajustes',
@@ -133,7 +133,7 @@ const calls = updates.map(cfg => {
   const valor = String(cfg.valor);
   return this.http.put(
     `${this.apiBase}/${cfg.id}`,     // URL con el id
-    { valor },            // cuerpo JSON
+    { "nombre": cfg.nombre, valor },            // cuerpo JSON
     { headers: this.authHeaders },   // auth header
   );
 });
