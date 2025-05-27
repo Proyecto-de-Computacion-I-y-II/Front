@@ -94,11 +94,28 @@ p{
   color: var(--verde);
 }
 
-.description {
-  margin-top: 1rem;
-  font-size: 1rem;
-  line-height: 1.5;
+.mi-texto-negrita {
+  font-weight: bolder;
 }
+
+
+.description {
+
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--grisoscuro);
+  padding: 20px;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  border: 2px solid var(--naranjaclaro);   
+  border-radius: 8px;         
+  background-color: var(--naranjaclaro);   
+  box-shadow: 0 4px 6px rgba(230, 126, 34, 0.3); 
+  transition: transform 0.3s ease;
+  max-width: 100%;
+}
+
+
 
 .bg-fondogris {
   background-color: var(--fondogris);
