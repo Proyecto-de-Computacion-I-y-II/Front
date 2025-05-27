@@ -12,7 +12,7 @@ import {environment} from '../../../../environments/environment';
 export class UserService extends BaseService<UserDTO>{
   constructor(http: HttpClient) {
     super(http);
-    this.basePath = environment.apiUrl + 'usuario';
+    this.basePath = environment.apiUrl + '/usuario';
   }
 
   logIn(body: User): Observable<UserDTO> {
