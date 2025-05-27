@@ -6,12 +6,12 @@
 
 .menu-title .title-text {
   font-weight: bold;
-  font-size: 16px; 
+  font-size: 16px;
 }
 
 mat-icon {
-  font-size: 24px; 
-  color: var(--negro); 
+  font-size: 24px;
+  color: var(--negro);
 }
 
 .menu-content {
@@ -24,25 +24,31 @@ mat-icon {
 .columns-container {
   display: flex;
   justify-content: space-between;
-  gap: 20px; /* Espacio entre las dos columnas */
+  gap: 20px;
+  /* Espacio entre las dos columnas */
 }
 
-.left-column, .right-column {
-  width: 45%; /* Ajustamos el ancho de cada columna */
+.left-column,
+.right-column {
+  width: 45%;
+  /* Ajustamos el ancho de cada columna */
 }
 
 .form-group {
-  margin-bottom: 5px; /* Espacio entre los elementos del formulario */
+  margin-bottom: 5px;
+  /* Espacio entre los elementos del formulario */
 }
 
 .form-group2 {
-  margin-bottom: 5px; /* Espacio entre los elementos del formulario */
+  margin-bottom: 5px;
+  /* Espacio entre los elementos del formulario */
 }
 
 
 label {
   display: block;
-  margin-bottom: 5px; /* Espacio entre la etiqueta y el select */
+  margin-bottom: 5px;
+  /* Espacio entre la etiqueta y el select */
   font-weight: bold;
 }
 
@@ -53,17 +59,15 @@ select {
   border-radius: 4px;
 }
 
-.separator {
-  border-left: 2px solid #eae8e8; /* Línea divisoria entre las columnas */
-  height: auto;
-}
+
 
 .menu-content p {
   margin-top: 10px;
 }
 
 .form-group label {
-  font-weight: lighter; /* Título en negrita */
+  font-weight: lighter;
+  /* Título en negrita */
 
   font-size: 13px;
 }
@@ -80,7 +84,8 @@ select {
 /* Estilo para los mat-select */
 mat-select {
   border-radius: 8px;
-  background-color: var(--fondogris); /* Fondo gris claro */
+  background-color: var(--fondogris);
+  /* Fondo gris claro */
   width: 100%;
   max-width: 360px;
   font-size: 12px;
@@ -102,29 +107,34 @@ mat-option {
 
 
 .slider-num {
-  display: flex;               /* Utilizamos flexbox para alinear los elementos */
-  align-items: center;         /* Centrar verticalmente los elementos */
+  display: flex;
+  /* Utilizamos flexbox para alinear los elementos */
+  align-items: center;
+  /* Centrar verticalmente los elementos */
   gap: 30px;
-  width: auto;/* Espacio entre los elementos */
+  width: auto;
+  /* Espacio entre los elementos */
 }
 
-.custom-slider{
+.custom-slider {
   width: 200px;
 }
-.form-g
-roup2 label {
+
+.form-g roup2 label {
   margin-top: 10px;
 }
 
 
 
 span {
-  white-space: nowrap;         /* Evita que el texto se divida */
+  white-space: nowrap;
+  /* Evita que el texto se divida */
 }
 
 
 .form-group2 label {
-  font-weight: lighter; /* Título en negrita */
+  font-weight: lighter;
+  /* Título en negrita */
 
   font-size: 13px;
 }
@@ -148,7 +158,7 @@ span {
   max-width: 80px;
 }
 
-.botones-bajos{
+.botones-bajos {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -188,68 +198,104 @@ span {
   box-sizing: border-box;
 }
 
-
 .product-card {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.20);
-  background: var(--blanco) !important;
-  border-radius: 7%;
-  text-align: center;
-  cursor: pointer;
-  /* border: 2px solid #2c9f51; */
-  transition: transform 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* para que todo arranque desde arriba */
+  max-width: 300px; /* ajusta como quieras */
+  min-height: 400px; /* altura mínima de la card para que todas tengan el mismo tamaño */
+  padding: 1rem;
+  box-sizing: border-box;
+  background-color: var(--blanco);
+  border-radius: 10px;
 }
+
+
 
 .product-card:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
+.no-image-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+  color: var(--grisclaro);
+  font-style: italic;
+  font-size: 14px;
+  padding: 10px;
+}
+
 
 .product-card img {
-  width: 100%;
-  border-top-left-radius: 23%;
-    border-top-right-radius: 23%;
-  object-fit: contain;
-  border-bottom: 2px dotted var(--verde);
-  padding: 15px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 100%;
 
+  border-top-left-radius: 23%;
+  border-top-right-radius: 23%;
+  object-fit: contain;
 }
+
+.product-divider {
+  height: 2px;                /* Bajo alto = línea horizontal */
+  width: 100%;                /* Ocupa todo el ancho disponible */
+  background-color: var(--verde);
+  margin: 10px 0;             /* Espaciado vertical */
+}
+
 
 .product-info {
-  /* background: #f1f1f1 !important; */
-  height: 100%;
-  width: 100%;
-  display: grid;
-  grid-template-rows: auto auto; /* Dos filas: una para el nombre, otra para el precio */
-  justify-items: center;         /* Centra contenido horizontalmente */
-  padding: 8px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-top: 10px;
   gap: 10px;
-  min-height: 70px;
 }
+
+.product-image-container {
+  min-height: 220px; /* fija espacio para la imagen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5%;
+  border-top-left-radius: 23%;
+  border-top-right-radius: 23%;
+  overflow: hidden;
+}
+
+.product-image-container img {
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+.price-supermarket {
+  margin-top: auto;  /* Esto empuja price-supermarket al fondo */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 
 .product-details {
   text-align: left;
 }
 
 .product-name {
-  font-size: 12px;
-  font-weight: bold;
-  margin: 0;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 3;            /* Limita a 3 líneas */
-  -webkit-box-orient: vertical;
+  margin-top: auto; /* empuja hacia abajo todo lo que pueda */
+  font-size: 1rem;
+  max-height: 4.5em; /* limita el alto a aprox 3 líneas */
   overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* limita a 3 líneas */
+  -webkit-box-orient: vertical;
   text-overflow: ellipsis;
-  word-break: break-word;           /* Rompe solo si necesario */
-  overflow-wrap: break-word;        /* Ayuda a evitar letras sueltas */
-
-  text-align: center;
 }
-
-
-
 
 .price {
   font-size: 1.5rem;
@@ -285,16 +331,16 @@ span {
 }
 
 .product-container {
-   /* Gris claro */
+  /* Gris claro */
   padding: 1rem;
 }
 
-.fondo{
+.fondo {
   background-color: var(--fondogris);
   min-height: 100vh;
 }
 
-.filtros_av{
+.filtros_av {
   border: 1px solid var(--verde);
   width: 100%;
 }
@@ -339,6 +385,7 @@ span {
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
 }
+
 .spinner::after,
 .spinner::before {
   content: '';
@@ -357,6 +404,7 @@ span {
   animation: rotationBack 0.5s linear infinite;
   transform-origin: center center;
 }
+
 .spinner::before {
   width: 32px;
   height: 32px;
@@ -365,20 +413,23 @@ span {
 }
 
 @keyframes rotation {
-0% {
-  transform: rotate(0deg);
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
-100% {
-  transform: rotate(360deg);
-}
-}
+
 @keyframes rotationBack {
-0% {
-  transform: rotate(0deg);
-}
-100% {
-  transform: rotate(-360deg);
-}
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(-360deg);
+  }
 }
 
 
@@ -403,11 +454,12 @@ span {
   width: 300px;
   height: 100%;
   background-color: #f9f9f9;
-  box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
   transition: left 0.3s ease;
   z-index: 1000;
   padding: 5px;
 }
+
 .sidebar-backdrop {
   position: fixed;
   top: 0;
@@ -462,7 +514,7 @@ span {
   border: none;
 }
 
-.loading-container{
+.loading-container {
   display: flex;
   flex-direction: column;
 }

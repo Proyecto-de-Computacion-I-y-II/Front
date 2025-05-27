@@ -1,10 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 @Component({
   selector: 'app-inicio',
   standalone: false,
   templateUrl: './inicio.component.html',
-  styleUrl: './inicio.component.css'
+  styleUrls: ['./inicio.component.css']
 })
-export class InicioComponent {
+export class InicioComponent implements OnInit {
+  isLoggedIn = false;
 
+  ngOnInit(): void {
+    const token = localStorage.getItem('token');
+    this.isLoggedIn = !!token;
+  }
 }

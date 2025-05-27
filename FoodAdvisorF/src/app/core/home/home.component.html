@@ -1,18 +1,11 @@
-
-
 <!-- Sidebar (oculto por defecto) -->
 <div class="sidebar" [class.active]="sidebarOpen">
   <div class="sidebar-content">
     <h2>Filtros</h2>
     <div class="form-group">
       <label for="supermercado">Supermercado:</label>
-      <mat-select
-        [(value)]="selectedSupermercados"
-        (selectionChange)="onSupermercadoChange()"
-        [multiple]="true"
-        [disabled]="isLoading"
-        id="supermercado"
-        name="supermercado">
+      <mat-select [(value)]="selectedSupermercados" (selectionChange)="onSupermercadoChange()" [multiple]="true"
+        [disabled]="isLoading" id="supermercado" name="supermercado">
         <mat-option *ngFor="let id of supermercadoIds" [value]="id">
           {{ getSupermercadoNombre(id) }}
         </mat-option>
@@ -21,12 +14,7 @@
 
     <div class="form-group">
       <label for="niveles">Niveles Pirámide:</label>
-      <mat-select
-        [(value)]="selectedNiveles"
-        [multiple]="true"
-        [disabled]="isLoading"
-        id="niveles"
-        name="niveles">
+      <mat-select [(value)]="selectedNiveles" [multiple]="true" [disabled]="isLoading" id="niveles" name="niveles">
         <mat-option *ngFor="let nivel of this.niveles" [value]="nivel.idNivel">
           {{ nivel.Nombre }}
         </mat-option>
@@ -36,13 +24,9 @@
 
     <div class="form-group">
       <label for="categoria">Categoría:</label>
-      <mat-select
-        [(value)]="selectedCategoria"
-        (selectionChange)="onCategoriaChange()"
-        id="categoria"
-        name="categoria"
+      <mat-select [(value)]="selectedCategoria" (selectionChange)="onCategoriaChange()" id="categoria" name="categoria"
         [disabled]="selectedSupermercados.length != 1">
-        <mat-option [value]="''">Todas</mat-option>
+        <mat-option [value]="''">Selecciona solo un supermercado</mat-option>
         <mat-option *ngFor="let categoria of categorias" [value]="categoria.id">
           {{ categoria.nombre }}
         </mat-option>
@@ -51,13 +35,9 @@
 
     <div class="form-group">
       <label for="subcategoria">Subcategoría:</label>
-      <mat-select
-        [(value)]="selectedSubcategoria"
-        (selectionChange)="onSubcategoriaChange()"
-        id="subcategoria"
-        name="subcategoria"
-        [disabled]="!selectedCategoria">
-        <mat-option [value]="''">Todas</mat-option>
+      <mat-select [(value)]="selectedSubcategoria" (selectionChange)="onSubcategoriaChange()" id="subcategoria"
+        name="subcategoria" [disabled]="!selectedCategoria">
+        <mat-option [value]="''">Selecciona solo un supermercado</mat-option>
         <mat-option *ngFor="let sub of subcategorias" [value]="sub.id">
           {{ sub.nombre }}
         </mat-option>
@@ -66,338 +46,174 @@
 
     <div class="form-group">
       <label for="subcategoria2">Subcategoría 2:</label>
-      <mat-select
-        [(value)]="selectedSubcategoria2"
-        id="subcategoria2"
-        name="subcategoria2"
+      <mat-select [(value)]="selectedSubcategoria2" id="subcategoria2" name="subcategoria2"
         [disabled]="!selectedSubcategoria">
-        <mat-option [value]="''">Todas</mat-option>
+        <mat-option [value]="''">Selecciona solo un supermercado</mat-option>
         <mat-option *ngFor="let sub2 of subcategorias2" [value]="sub2.id">
           {{ sub2.nombre }}
         </mat-option>
       </mat-select>
     </div>
 
-<hr>
+    <hr>
 
     <div class="sidebar-buttons">
-    <button class="filtros_av" (click)="toggleFiltros()">Filtros avanzados</button>
+      <button class="filtros_av" (click)="toggleFiltros()">Filtros avanzados</button>
 
-    <!-- Filtros avanzados -->
-    <div *ngIf="mostrarFiltros" class="filtros-avanzados">
+      <!-- Filtros avanzados -->
+      <div *ngIf="mostrarFiltros" class="filtros-avanzados">
 
-      <div class="form-group2">
-        <label for="precio">Precio (€):</label>
-        <div class="slider-num">
-          <input
-            type="text"
-            class="fixed-width no-spinner"
-            [(ngModel)]="precio.start"
-            [min]="0"
-            [max]="precio.end"
-            maxlength="4"
-            inputmode="numeric"
-            (input)="validateRango( this.precio,'start')"
-            (keyup)="validateLetters($event)"
+        <div class="form-group2">
+          <label for="precio">Precio (€):</label>
+          <div class="slider-num">
+            <input type="text" class="fixed-width no-spinner" [(ngModel)]="precio.start" [min]="0" [max]="precio.end"
+              maxlength="4" inputmode="numeric" (input)="validateRango( this.precio,'start')"
+              (keyup)="validateLetters($event)" />
 
-          />
+            <mat-slider id="precio" color="primary" [min]="0.0" [max]="precio.max" [step]="1" thumbLabel
+              class="custom-slider">
+              <input class="input-slider" matSliderStartThumb [(ngModel)]="precio.start" />
+              <input class="input-slider" matSliderEndThumb [(ngModel)]="precio.end" />
+            </mat-slider>
 
-          <mat-slider
-            id="precio"
-            color="primary"
-            [min]="0.0"
-            [max]="precio.max"
-            [step]="1"
-            thumbLabel
-            class="custom-slider"
-          >
-            <input
-              class="input-slider"
-              matSliderStartThumb
-              [(ngModel)]="precio.start"
-            />
-            <input
-              class="input-slider"
-              matSliderEndThumb
-              [(ngModel)]="precio.end"
-            />
-          </mat-slider>
+            <input type="text" class="fixed-width no-spinner" [(ngModel)]="precio.end" [min]="precio.start"
+              [max]="precio.max" maxlength="4" inputmode="numeric" (input)="validateRango( this.precio,'end')"
+              (keyup)="validateLetters($event)" />
+          </div>
+        </div>
 
-          <input
-            type="text"
-            class="fixed-width no-spinner"
-            [(ngModel)]="precio.end"
-            [min]="precio.start"
-            [max]="precio.max"
-            maxlength="4"
-            inputmode="numeric"
-            (input)="validateRango( this.precio,'end')"
-            (keyup)="validateLetters($event)"
 
-          />
+
+        <div class="form-group2">
+          <label for="grasas">Grasas (por 100g):</label>
+          <div class="slider-num">
+
+            <input type="text" class="fixed-width no-spinner" [(ngModel)]="grasa.start" [min]="0" [max]="grasa.end"
+              maxlength="3" inputmode="numeric" (input)="validateRango( this.grasa,'start')"
+              (keyup)="validateLetters($event)" />
+
+            <mat-slider id="grasas" color="primary" [min]="0.0" [max]="grasa.max" [step]="0.1" thumbLabel
+              class="custom-slider">
+              <input class="input-slider" matSliderStartThumb [(ngModel)]="grasa.start">
+              <input class="input-slider" matSliderEndThumb [(ngModel)]="grasa.end" />
+            </mat-slider>
+            <input type="text" class="fixed-width no-spinner" [(ngModel)]="grasa.end" [min]="grasa.start"
+              [max]="grasa.max" maxlength="3" inputmode="numeric" (input)="validateRango( this.grasa,'end')"
+              (keyup)="validateLetters($event)" />
+          </div>
+        </div>
+
+        <div class="form-group2">
+          <label for="azucares">Azucares (por 100g):</label>
+          <div class="slider-num">
+
+            <input type="text" class="fixed-width no-spinner" [(ngModel)]="azucar.start" [min]="0" [max]="azucar.end"
+              maxlength="3" inputmode="numeric" (input)="validateRango( this.azucar,'start')"
+              (keyup)="validateLetters($event)" />
+
+            <mat-slider id="azucares" color="primary" [min]="0.0" [max]="azucar.max" [step]="0.1" thumbLabel
+              class="custom-slider">
+              <input class="input-slider" matSliderStartThumb [(ngModel)]="azucar.start">
+              <input class="input-slider" matSliderEndThumb [(ngModel)]="azucar.end" />
+            </mat-slider>
+            <input type="text" class="fixed-width no-spinner" [(ngModel)]="azucar.end" [min]="azucar.start"
+              [max]="azucar.max" maxlength="3" inputmode="numeric" (input)="validateRango( this.azucar,'end')"
+              (keyup)="validateLetters($event)" />
+          </div>
+        </div>
+
+        <div class="form-group2">
+          <label for="sal">Sal (por 100g):</label>
+          <div class="slider-num">
+            <input type="text" class="fixed-width no-spinner" [(ngModel)]="sal.start" [min]="0" [max]="sal.end"
+              maxlength="4" inputmode="numeric" (input)="validateRango( this.sal,'start')"
+              (keyup)="validateLetters($event)" />
+            <mat-slider id="sal" color="primary" [min]="0.0" [max]="sal.max" [step]="1" thumbLabel
+              class="custom-slider">
+              <input class="input-slider" matSliderStartThumb [(ngModel)]="sal.start">
+              <input class="input-slider" matSliderEndThumb [(ngModel)]="sal.end" />
+            </mat-slider>
+            <input type="text" class="fixed-width no-spinner" [(ngModel)]="sal.end" [min]="sal.start" [max]="sal.max"
+              maxlength="4" inputmode="numeric" (input)="validateRango( this.sal,'end')"
+              (keyup)="validateLetters($event)" />
+          </div>
+        </div>
+
+        <div class="form-group2">
+          <label for="proteinas">Proteinas (por 100g):</label>
+          <div class="slider-num">
+            <input type="text" class="fixed-width no-spinner" [(ngModel)]="proteinas.start" [min]="0"
+              [max]="proteinas.end" maxlength="3" inputmode="numeric" (input)="validateRango( this.proteinas,'start')"
+              (keyup)="validateLetters($event)" />
+            <mat-slider id="proteinas" color="primary" [min]="0.0" [max]="proteinas.max" [step]="0.1" thumbLabel
+              class="custom-slider">
+              <input class="input-slider" matSliderStartThumb [(ngModel)]="proteinas.start">
+              <input class="input-slider" matSliderEndThumb [(ngModel)]="proteinas.end" />
+            </mat-slider>
+            <input type="text" class="fixed-width no-spinner" [(ngModel)]="proteinas.end" [min]="proteinas.start"
+              [max]="proteinas.max" maxlength="3" inputmode="numeric" (input)="validateRango( this.proteinas,'end')"
+              (keyup)="validateLetters($event)" />
+          </div>
+        </div>
+
+        <div class="form-group2">
+          <label for="hidrato">Carbohidratos (por 100g):</label>
+          <div class="slider-num">
+            <input type="text" class="fixed-width no-spinner" [(ngModel)]="hidrato.start" [min]="0" [max]="hidrato.end"
+              maxlength="3" inputmode="numeric" (input)="validateRango( this.hidrato,'start')"
+              (keyup)="validateLetters($event)" />
+            <mat-slider id="hidrato" color="primary" [min]="0.0" [max]="hidrato.max" [step]="0.1" thumbLabel
+              class="custom-slider">
+              <input class="input-slider" matSliderStartThumb [(ngModel)]="hidrato.start">
+              <input class="input-slider" matSliderEndThumb [(ngModel)]="hidrato.end" />
+            </mat-slider>
+            <input type="text" class="fixed-width no-spinner" [(ngModel)]="hidrato.end" [min]="hidrato.start"
+              [max]="hidrato.max" maxlength="3" inputmode="numeric" (input)="validateRango( this.hidrato,'end')"
+              (keyup)="validateLetters($event)" />
+          </div>
+        </div>
+
+        <div class="form-group2">
+          <label for="acidos">Ácidos Grasos (por 100g):</label>
+          <div class="slider-num">
+            <input type="text" class="fixed-width no-spinner" [(ngModel)]="acidos.start" [min]="0" [max]="acidos.end"
+              maxlength="3" inputmode="numeric" (input)="validateRango( this.acidos,'start')"
+              (keyup)="validateLetters($event)" />
+            <mat-slider id="acidos" color="primary" [min]="0.0" [max]="acidos.max" [step]="0.1" thumbLabel
+              class="custom-slider">
+              <input class="input-slider" matSliderStartThumb [(ngModel)]="acidos.start">
+              <input class="input-slider" matSliderEndThumb [(ngModel)]="acidos.end" />
+            </mat-slider>
+            <input type="text" class="fixed-width no-spinner" [(ngModel)]="acidos.end" [min]="acidos.start"
+              [max]="acidos.max" maxlength="3" inputmode="numeric" (input)="validateRango( this.acidos,'end')"
+              (keyup)="validateLetters($event)" />
+          </div>
+        </div>
+
+        <div class="form-group2">
+          <label for="fibras">Fibras (por 100g):</label>
+          <div class="slider-num">
+            <input type="text" class="fixed-width no-spinner" [(ngModel)]="fibra.start" [min]="0" [max]="fibra.end"
+              maxlength="3" inputmode="numeric" (input)="validateRango( this.fibra,'start')"
+              (keyup)="validateLetters($event)" />
+            <mat-slider id="fibras" color="primary" [min]="0.0" [max]="fibra.max" [step]="0.1" thumbLabel
+              class="custom-slider">
+              <input class="input-slider" matSliderStartThumb [(ngModel)]="fibra.start">
+              <input class="input-slider" matSliderEndThumb [(ngModel)]="fibra.end" />
+            </mat-slider>
+            <input type="text" class="fixed-width no-spinner" [(ngModel)]="fibra.end" [min]="fibra.start"
+              [max]="fibra.max" maxlength="3" inputmode="numeric" (input)="validateRango( this.fibra,'end')"
+              (keyup)="validateLetters($event)" />
+          </div>
         </div>
       </div>
-
-
-
-      <div class="form-group2">
-        <label for="grasas">Grasas (por 100g):</label>
-        <div class="slider-num">
-
-          <input
-            type="text"
-            class="fixed-width no-spinner"
-            [(ngModel)]="grasa.start"
-            [min]="0"
-            [max]="grasa.end"
-            maxlength="3"
-            inputmode="numeric"
-            (input)="validateRango( this.grasa,'start')"
-            (keyup)="validateLetters($event)"
-
-          />
-
-          <mat-slider id="grasas" color="primary"
-                      [min]="0.0"
-                      [max]="grasa.max"
-                      [step]="0.1" thumbLabel class="custom-slider">
-            <input class="input-slider" matSliderStartThumb [(ngModel)]="grasa.start">
-            <input class="input-slider" matSliderEndThumb [(ngModel)]="grasa.end"/>
-          </mat-slider>
-          <input
-            type="text"
-            class="fixed-width no-spinner"
-            [(ngModel)]="grasa.end"
-            [min]="grasa.start"
-            [max]="grasa.max"
-            maxlength="3"
-            inputmode="numeric"
-            (input)="validateRango( this.grasa,'end')"
-            (keyup)="validateLetters($event)"
-
-          />
-        </div>
+      <div class="botones-bajos">
+        <button class="btn-aplicar" [disabled]="isLoading" (click)="aplicarFiltros()">Aplicar</button>
+        <button class="btn-limpiar" [disabled]="isLoading" (click)="limpiarFiltros()">Limpiar</button>
       </div>
-
-      <div class="form-group2">
-        <label for="azucares">Azucares (por 100g):</label>
-        <div class="slider-num">
-
-          <input
-            type="text"
-            class="fixed-width no-spinner"
-            [(ngModel)]="azucar.start"
-            [min]="0"
-            [max]="azucar.end"
-            maxlength="3"
-            inputmode="numeric"
-            (input)="validateRango( this.azucar,'start')"
-            (keyup)="validateLetters($event)"
-          />
-
-          <mat-slider id="azucares" color="primary"
-                      [min]="0.0"
-                      [max]="azucar.max"
-                      [step]="0.1" thumbLabel class="custom-slider">
-            <input class="input-slider" matSliderStartThumb [(ngModel)]="azucar.start">
-            <input class="input-slider" matSliderEndThumb [(ngModel)]="azucar.end"/>
-          </mat-slider>
-          <input
-            type="text"
-            class="fixed-width no-spinner"
-            [(ngModel)]="azucar.end"
-            [min]="azucar.start"
-            [max]="azucar.max"
-            maxlength="3"
-            inputmode="numeric"
-            (input)="validateRango( this.azucar,'end')"
-            (keyup)="validateLetters($event)"
-          />
-        </div>
-      </div>
-
-      <div class="form-group2">
-        <label for="sal">Sal (por 100g):</label>
-        <div class="slider-num">
-          <input
-            type="text"
-            class="fixed-width no-spinner"
-            [(ngModel)]="sal.start"
-            [min]="0"
-            [max]="sal.end"
-            maxlength="4"
-            inputmode="numeric"
-            (input)="validateRango( this.sal,'start')"
-            (keyup)="validateLetters($event)"
-          />
-          <mat-slider id="sal" color="primary"
-                      [min]="0.0"
-                      [max]="sal.max"
-                      [step]="1" thumbLabel class="custom-slider">
-            <input class="input-slider" matSliderStartThumb [(ngModel)]="sal.start">
-            <input class="input-slider" matSliderEndThumb [(ngModel)]="sal.end"/>
-          </mat-slider>
-          <input
-            type="text"
-            class="fixed-width no-spinner"
-            [(ngModel)]="sal.end"
-            [min]="sal.start"
-            [max]="sal.max"
-            maxlength="4"
-            inputmode="numeric"
-            (input)="validateRango( this.sal,'end')"
-            (keyup)="validateLetters($event)"
-          />
-        </div>
-      </div>
-
-      <div class="form-group2">
-        <label for="proteinas">Proteinas (por 100g):</label>
-        <div class="slider-num">
-          <input
-            type="text"
-            class="fixed-width no-spinner"
-            [(ngModel)]="proteinas.start"
-            [min]="0"
-            [max]="proteinas.end"
-            maxlength="3"
-            inputmode="numeric"
-            (input)="validateRango( this.proteinas,'start')"
-            (keyup)="validateLetters($event)"
-          />
-          <mat-slider id="proteinas" color="primary"
-                      [min]="0.0"
-                      [max]="proteinas.max"
-                      [step]="0.1"thumbLabel class="custom-slider">
-            <input class="input-slider" matSliderStartThumb [(ngModel)]="proteinas.start">
-            <input class="input-slider" matSliderEndThumb [(ngModel)]="proteinas.end"/>
-          </mat-slider>
-          <input
-            type="text"
-            class="fixed-width no-spinner"
-            [(ngModel)]="proteinas.end"
-            [min]="proteinas.start"
-            [max]="proteinas.max"
-            maxlength="3"
-            inputmode="numeric"
-            (input)="validateRango( this.proteinas,'end')"
-            (keyup)="validateLetters($event)"
-          />
-        </div>
-      </div>
-
-      <div class="form-group2">
-        <label for="hidrato">Carbohidratos (por 100g):</label>
-        <div class="slider-num">
-          <input
-            type="text"
-            class="fixed-width no-spinner"
-            [(ngModel)]="hidrato.start"
-            [min]="0"
-            [max]="hidrato.end"
-            maxlength="3"
-            inputmode="numeric"
-            (input)="validateRango( this.hidrato,'start')"
-            (keyup)="validateLetters($event)"
-          />
-          <mat-slider id="hidrato" color="primary"
-                      [min]="0.0"
-                      [max]="hidrato.max"
-                      [step]="0.1" thumbLabel class="custom-slider">
-            <input class="input-slider" matSliderStartThumb [(ngModel)]="hidrato.start">
-            <input class="input-slider" matSliderEndThumb [(ngModel)]="hidrato.end"/>
-          </mat-slider>
-          <input
-            type="text"
-            class="fixed-width no-spinner"
-            [(ngModel)]="hidrato.end"
-            [min]="hidrato.start"
-            [max]="hidrato.max"
-            maxlength="3"
-            inputmode="numeric"
-            (input)="validateRango( this.hidrato,'end')"
-            (keyup)="validateLetters($event)"
-          />
-        </div>
-      </div>
-
-      <div class="form-group2">
-        <label for="acidos">Ácidos Grasos (por 100g):</label>
-        <div class="slider-num">
-          <input
-            type="text"
-            class="fixed-width no-spinner"
-            [(ngModel)]="acidos.start"
-            [min]="0"
-            [max]="acidos.end"
-            maxlength="3"
-            inputmode="numeric"
-            (input)="validateRango( this.acidos,'start')"
-            (keyup)="validateLetters($event)"
-          />
-          <mat-slider id="acidos" color="primary"
-                      [min]="0.0"
-                      [max]="acidos.max"
-                      [step]="0.1" thumbLabel class="custom-slider">
-            <input class="input-slider" matSliderStartThumb [(ngModel)]="acidos.start">
-            <input class="input-slider" matSliderEndThumb [(ngModel)]="acidos.end"/>
-          </mat-slider>
-          <input
-            type="text"
-            class="fixed-width no-spinner"
-            [(ngModel)]="acidos.end"
-            [min]="acidos.start"
-            [max]="acidos.max"
-            maxlength="3"
-            inputmode="numeric"
-            (input)="validateRango( this.acidos,'end')"
-            (keyup)="validateLetters($event)"
-          />
-        </div>
-      </div>
-
-      <div class="form-group2">
-        <label for="fibras">Fibras (por 100g):</label>
-        <div class="slider-num">
-          <input
-            type="text"
-            class="fixed-width no-spinner"
-            [(ngModel)]="fibra.start"
-            [min]="0"
-            [max]="fibra.end"
-            maxlength="3"
-            inputmode="numeric"
-            (input)="validateRango( this.fibra,'start')"
-            (keyup)="validateLetters($event)"
-          />
-          <mat-slider id="fibras" color="primary"
-                      [min]="0.0"
-                      [max]="fibra.max"
-                      [step]="0.1" thumbLabel class="custom-slider">
-            <input class="input-slider" matSliderStartThumb [(ngModel)]="fibra.start">
-            <input class="input-slider" matSliderEndThumb [(ngModel)]="fibra.end"/>
-          </mat-slider>
-          <input
-            type="text"
-            class="fixed-width no-spinner"
-            [(ngModel)]="fibra.end"
-            [min]="fibra.start"
-            [max]="fibra.max"
-            maxlength="3"
-            inputmode="numeric"
-            (input)="validateRango( this.fibra,'end')"
-            (keyup)="validateLetters($event)"
-          />
-        </div>
-      </div>
-    </div>
- <div class="botones-bajos">
-      <button class="btn-aplicar" [disabled]="isLoading" (click)="aplicarFiltros()">Aplicar</button>
-      <button class="btn-limpiar" [disabled]="isLoading" (click)="limpiarFiltros()">Limpiar</button>
-    </div>
-    </div>
     </div>
   </div>
+</div>
 
 <!-- Fondo oscuro al abrir el sidebar -->
 <div class="sidebar-backdrop" *ngIf="sidebarOpen" (click)="toggleSidebar()"></div>
@@ -405,56 +221,64 @@
 
 
 <div class="fondo">
-<div class="menu-title-2">
-  <span class="title-text">{{ this.titulo }}</span>
-  <!-- Botón para abrir el sidebar -->
-  <button class="toggle-sidebar" (click)="toggleSidebar()">Filtros</button>
-  <button class="limpiar" (click)="limpiarFiltros()">Limpiar</button>
-</div>
+  <div class="menu-title-2">
+    <span class="title-text d-inline-block px-5">{{ this.titulo }}</span>
+    <!-- Botón para abrir el sidebar -->
+    <button class="toggle-sidebar" (click)="toggleSidebar()">Filtros</button>
+    <button class="limpiar" (click)="limpiarFiltros()">Limpiar</button>
+  </div>
 
 
 
-<div *ngIf="isLoading" class="loading-container">
-  <p class="loading-text">Cargando productos...</p>
-  <div class="spinner"></div>
-</div>
+  <div *ngIf="isLoading" class="loading-container">
+    <p class="loading-text">Cargando productos...</p>
+    <div class="spinner"></div>
+  </div>
 
-<div class="product-container">
-  <div *ngIf="!isLoading" class="product-grid">
-    <div class="product-card" *ngFor="let product of products" (click)="goToProductDetail(product.ID_prod)">
-      <img [src]="product.imagen || 'logo_fondo.png'" [alt]="product.nombre">
-
-      <div class="product-info">
-        <div class="product-details">
-          <h3 class="product-name">{{  keepLastTwoWordsTogether(product.nombre) }}</h3>
+  <div class="product-container">
+    <div class="product-grid">
+      <div class="product-card" *ngFor="let product of products" (click)="goToProductDetail(product.ID_prod)">
+        <div class="product-image-container">
+          <ng-container *ngIf="product.imagen; else noImage">
+            <img [src]="product.imagen" [alt]="product.nombre" />
+          </ng-container>
+          <ng-template #noImage>
+            <div class="no-image-text">Imagen no disponible</div>
+          </ng-template>
         </div>
-        <div class="product-price">
-          <h3 class="price">{{ product.precio }}€</h3>
-          <h3 class="product-market">{{this.getSupermercadoNombre(product.idSuper)}}</h3>
+        <div class="product-info">
+          <div class="product-divider"></div>
+          <div class="product-details">
+            <h3 class="product-name">{{ keepLastTwoWordsTogether(product.nombre) }}</h3>
+          </div>
+          <div class="price-supermarket">
+          <div class="product-price">
+            <h3 class="price">{{ product.precio }}€</h3>
+            <h3 class="product-market">{{ getSupermercadoNombre(product.idSuper) }}</h3>
+          </div>
+          </div>
         </div>
       </div>
     </div>
+
   </div>
-</div>
 
-<div *ngIf="!isLoading && products.length != 0" class="pagination">
-  <button (click)="initPage()" [disabled]="currentPage === 1">««</button>
+  <div *ngIf="!isLoading && products.length != 0" class="pagination">
+    <button (click)="initPage()" [disabled]="currentPage === 1">««</button>
 
-  <button (click)="prevPage()" [disabled]="currentPage === 1">«</button>
+    <button (click)="prevPage()" [disabled]="currentPage === 1">«</button>
 
-  <button *ngFor="let page of visiblePages"
-          (click)="changePage(page)"
-          [class.active]="currentPage === page">
-    {{ page }}
-  </button>
+    <button *ngFor="let page of visiblePages" (click)="changePage(page)" [class.active]="currentPage === page">
+      {{ page }}
+    </button>
 
-  <button (click)="nextPage()" [disabled]="currentPage === totalPages">»</button>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">»</button>
 
-  <button (click)="lastPage()" [disabled]="currentPage === totalPages">»»</button>
+    <button (click)="lastPage()" [disabled]="currentPage === totalPages">»»</button>
 
-</div>
+  </div>
 
-<div *ngIf="!isLoading && products.length == 0" class="no-productos">
-  <h1>No hay resultados para tu búsqueda. Prueba con otros filtros.</h1>
-</div>
+  <div *ngIf="!isLoading && products.length == 0" class="no-productos">
+    <h1>No hay resultados para tu búsqueda. Prueba con otros filtros.</h1>
+  </div>
 </div>

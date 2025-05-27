@@ -1,19 +1,14 @@
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule, registerLocaleData } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import localeEs from '@angular/common/locales/es';
 
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleGroup } from '@angular/material/button-toggle';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormField } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatOption, MatSelect } from '@angular/material/select';
-import { MatSlider, MatSliderRangeThumb } from '@angular/material/slider';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatToolbarModule } from '@angular/material/toolbar';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+
 import { CestaComponent } from './core/cesta/cesta.component';
 import { CestasComponent } from './core/cestas/cestas.component';
 import { HomeComponent } from './core/home/home.component';
@@ -23,34 +18,40 @@ import { ProductoDetalleComponent } from './producto-detalle/producto-detalle.co
 import { LoginComponent } from './security/login/login.component';
 import { RegisterComponent } from './security/register/register.component';
 import { TemporadaComponent } from './temporada/temporada.component';
-
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatDrawer, MatDrawerContainer } from '@angular/material/sidenav';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AdminComponent } from './security/admin/admin.component';
-import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
 import { SubproductosTemporadaComponent } from './subproductos-temporada/subproductos-temporada.component';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { AjustesComponent } from './core/ajustes/ajustes.component';
+import { StatsAdminComponent } from './core/stats-admin/stats-admin.component';
 import { MapComponent } from './core/map/map.component';
-import {GoogleMapsModule} from '@angular/google-maps';
-import {
-  MatCell, MatCellDef,
-  MatColumnDef,
-  MatHeaderCell,
-  MatHeaderCellDef,
-  MatHeaderRow, MatHeaderRowDef,
-  MatRow, MatRowDef,
-  MatTable
-} from '@angular/material/table';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { AjustesComponent } from './core/ajustes/ajustes.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatTableModule } from '@angular/material/table';
 
-// ✅ IMPORTAR EL SERVICIO Y LA FUNCIÓN FACTORY
+import { GoogleMapsModule } from '@angular/google-maps';
+
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ConfiguracionService, initializeConfig } from './services/configuracion.service';
+import { AuthInterceptor } from './shared/interceptor/auth.interceptor';
+
+registerLocaleData(localeEs, 'es-ES');
 
 @NgModule({
   declarations: [
@@ -69,43 +70,36 @@ import { ConfiguracionService, initializeConfig } from './services/configuracion
     AdminComponent,
     HeaderComponent,
     FooterComponent,
+    AjustesComponent,
+    StatsAdminComponent,
     MapComponent,
-    FooterComponent,
-    AjustesComponent
   ],
   imports: [
-    MatExpansionModule,
     BrowserModule,
+    CommonModule, 
+    RouterModule,
     AppRoutingModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatFormField,
     FormsModule,
-    MatSelect,
-    MatOption,
-    MatSlider,
-    MatInputModule,
+
     MatButtonModule,
-    MatSnackBarModule,
-    MatSliderRangeThumb,
+    MatButtonToggleModule,
     MatCardModule,
-    MatButtonToggleGroup,
-    MatDrawer,
-    MatDrawerContainer,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatSelectModule,
+    MatSliderModule,
+    MatSnackBarModule,
+    MatToolbarModule,
+    MatExpansionModule,
+    MatSidenavModule,
     MatCheckboxModule,
-    GoogleMapsModule,
-    MatTable,
-    MatHeaderCell,
-    MatCell,
-    MatColumnDef,
-    MatHeaderRow,
-    MatRow,
-    MatHeaderCellDef,
-    MatCellDef,
-    MatHeaderRowDef,
-    MatRowDef,
     MatListModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatTableModule,
+
+    GoogleMapsModule,
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),
@@ -114,9 +108,7 @@ import { ConfiguracionService, initializeConfig } from './services/configuracion
       useClass: AuthInterceptor,
       multi: true
     },
-    // ✅ AÑADIR EL SERVICIO DE CONFIGURACIÓN
     ConfiguracionService,
-    // ✅ CONFIGURAR APP_INITIALIZER PARA CARGAR EL COLOR ANTES DE RENDERIZAR
     {
       provide: APP_INITIALIZER,
       useFactory: initializeConfig,
@@ -126,4 +118,4 @@ import { ConfiguracionService, initializeConfig } from './services/configuracion
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

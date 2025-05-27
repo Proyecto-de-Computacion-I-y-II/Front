@@ -59,13 +59,13 @@
     <div class="profile-section">
       <div class="section-title">Actividad de la aplicación:</div>
         <div class="section-grid">
-          <div class="title-sub">Cantidad de pedidos:</div>
+          <div class="title-sub">Cantidad de productos pedidos:</div>
             <div class="subtitle">
               <ng-container *ngIf="prodUser !== -1; else pedidosLoading">
                 {{ prodUser }}
               </ng-container>
               <ng-template #pedidosLoading>
-                <div class="spinner"></div> <!-- Tu spinner bonito aquí -->
+                <div class="spinner"></div>
               </ng-template>
             </div>
     </div>

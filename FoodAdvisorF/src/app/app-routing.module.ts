@@ -12,7 +12,9 @@ import { LoginComponent } from './security/login/login.component';
 import { RegisterComponent } from './security/register/register.component';
 import { SubproductosTemporadaComponent } from './subproductos-temporada/subproductos-temporada.component';
 import { TemporadaComponent } from './temporada/temporada.component';
+import { AjustesComponent } from './core/ajustes/ajustes.component';
 import {MapComponent} from './core/map/map.component';
+import {StatsAdminComponent} from './core/stats-admin/stats-admin.component';
 
 const routes: Routes = [
   { path: 'inicio', component: InicioComponent},
@@ -30,6 +32,8 @@ const routes: Routes = [
   { path: 'not-found', component: NotFoundComponent},
   { path: 'subproducto-temporada/:idTemp', component: SubproductosTemporadaComponent},
   { path: 'ad-conf-vis', component:AdminComponent},
+  { path: 'ajustes', component: AjustesComponent},
+  { path: 'estadisticas', component: StatsAdminComponent },
   { path: '', redirectTo: 'inicio', pathMatch: 'full'},
   { path: '**', redirectTo: 'not-found'}
 ];

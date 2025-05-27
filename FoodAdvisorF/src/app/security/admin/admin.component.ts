@@ -1,8 +1,7 @@
 // admin.component.ts
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Chart, ChartData, ChartOptions } from 'chart.js/auto';
-import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-admin',
@@ -11,273 +10,248 @@ import { ChangeDetectorRef } from '@angular/core';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-  cestas: any[] = [];
-  usuarios: { [id: number]: string } = {};
-  usuariosUnicos: number[] = [];
-  currentUserId: number | null = null;
+  // — Estado de carga —
+  isLoadingUsuarios = false;
+  isLoadingNombreUsuario: { [id: number]: boolean } = {};
+  cestasCargando: { [id: number]: boolean } = {};
+  productosCargadosPorFecha: { [fecha: string]: boolean } = {};
+  productosCargadosPorCesta: { [id: number]: boolean } = {};
+  isLoadingCestas = false;
+  isLoadingProductos = false;
 
+  // — Datos de usuario —
+  currentUserId: number | null = null;
+  usuariosUnicos: number[] = [];
+  usuarios: { [id: number]: string } = {};
+  totalUsuarios = 0;
+
+  // — Datos de cestas —
+  cestas: any[] = [];
+  totalCestasPorUsuario: { [id: number]: number } = {};
+  fechasAgrupadas: { [fecha: string]: any[] } = {};
+  totalCestasPorDia: { [fecha: string]: number } = {};
+  totalProductosPorFecha: { [fecha: string]: number } = {};
+  productosPorCesta: { [id: number]: any[] } = {};
+  totalProductosPorCesta: { [id: number]: number } = {};
+
+  // — Selecciones de UI —
   usuarioSeleccionado: number | null = null;
   cestaSeleccionada: any = null;
+  fechaAbierta: string | null = null;
+
+  // — Productos y gráfico —
   productosCesta: any[] = [];
   porcentajesCesta: any[] = [];
 
-  isLoadingUsuarios: boolean = false;
-  isLoadingCestas: boolean = false;
-  isLoadingProductos: boolean = false;
+  @ViewChild('porcentajeChart', { static: false }) porcentajeChartCanvas!: ElementRef;
+  private chart: Chart<'pie'> | null = null;
 
-  fechasAgrupadas: { [fecha: string]: any[] } = {};
-  productosPorCesta: { [idCesta: number]: any[] } = {};
-  fechasVisibles: string[] = [];
+  private apiBase = 'http://127.0.0.1:8000/api';
+  private headers!: HttpHeaders;
 
-  totalUsuarios: number = 0;
-  totalCestasPorUsuario: { [id: number]: number } = {};
-  totalCestasPorDia: { [fecha: string]: number } = {};
-  totalProductosPorCesta: { [idCesta: number]: number } = {};
-  totalProductosPorFecha: { [fecha: string]: number } = {};
-  productosCargadosPorCesta: { [idCesta: number]: boolean } = {};
-  productosCargadosPorFecha: { [fecha: string]: boolean } = {};
-
-  @ViewChild('porcentajeChart') porcentajeChartCanvas!: ElementRef;
-  chart: Chart | null = null;
-
-  constructor(private http: HttpClient, private cdRef: ChangeDetectorRef) {}
+  constructor(
+    private http: HttpClient,
+    private cdRef: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
-    this.loadUser();
+    const token = localStorage.getItem('token') || '';
+    this.headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+    this.loadCurrentUser();
   }
 
-  loadUser() {
-    const token = localStorage.getItem('token');
-    if (!token) return;
-
+  private loadCurrentUser(): void {
     this.isLoadingUsuarios = true;
-    const headers = { Authorization: `Bearer ${token}` };
-
-    this.http.get('http://127.0.0.1:8000/api/usuario', { headers }).subscribe({
-      next: (user: any) => {
-        this.currentUserId = user.usuario.ID_user;
-        this.loadCestas();
-      },
-      error: err => {
-        console.error('Error obteniendo usuario actual:', err);
-        this.isLoadingUsuarios = false;
-      }
-    });
+    this.http.get<any>(`${this.apiBase}/usuario`, { headers: this.headers })
+      .subscribe({
+        next: res => {
+          this.currentUserId = res.usuario.ID_user;
+          this.loadCestas();
+        },
+        error: err => {
+          console.error('Error al cargar usuario:', err);
+          this.isLoadingUsuarios = false;
+        }
+      });
   }
 
-  loadCestas() {
-    this.isLoadingUsuarios = true;
-    this.http.get<any[]>('http://127.0.0.1:8000/api/cestas-compra').subscribe({
-      next: (cestasData) => {
-        const filtradas = cestasData.filter(c => c.ID_user !== this.currentUserId);
-        this.cestas = filtradas;
+  private loadCestas(): void {
+    this.http.get<any[]>(`${this.apiBase}/cestas-compra`, { headers: this.headers })
+      .subscribe({
+        next: data => {
+          // Excluir cestas del administrador
+          this.cestas = data.filter(c => c.ID_user !== this.currentUserId);
 
-        const uniqueUserIds = [...new Set(filtradas.map(c => c.ID_user))];
-        this.usuariosUnicos = uniqueUserIds;
-        this.totalUsuarios = uniqueUserIds.length;
+          // Usuarios únicos
+          const ids = Array.from(new Set(this.cestas.map(c => c.ID_user)));
+          this.usuariosUnicos = ids;
+          this.totalUsuarios = ids.length;
 
-        if (uniqueUserIds.length === 0) this.isLoadingUsuarios = false;
+          // Si no hay usuarios, desactivar loader
+          if (!ids.length) {
+            this.isLoadingUsuarios = false;
+            return;
+          }
 
-        let cargados = 0;
-        uniqueUserIds.forEach(id => {
-          this.http.get<any>(`http://127.0.0.1:8000/api/usuario/login/${id}`).subscribe({
-            next: (userData) => {
-              this.usuarios[id] = `${userData.nombre} ${userData.apellidos}`;
-              if (++cargados === uniqueUserIds.length) {
-                this.isLoadingUsuarios = false;
-                uniqueUserIds.forEach(uid => this.obtenerCestasDeUsuario(uid, true));
-              }
-            },
-            error: () => {
-              this.usuarios[id] = 'Usuario desconocido';
-              if (++cargados === uniqueUserIds.length) {
-                this.isLoadingUsuarios = false;
-                uniqueUserIds.forEach(uid => this.obtenerCestasDeUsuario(uid, true));
-              }
-            }
+          // Cargar nombre de cada usuario
+          let loadedNames = 0;
+          ids.forEach(id => {
+            this.isLoadingNombreUsuario[id] = true;
+            this.http.get<any>(`${this.apiBase}/usuario/login/${id}`, { headers: this.headers })
+              .subscribe({
+                next: u => {
+                  this.usuarios[id] = `${u.nombre} ${u.apellidos}`;
+                  this.isLoadingNombreUsuario[id] = false;
+                  if (++loadedNames === ids.length) {
+                    // Todas las cargas de nombre hechas
+                    this.isLoadingUsuarios = false;
+                    this.fechaAbierta = null;              // <-- reset panel abierto
+                    ids.forEach(uid => this.obtenerCestasDeUsuario(uid, true));
+                  }
+                },
+                error: () => {
+                  this.usuarios[id] = 'Desconocido';
+                  this.isLoadingNombreUsuario[id] = false;
+                  if (++loadedNames === ids.length) {
+                    this.isLoadingUsuarios = false;
+                    this.fechaAbierta = null;              // <-- reset panel abierto
+                    ids.forEach(uid => this.obtenerCestasDeUsuario(uid, true));
+                  }
+                }
+              });
           });
-        });
-      },
-      error: err => {
-        console.error('Error cargando cestas:', err);
-        this.isLoadingUsuarios = false;
-      }
-    });
+        },
+        error: err => {
+          console.error('Error cargando cestas:', err);
+          this.isLoadingUsuarios = false;
+        }
+      });
   }
 
   obtenerNombreUsuario(id: number): string {
-    return this.usuarios[id] || 'Cargando...';
+    return this.usuarios[id] || '';
   }
 
-  seleccionarUsuario(id: number) {
+  seleccionarUsuario(id: number): void {
     this.usuarioSeleccionado = id;
     this.cestaSeleccionada = null;
     this.productosCesta = [];
     this.porcentajesCesta = [];
-    this.fechasVisibles = [];
-
-    if (this.chart) {
-      this.chart.destroy();
-      this.chart = null;
-    }
-
+    if (this.chart) { this.chart.destroy(); this.chart = null; }
     this.obtenerCestasDeUsuario(id);
   }
 
   obtenerCestasDeUsuario(id: number, preload: boolean = false): void {
-    const cestasUsuario = this.cestas
+    const userCestas = this.cestas
       .filter(c => c.ID_user === id)
       .sort((a, b) => new Date(b.fecha_compra).getTime() - new Date(a.fecha_compra).getTime());
 
-    this.totalCestasPorUsuario[id] = cestasUsuario.length;
+    this.totalCestasPorUsuario[id] = userCestas.length;
+    this.cestasCargando[id] = true;
 
     if (!preload) {
-      this.totalCestasPorDia = {};
-      this.totalProductosPorCesta = {};
-      this.totalProductosPorFecha = {};
       this.fechasAgrupadas = {};
+      this.totalCestasPorDia = {};
+      this.totalProductosPorFecha = {};
       this.productosCargadosPorFecha = {};
     }
 
-    const fechaPendientes = new Set<string>();
-
-    for (const cesta of cestasUsuario) {
-      const fecha = new Date(cesta.fecha_compra).toLocaleDateString('es-ES', {
-        year: 'numeric', month: 'long', day: 'numeric'
-      });
-
-      if (!this.fechasAgrupadas[fecha]) {
-        this.fechasAgrupadas[fecha] = [];
-        this.totalCestasPorDia[fecha] = 0;
-        this.totalProductosPorFecha[fecha] = 0;
-        this.productosCargadosPorFecha[fecha] = false;
-        fechaPendientes.add(fecha);
-      }
-
-      this.fechasAgrupadas[fecha].push(cesta);
-      this.totalCestasPorDia[fecha]++;
-
+    let doneCount = 0;
+    userCestas.forEach(cesta => {
+      const fechaKey = new Date(cesta.fecha_compra).toISOString().split('T')[0];
+      this.fechasAgrupadas[fechaKey] = this.fechasAgrupadas[fechaKey] || [];
+      this.fechasAgrupadas[fechaKey].push(cesta);
+      this.totalCestasPorDia[fechaKey] = (this.totalCestasPorDia[fechaKey] || 0) + 1;
       this.productosCargadosPorCesta[cesta.ID_cesta] = false;
+      this.totalProductosPorCesta[cesta.ID_cesta] = 0;
+      this.totalProductosPorFecha[fechaKey] = this.totalProductosPorFecha[fechaKey] || 0;
 
-      this.http.get<any>(`http://127.0.0.1:8000/api/admin/cesta/${cesta.ID_cesta}`).subscribe({
-        next: (data) => {
-          const productos = data?.cesta?.productos || [];
-          this.productosPorCesta[cesta.ID_cesta] = productos;
-          this.totalProductosPorCesta[cesta.ID_cesta] = productos.length;
-          this.totalProductosPorFecha[fecha] += productos.length;
-          this.productosCargadosPorCesta[cesta.ID_cesta] = true;
+      this.http.get<any>(`${this.apiBase}/admin/cesta/${cesta.ID_cesta}`, { headers: this.headers })
+        .subscribe({
+          next: res => {
+            const productos = res.cesta.productos || [];
+            this.productosPorCesta[cesta.ID_cesta] = productos;
+            this.totalProductosPorCesta[cesta.ID_cesta] = productos.length;
+            this.totalProductosPorFecha[fechaKey] += productos.length;
+            this.productosCargadosPorCesta[cesta.ID_cesta] = true;
 
-          // Check if all cestas of the date are loaded
-          const allLoaded = this.fechasAgrupadas[fecha].every(
-            c => this.productosCargadosPorCesta[c.ID_cesta]
-          );
-          if (allLoaded) this.productosCargadosPorFecha[fecha] = true;
-        },
-        error: () => {
-          this.productosPorCesta[cesta.ID_cesta] = [];
-          this.totalProductosPorCesta[cesta.ID_cesta] = 0;
-          this.productosCargadosPorCesta[cesta.ID_cesta] = true;
+            // Si todas las de esa fecha terminaron:
+            if (this.fechasAgrupadas[fechaKey].every(x => this.productosCargadosPorCesta[x.ID_cesta])) {
+              this.productosCargadosPorFecha[fechaKey] = true;
+            }
 
-          const allLoaded = this.fechasAgrupadas[fecha].every(
-            c => this.productosCargadosPorCesta[c.ID_cesta]
-          );
-          if (allLoaded) this.productosCargadosPorFecha[fecha] = true;
-        }
-      });
-    }
+            if (++doneCount === userCestas.length) {
+              this.cestasCargando[id] = false;
+              this.fechaAbierta = null;          // <-- asegurar panel cerrado
+            }
+          },
+          error: () => {
+            this.productosPorCesta[cesta.ID_cesta] = [];
+            this.totalProductosPorCesta[cesta.ID_cesta] = 0;
+            this.productosCargadosPorCesta[cesta.ID_cesta] = true;
+            if (++doneCount === userCestas.length) {
+              this.cestasCargando[id] = false;
+              this.fechaAbierta = null;        // <-- asegurar panel cerrado
+            }
+          }
+        });
+    });
   }
 
   getFechas(): string[] {
-    return Object.keys(this.fechasAgrupadas);
+    return Object.keys(this.fechasAgrupadas)
+      .sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
   }
 
-  toggleFechaExpandida(fecha: string): void {
-    const index = this.fechasVisibles.indexOf(fecha);
-    if (index > -1) {
-      this.fechasVisibles.splice(index, 1);
-    } else {
-      this.fechasVisibles.push(fecha);
-    }
-  }
-
-  seleccionarCesta(cesta: any) {
+  seleccionarCesta(cesta: any): void {
     this.cestaSeleccionada = cesta;
     this.productosCesta = this.productosPorCesta[cesta.ID_cesta] || [];
     this.porcentajesCesta = [];
-    this.obtenerPorcentajesDeCesta(cesta.ID_cesta);
+    if (this.chart) { this.chart.destroy(); this.chart = null; }
+    this.renderizarGraficoDeCesta(cesta.ID_cesta);
   }
 
-  obtenerPorcentajesDeCesta(idCesta: number) {
+  private renderizarGraficoDeCesta(id: number): void {
     this.isLoadingCestas = true;
-    this.http.get<any[]>(`http://127.0.0.1:8000/api/cestas/${idCesta}/porcentajes`).subscribe({
-      next: (data) => {
-        this.porcentajesCesta = data;
-        this.isLoadingCestas = false;
-        setTimeout(() => {
-          this.cdRef.detectChanges();
-          this.renderizarGrafico();
-        }, 0);
-      },
-      error: err => {
-        console.error('Error obteniendo porcentajes:', err);
-        this.isLoadingCestas = false;
-      }
-    });
+    this.http.get<any[]>(`${this.apiBase}/cestas/${id}/porcentajes`, { headers: this.headers })
+      .subscribe({
+        next: data => {
+          this.porcentajesCesta = data;
+          this.isLoadingCestas = false;
+          setTimeout(() => {
+            this.cdRef.detectChanges();
+            this.renderizarGrafico();
+          }, 0);
+        },
+        error: err => {
+          console.error('Error porcentajes:', err);
+          this.isLoadingCestas = false;
+        }
+      });
   }
 
-  renderizarGrafico() {
-    if (!this.porcentajeChartCanvas || !this.porcentajeChartCanvas.nativeElement) return;
-    if (this.porcentajesCesta.length === 0) return;
+  private renderizarGrafico(): void {
+    if (!this.porcentajeChartCanvas) return;
+    const ctx = this.porcentajeChartCanvas.nativeElement;
+    if (!this.porcentajesCesta.length) return;
 
     const labels = this.porcentajesCesta.map(p => p.nivel_piramide.Nombre);
-    const dataValues = this.porcentajesCesta.map(p => parseFloat(p.porcentaje));
+    const values = this.porcentajesCesta.map(p => +p.porcentaje);
 
-    const backgroundColors = [
-      'rgba(255, 99, 132, 0.7)',
-      'rgba(54, 162, 235, 0.7)',
-      'rgba(255, 206, 86, 0.7)',
-      'rgba(75, 192, 192, 0.7)',
-      'rgba(153, 102, 255, 0.7)'
+    const bg = [
+      'rgba(255,99,132,0.7)', 'rgba(54,162,235,0.7)',
+      'rgba(255,206,86,0.7)', 'rgba(75,192,192,0.7)',
+      'rgba(153,102,255,0.7)'
     ];
-    const borderColors = backgroundColors.map(c => c.replace('0.7', '1'));
+    const bc = bg.map(c => c.replace('0.7','1'));
 
-    const chartData: ChartData<'pie'> = {
-      labels,
-      datasets: [{
-        label: 'Porcentaje por Nivel',
-        data: dataValues,
-        backgroundColor: backgroundColors,
-        borderColor: borderColors,
-        borderWidth: 1
-      }]
-    };
-
-    const chartOptions: ChartOptions<'pie'> = {
-      responsive: true,
-      plugins: {
-        legend: { position: 'bottom' },
-        title: {
-          display: true,
-          text: `Distribución nutricional de la cesta ${this.cestaSeleccionada?.ID_cesta}`
-        }
-      }
+    const chartData: ChartData<'pie'> = { labels, datasets:[{ data: values, backgroundColor: bg, borderColor: bc, borderWidth: 1 }] };
+    const chartOpts: ChartOptions<'pie'> = {
+      responsive:true,
+      plugins:{ legend:{ position:'bottom' }, title:{ display:true, text:`Distribución cesta ${this.cestaSeleccionada.ID_cesta}` } }
     };
 
     if (this.chart) this.chart.destroy();
-
-    this.chart = new Chart(this.porcentajeChartCanvas.nativeElement, {
-      type: 'pie',
-      data: chartData,
-      options: chartOptions
-    });
+    this.chart = new Chart(ctx, { type:'pie', data:chartData, options:chartOpts });
   }
-
-  obtenerInicialesUsuario(id: number): string {
-    const nombreCompleto = this.obtenerNombreUsuario(id);
-    if (!nombreCompleto) return '';
-    const palabras = nombreCompleto.trim().split(' ');
-    const iniciales = palabras.slice(0, 2).map(p => p[0].toUpperCase()).join('');
-    return iniciales;
-  }
-
 }

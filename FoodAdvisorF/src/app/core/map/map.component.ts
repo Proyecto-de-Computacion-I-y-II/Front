@@ -18,7 +18,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<any>();
   myLocationMarker: any;
   mapInitialized = false;
-  isLoading = true;  // ⬅️ Añadir
+  isLoading = true;
 
   ngOnInit(): void {
     this.setCurrentLocation();

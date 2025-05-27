@@ -1,1 +1,77 @@
-<p>ajustes works!</p>
+<div class="ajustes-container" *ngIf="!loading; else cargando">
+  <h2>Ajustes</h2>
+
+  <!-- ← Botón “Volver” y pulsable con routerLink -->
+  <div class="actions-top">
+    <button mat-stroked-button color="primary" routerLink="/ad-conf-vis">
+      ← Volver
+    </button>
+  </div>
+
+  <div *ngIf="!configData" class="estado">
+    <!-- antes se pedía “pulsa cargar…” pero ya cargamos al init -->
+    No hay configuraciones disponibles.
+  </div>
+
+  <div *ngIf="configData" class="config-list">
+    <mat-card *ngFor="let c of configData" class="config-card">
+      <mat-card-title [ngSwitch]="c.nombre">
+        <span *ngSwitchCase="'color_header'">Color del encabezado</span>
+        <span *ngSwitchCase="'productos_pagina'">Productos por página</span>
+        <span *ngSwitchDefault>{{ c.nombre }}</span>
+      </mat-card-title>
+      <mat-card-content>
+
+        <!-- Slider para productos_pagina -->
+        <ng-container *ngIf="c.nombre === 'productos_pagina'; else colorTpl">
+          <p><strong>Valor:</strong>  {{ c.valor }} productos/pagina: </p>
+          <select
+            [(ngModel)]="c.valor"
+            (ngModelChange)="onProductosChange(c.valor)"
+            class="w-full mb-2"
+          >
+            <option *ngFor="let v of allowedProductos" [value]="v">{{ v }}</option>
+          </select>
+          <mat-progress-bar
+            mode="determinate"
+            [value]="getProductosPercent(+c.valor)">
+          </mat-progress-bar>
+        </ng-container>
+
+        <!-- Color picker para color_header -->
+        <ng-template #colorTpl>
+          <p><strong>Valor en hex:</strong> {{ c.valor }}</p>
+          <p class="color-instruction mb-2">Haz clic para cambiar el color</p>
+          <input
+            type="color"
+            [(ngModel)]="c.valor"
+            (ngModelChange)="onColorChange(c.valor)"
+            class="color-wheel"
+          />
+        </ng-template>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Botones Cancelar / Aceptar -->
+  <div *ngIf="configData" class="actions mt-4 flex justify-end space-x-2">
+    <button mat-stroked-button color="warn" (click)="onCancel()">
+      Cancelar
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onSave()"
+      [disabled]="!hasChanges()"
+    >
+      Aceptar
+    </button>
+  </div>
+</div>
+
+<ng-template #cargando>
+  <div class="loading-fullscreen">
+    <div class="spinner spinner-large"></div>
+  </div>
+</ng-template>

@@ -1,114 +1,133 @@
 <div class="admin-container">
-  <h1 class="admin-title mat-display-1">Listado de Cestas de Usuarios</h1>
 
-  <!-- Panel de estadísticas -->
-  <mat-card class="stats-panel">
-    <p><strong>Total usuarios:</strong> {{ totalUsuarios }}</p>
-    <p><strong>Cestas del usuario:</strong> {{ usuarioSeleccionado ? (totalCestasPorUsuario[usuarioSeleccionado] || 0) : '—' }}</p>
-    <p><strong>Fechas distintas:</strong> {{ usuarioSeleccionado ? getFechas().length : '—' }}</p>
-    <p><strong>Productos en la cesta:</strong> {{ cestaSeleccionada ? productosCesta.length : '—' }}</p>
-  </mat-card>
+  <!-- Header -->
+  <div class="page-header">
+    <div class="title-container">
+      <h1 class="page-title">Listado de Cestas de Usuarios</h1>
+    </div>
+    <button mat-raised-button color="accent" routerLink="/ajustes" class="btn-ajustes">
+      Ajustes
+    </button>
+    <button mat-raised-button color="accent" routerLink="/estadisticas" class="btn-estadisticas">
+      Estadísticas
+    </button>
+  </div>
 
-  <div class="admin-panel mat-elevation-z2">
-    
-    <!-- Columna izquierda: Usuarios -->
-<!-- Columna izquierda: Usuarios (Angular Material List mejorada) -->
-<div class="container">
-<mat-nav-list class="usuarios-columna">
-  <ng-container *ngIf="!isLoadingUsuarios; else loadingUsuarios">
-    <mat-list-item
+  <!-- Estadísticas de usuarios -->
+  <div class="panel-central">
+    <mat-card class="stat-card">
+      <div class="stat-content">
+        <div class="stat-label">Usuarios totales</div>
+        <div class="stat-number">
+          <ng-container *ngIf="!isLoadingUsuarios; else loadingUsuariosTpl">
+            {{ totalUsuarios }}
+          </ng-container>
+          <ng-template #loadingUsuariosTpl>
+            <div class="spinner-container"><div class="spinner"></div></div>
+          </ng-template>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- Fila de tarjetas de usuario -->
+  <div class="cards-row">
+    <mat-card
+      class="click-card"
       *ngFor="let id of usuariosUnicos"
-      [class.seleccionado]="usuarioSeleccionado === id"
+      [class.selected]="usuarioSeleccionado === id"
       (click)="seleccionarUsuario(id)"
     >
-      <!-- Contenedor flex para nombre + contador -->
-      <div class="usuario-info">
-        <span class="usuario-cestas">{{ totalCestasPorUsuario[id] || 0 }}</span>
-        <span class="usuario-nombre">{{ obtenerNombreUsuario(id) }}</span>
-        <mat-icon class="chevron">expand_more</mat-icon>
-      </div>
+      <ng-container *ngIf="!isLoadingNombreUsuario[id]; else loadingNombreTpl">
+        <div class="card-content">
+          <span class="card-title">{{ usuarios[id] }}</span>
+          <span class="badge">{{ totalCestasPorUsuario[id] || 0 }}</span>
+        </div>
+      </ng-container>
+      <ng-template #loadingNombreTpl>
+        <div class="spinner-container"><div class="spinner"></div></div>
+      </ng-template>
+    </mat-card>
+  </div>
 
-    </mat-list-item>
-  </ng-container>
+  <!-- Si no hay usuario seleccionado, mostramos mensaje -->
+  <ng-container *ngIf="usuarioSeleccionado; else sinUsuarioTpl">
 
-  <ng-template #loadingUsuarios>
-    <div class="spinner-container">
-      <mat-progress-spinner mode="indeterminate" diameter="30"></mat-progress-spinner>
-    </div>
-  </ng-template>
-</mat-nav-list>
-
-
-
-    <!-- Columna central: Fechas y cestas -->
-<!-- Columna central: Fechas y cestas -->
-<mat-nav-list class="cestas-columna" *ngIf="usuarioSeleccionado">
-    <ng-container *ngFor="let fecha of getFechas()">
+    <!-- Acordeón de fechas / cestas -->
+    <mat-accordion class="accordion-flat">
       <mat-expansion-panel
-        class="cesta-panel"
-        [expanded]="fechasVisibles.includes(fecha)"
-        (opened)="toggleFechaExpandida(fecha)"
-        (closed)="toggleFechaExpandida(fecha)"
+        *ngFor="let fecha of getFechas()"
+        [expanded]="fechaAbierta === fecha"
+        (opened)="fechaAbierta = fecha"
+        (closed)="fechaAbierta = null"
+        class="panel-card"
       >
         <mat-expansion-panel-header>
-          <mat-panel-title class="fecha-titulo">
-                <span class="fecha-dia">{{ fecha | date:'d' }}</span>
-                <span class="fecha-mes-ano">{{ fecha | date:'MMMM y':'':'es-ES' }}</span>
-          </mat-panel-title>
-          <mat-panel-description class="fecha-descripcion">
-            {{ totalCestasPorDia[fecha] || 0 }} cestas
-          </mat-panel-description>
+          <div class="fecha-header">
+            <span class="fecha-day">{{ fecha | date:'d' }}</span>
+            <span class="fecha-month">{{ fecha | date:'MMMM y' }}</span>
+          </div>
+          <div class="fecha-badge">
+            <ng-container *ngIf="!productosCargadosPorFecha[fecha]; else countTpl">
+              <div class="spinner-container"><div class="spinner"></div></div>
+            </ng-container>
+            <ng-template #countTpl>
+              <span class="badge-sm">
+                {{ totalCestasPorDia[fecha] || 0 }}
+                {{ (totalCestasPorDia[fecha] || 0) === 1 ? 'cesta' : 'cestas' }}
+              </span>
+            </ng-template>
+          </div>
         </mat-expansion-panel-header>
 
-        <mat-list dense>
-          <mat-list-item
+        <div class="cestas-grid">
+          <mat-card
+            class="click-card-small"
             *ngFor="let cesta of fechasAgrupadas[fecha]"
-            class="cesta-item"
-            [class.seleccionado]="
-              cestaSeleccionada?.ID_cesta === cesta.ID_cesta
-            "
+            [class.selected]="cestaSeleccionada?.ID_cesta === cesta.ID_cesta"
             (click)="seleccionarCesta(cesta)"
           >
             <div class="cesta-info">
-              <span class="cesta-text">Cesta ID: {{ cesta.ID_cesta }}</span>
-              <mat-icon class="chevron-small">chevron_right</mat-icon>
+              <div>
+                <div class="cesta-id">Cesta: {{ cesta.ID_cesta }}</div>
+                <div class="cesta-count">
+                  Productos: {{ totalProductosPorCesta[cesta.ID_cesta] || 0 }}
+                </div>
+              </div>
+              <mat-icon class="chevron">chevron_right</mat-icon>
             </div>
-          </mat-list-item>
-        </mat-list>
-      </mat-expansion-panel>
-    </ng-container>
-</mat-nav-list>
-
-
-
-    <!-- Columna derecha: Productos y gráfico -->
-    <div class="productos-columna" *ngIf="cestaSeleccionada">
-      <div *ngIf="isLoadingProductos || isLoadingCestas" class="spinner-container">
-        <mat-progress-spinner mode="indeterminate" diameter="40"></mat-progress-spinner>
-      </div>
-
-      <ng-container *ngIf="!isLoadingProductos && !isLoadingCestas">
-        <!-- Gráfico -->
-        <mat-card class="grafico-circular" *ngIf="productosCesta.length > 0">
-          <p class="total-productos">Total de productos: {{ productosCesta.length }}</p>
-          <canvas #porcentajeChart></canvas>
-        </mat-card>
-
-        <!-- Mensaje de cesta vacía -->
-        <mat-card class="mensaje-vacio" *ngIf="productosCesta.length === 0">
-          ⚠️ Esta cesta está vacía.
-        </mat-card>
-
-        <!-- Productos -->
-        <div class="productos-grid" *ngIf="productosCesta.length > 0">
-          <mat-card class="producto-card" *ngFor="let producto of productosCesta">
-            <mat-card-title>{{ producto.nombre }}</mat-card-title>
-            <mat-card-content>{{ producto.precio }} €</mat-card-content>
           </mat-card>
         </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <!-- Detalle de productos de la cesta -->
+    <div class="productos-section" *ngIf="cestaSeleccionada">
+      <ng-container *ngIf="isLoadingCestas || isLoadingProductos; else productosTpl">
+        <div class="spinner-container"><div class="spinner"></div></div>
       </ng-container>
-    </div>
+      <ng-template #productosTpl>
+        <mat-card *ngIf="productosCesta.length === 0" class="empty-card">
+          ⚠️ Esta cesta está vacía.
+        </mat-card>
+        <mat-card *ngIf="productosCesta.length > 0" class="chart-card">
+          <p class="chart-title">Total de productos: {{ productosCesta.length }}</p>
+          <canvas #porcentajeChart></canvas>
+        </mat-card>
+        <div class="productos-grid" *ngIf="productosCesta.length > 0">
+          <mat-card class="producto-card" *ngFor="let p of productosCesta">
+            <div class="prod-title">{{ p.nombre }}</div>
+            <div class="prod-price">{{ p.precio }} €</div>
+          </mat-card>
+        </div>
+      </ng-template>
     </div>
 
-  </div>
+  </ng-container>
+
+  <!-- Mensaje si no hay usuario seleccionado -->
+  <ng-template #sinUsuarioTpl>
+    <p class="no-selection">Selecciona un usuario para ver sus cestas.</p>
+  </ng-template>
+
 </div>

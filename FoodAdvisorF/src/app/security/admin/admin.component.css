@@ -1,404 +1,344 @@
-/* ---------- CONTENEDOR GENERAL ---------- */
+/* admin.component.css */
+
+/* — Contenedor principal — */
 .admin-container {
   padding: 2rem;
-  background-color: #f7f7f7;
-  font-family: 'Segoe UI', sans-serif;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-}
-
-.container-user {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  align-self: center;
-  gap: 10px;
-  width: 100%;
-}
-
-.admin-title {
-  margin-bottom: 2rem;
-  text-align: center;
-  font-weight: 700;
- 
-  margin-bottom: 40px;
-  color: var(--grisoscuro);
-
-  font-size: 2rem;
-
-}
-
-/* ---------- PANEL DE ESTADÍSTICAS ---------- */
-.stats-panel {
-  max-width: 400px;
-  margin: 0 auto 2rem auto;
-  padding: 1.5rem;
-  border-radius: 10px;
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  font-size: 1rem;
-  line-height: 1.6;
-}
-
-/* ---------- PANEL PRINCIPAL ---------- */
-.admin-panel {
-  display: flex;
- 
-  justify-content: start;
-  align-items: flex-start;
-  gap: 40px;
-}
-
-.usuarios-columna {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.usuario-box {
-  background-color: var(--blanco);
-  border: 2px solid var(--negro);
-  padding: 18px 24px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  cursor: pointer;
-  width: 300px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.usuario-box.seleccionado {
-  background-color: #d9fdd3;
-}
-
-.flecha {
-  font-size: 1.2rem;
-}
-
-.cestas-columna {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.cesta-box {
-  border: 2px solid var(--negro);
-  background-color: var(--blanco);
-  padding: 18px 24px;
-  width: 300px;
-  cursor: pointer;
-}
-
-.cesta-box.seleccionado {
-  background-color: #d9fdd3;
-}
-
-.productos-columna {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.productos-columna h2 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.productos-grid {
-  display: flex;
-
-
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
-}
-
- 
-.producto-card {
-  flex: 0 0 calc(25% - 20px); /* 4 por fila con espacio */
-  max-width: 200px;
-  text-align: center;
-  padding: 15px;
-  background-color: var(--blanco);
-  border: 1px solid #ddd;
-  border-radius: 12px;
-}
-
-.producto-card img {
-  width: 100%;
-  height: auto;
-  margin-bottom: 10px;
-}
-
-.producto-card .nombre {
-  font-weight: 500;
-  margin-bottom: 5px;
-}
-
-.producto-card .precio {
-  color: green;
-  font-weight: bold;
-}
-
-.grafico-circular {
-  width: 300px;
-  height: 300px;
-  margin: 20px auto;
-}
-
-.grafico-circular canvas {
-  width: 100% !important;
-  height: 100% !important;
-}
-.mensaje-vacio {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #555;
-  margin-top: 30px;
-  background-color: #fff6f6;
-  border: 2px solid #ffcccc;
-  padding: 20px;
-}
-/* ---------- COLUMNA IZQUIERDA: USUARIOS ---------- */
-.usuarios-columna {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
-  min-width: 260px;
-  background-color: #ffffff;
-
-  border-radius: 10px;
-  padding: 0.5rem 0.25rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
-
-/* “Botones” de usuario */
-mat-list-item {
-  display: flex !important;
-  align-items: center;
-  padding: 0.75rem 1rem !important;
-  margin: 0 !important;
-  border-radius: 20px !important;
-  min-height: 70px !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
-  cursor: pointer !important;
-  transition: background-color 0.2s ease !important;
-}
-mat-list-item + mat-list-item {
-  margin-top: 0.5rem !important;
-}
-mat-list-item:hover {
-  background-color: #f5f5f5 !important;
-}
-mat-list-item.seleccionado {
-  background-color: #d0f5d0 !important;
-}
-
- 
-.fecha-box.expandida {
-  background-color: #d9fdd3;
-  border-color: var(--verde);
-
-/* Avatar de Angular Material */
-.mat-list-avatar {
-  background-color: #e0e0e0 !important;
-  color: #424242 !important;
-  flex-shrink: 0;
-
-}
-
-/* Contenedor nombre + badge + chevron */
-.usuario-info {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex: 1;
-  overflow: hidden;
-}
-.usuario-nombre {
-  font-weight: 600;
-  font-size: 1rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.usuario-cestas {
-  background: #f5f5f5;
-  border-radius: 12px;
-  padding: 2px 8px;
-  font-size: 0.875rem;
-  color: #616161;
-  flex-shrink: 0;
-}
-.chevron {
-  font-size: 24px;
-  color: #757575;
-  flex-shrink: 0;
-}
-
-/* ---------- SPINNER DE CARGA ---------- */
-.spinner-container {
-  display: flex;
-  justify-content: center;
-  padding: 16px;
-}
-
- 
-.spinner {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: inline-block;
+/* — Header con título y botón — */
+.page-header {
   position: relative;
-  border: 3px solid;
+  margin-bottom: 2rem;
+  padding: 0 1rem;             /* un pequeño padding lateral */
+  display: flex;
+  align-items: center;
+  justify-content: center;     /* por defecto centra el title-container */
+  flex-wrap: wrap;
+}
+
+/* src/styles.scss */
+.spinner {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  position: relative;
+  border: 2px solid;
   border-color: var(--naranja) var(--naranja) transparent transparent;
   box-sizing: border-box;
-  animation: rotation 1s linear infinite;
+  animation: rotation 0.8s linear infinite;
 }
-
 .spinner::after,
 .spinner::before {
   content: '';
-  box-sizing: border-box;
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  left: 0; right: 0; top: 0; bottom: 0;
   margin: auto;
-  border: 3px solid;
+  border: 2px solid;
   border-color: transparent transparent var(--verde) var(--verde);
-  width: 40px;
-  height: 40px;
   border-radius: 50%;
   animation: rotationBack 0.5s linear infinite;
   transform-origin: center center;
 }
-
 .spinner::before {
-  width: 32px;
-  height: 32px;
+  width: 16px; height: 16px;
+  animation: rotation 1.2s linear infinite;
   border-color: var(--naranja) var(--naranja) transparent transparent;
-  animation: rotation 1.5s linear infinite;
+}
+@keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes rotationBack { 0% { transform: rotate(0deg); } 100% { transform: rotate(-360deg); } }
+
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.25rem 0;
+  margin-right: 0.5rem;
 }
 
-/* ---------- COLUMNA CENTRAL: CESTAS ---------- */
-.cestas-columna {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
-  width: 100%;
-  min-width: 260px;
-  background: #fff;
-  border-radius: 10px;
-  padding: 0.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+/* El botón “Ajustes” se posiciona arriba a la derecha */
+.btn-ajustes {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-/* Ajustes generales al accordion */
-mat-accordion {
-  width: 100%;
-}
-
-/* “Botones” de fecha (expansion-panels) */
-.cesta-panel {
-  width: 100%;
+/* Título */
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #222;
   margin: 0;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  transition: background-color 0.2s ease;
-
-
-  /* Header como botón */
-  ::ng-deep .mat-expansion-panel-header {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    padding: 0.75rem 1rem !important;
-    min-height: 70px !important;
-    background: #fff !important;
-    cursor: pointer;
-  }
-  
-  ::ng-deep .mat-expansion-panel-header:hover {
-    background: #f5f5f5 !important;
-  }
-  ::ng-deep .mat-expansion-panel-header.mat-expanded {
-    background: #d0f5d0 !important;
-  }
-
-  /* Título y descripción sin wrap */
-  ::ng-deep .mat-panel-title,
-  ::ng-deep .mat-panel-description {
-    font-weight: 600;
-    font-size: 1rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
 }
 
- 
-@keyframes rotationBack {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(-360deg);
-  }
+.title-container {
+  width: 100%;
+  text-align: center;
 }
 
-/* Lista de cestas dentro de cada panel */
-.cesta-item {
-  display: flex !important;
+.page-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #222;
+  margin: 0;
+}
+
+/* — Panel central de estadísticas — */
+.panel-central {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem 2rem;
+  border-radius: 1.5rem;
+  background: #f7f8fa;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+  max-width: 380px;
+  width: 100%;
+}
+
+.stat-icon {
+  background: #e3f2fd;
+  border-radius: 50%;
+  padding: 1rem;
+}
+
+.icon-lg {
+  font-size: 2.5rem;
+  color: #1976d2;
+}
+
+.stat-label {
+  font-size: 1.1rem;
+  color: #1976d2;
+  font-weight: 600;
+}
+
+.stat-number {
+  /*Centrar*/
+  display: flex;
+  justify-content: center;
+  font-size: 2.3rem;
+  font-weight: bold;
+  color: #222;
+}
+
+/* — Fila de tarjetas de usuario — */
+.cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.click-card {
+  min-width: 260px;
+  max-width: 320px;
+  padding: 1.2rem 1.5rem;
+  border-radius: 1.2rem;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  border: 2px solid #e0e0e0;
+  cursor: pointer;
+  transition: 0.2s;
+  text-align: center;
+}
+
+.click-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  border-color: #1976d2;
+  transform: translateY(-2px) scale(1.02);
+}
+
+.click-card.selected {
+  background: #e8f5e9;
+  border-color: #43a047;
+  box-shadow: 0 8px 32px rgba(67,160,71,0.2);
+}
+
+.card-content {
+  display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 1rem !important;
-  margin: 0 !important;
-  border-radius: 20px !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
-  cursor: pointer !important;
-  transition: background-color 0.2s ease !important;
-}
-.cesta-item + .cesta-item {
-  margin-top: 0.5rem !important;
-}
-.cesta-item:hover {
-  background: #f5f5f5 !important;
-}
-.cesta-item.seleccionado {
-  background: #d0f5d0 !important;
-}
-.cesta-item .cesta-text {
-  font-size: 0.95rem;
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.cesta-item .chevron-small {
-  font-size: 24px;
-  color: #757575;
 }
 
-/* ---------- ADAPTACIÓN RESPONSIVE ---------- */
-@media (max-width: 1200px) {
-  .usuarios-columna,
-  .cestas-columna {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media (max-width: 600px) {
-  .usuarios-columna,
-  .cestas-columna {
-    grid-template-columns: 1fr;
-  }
+.badge {
+  background: #1976d2;
+  color: #fff;
+  padding: 0.2em 0.8em;
+  border-radius: 1rem;
+  font-weight: 600;
 }
 
+/* — Acordeón de fechas — */
+.accordion-flat .mat-expansion-panel {
+  background: #fcfbff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  margin-bottom: 1rem;
+  border: none;
+}
+.accordion-flat .mat-expansion-panel.mat-expanded {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+}
+
+.fecha-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.fecha-day {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #222;
+}
+.fecha-month {
+  font-size: 1.1rem;
+  color: #1976d2;
+  text-transform: capitalize;
+}
+
+.fecha-badge {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+.badge-sm {
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 0.2em 0.8em;
+  border-radius: 1rem;
+  font-weight: 600;
+  margin-right: 1rem;
+}
+
+/* — Grid de cestas dentro del panel — */
+.cestas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.click-card-small {
+  padding: 1rem;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  border: 2px solid #e0e0e0;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.click-card-small:hover {
+  box-shadow: 0 6px 24px rgba(0,0,0,0.1);
+  border-color: #1976d2;
+  background: #f5faff;
+}
+
+.click-card-small.selected {
+  background: #e8f5e9;
+  border-color: #43a047;
+  box-shadow: 0 8px 32px rgba(67,160,71,0.2);
+}
+
+.cesta-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cesta-id {
+  font-weight: 600;
+  color: #222;
+}
+.cesta-count {
+  color: #1976d2;
+}
+
+/* — Sección de productos — */
+.productos-section {
+  margin: 2rem 0;
+}
+
+.empty-card {
+  padding: 1.5rem;
+  text-align: center;
+  background: #fff8e1;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.chart-card {
+  max-width: 420px;
+  margin: 0 auto 2rem;
+  padding: 1.5rem;
+  background: #fcfbff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.1);
+}
+.chart-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #222;
+}
+
+/* — Grid de productos — */
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(180px,1fr));
+  gap: 1rem;
+}
+
+.producto-card {
+  padding: 1rem;
+  border-radius: 1rem;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  border: 2px solid #e0e0e0;
+  transition: 0.2s;
+}
+
+.producto-card:hover {
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  border-color: #1976d2;
+  background: #f5faff;
+}
+
+.prod-title {
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #222;
+}
+
+.prod-price {
+  color: #1976d2;
+  font-size: 1rem;
+}
+
+.no-selection {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-estadisticas {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* — Responsive — */
+@media (max-width: 900px) {
+  .cestas-grid { grid-template-columns: repeat(2,1fr); }
+  .productos-grid { grid-template-columns: repeat(2,1fr); }
 }

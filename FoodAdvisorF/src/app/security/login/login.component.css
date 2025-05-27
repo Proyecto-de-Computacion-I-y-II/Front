@@ -1,16 +1,60 @@
-.center {
-  height: calc(100vh - 64px);
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh; /* Alto completo de la ventana */
+  background-color: var(--fondogris); 
+}
+
+.login-container {
+  width: 25%;
+  max-width: 90%;
+  padding: 30px;
+  border: 1px solid var(--grisclaro);
+  border-radius: 10px;
+  background-color: var(--blanco);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
+@media (max-width: 1280px) {
+  .login-container {
+    min-width: 80%;
+  }
+}
+
+.btn.login {
+  background-color: var(--naranja);
+  margin-bottom: 3%;
+  color: var(--blanco);
+}
+
+.btn.register {
+  background-color: var(--verde);
+  margin-bottom: 3%;
+  color: var(--blanco);
+}
+
+button[mat-icon-button] {
+  border: none !important;
+  outline: none;
+  box-shadow: none;
+}
+
 .field{
-  width: 20%;
+  width: 100%;
+  min-width: 200px;
 }
 
 .show-password{
   overflow: hidden;
   padding-right: 5px;
+}
+
+.logo {
+  max-width: 35%;
+  max-height: 35%;
+  margin-bottom: 20px;
 }
