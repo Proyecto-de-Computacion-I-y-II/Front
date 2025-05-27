@@ -24,7 +24,7 @@ export class UserService extends BaseService<UserDTO>{
   }
 
   register(body: User): Observable<UserDTO> {
-    return this.http.post<UserDTO>(`${this.basePath}/register`, { nombre: body.name, apellidos: body.lastName, correo: body.email, contrasenia: body.password, rol: "cliente"}, {
+    return this.http.post<UserDTO>(`${this.basePath}/register`, { nombre: body.name, apellidos: body.lastName, correo: body.email, contrasenia: body.password, rol: "comprador"}, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
       })
