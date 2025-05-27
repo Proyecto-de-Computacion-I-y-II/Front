@@ -8,7 +8,7 @@ import {
 import { Router, NavigationEnd } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { ConfiguracionService } from '../services/configuracion.service';
+import { ConfiguracionService } from '../services/configuracion.service'; // ✅ IMPORTAR EL SERVICIO
 
 declare var webkitSpeechRecognition: any;
 
@@ -75,7 +75,7 @@ export class HeaderComponent implements OnInit {
     setTimeout(() => {
       this.headerBackgroundColor = this.configuracionService.getHeaderColor();
       this.cdr.detectChanges(); // Forzar detección de cambios
-      console.log('Color del header actualizado desde servicio:', this.headerBackgroundColor);
+      console.log('🎨 Color del header actualizado desde servicio:', this.headerBackgroundColor);
     }, 100);
   }
 checkIfChrome() {

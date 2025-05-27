@@ -86,62 +86,69 @@ min-height: 100vh;
 
 
 .product-card {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.20);
-  background: var(--blanco) !important;
-  border-radius: 7%;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  max-width: 300px;
+  min-height: 320px; /* 🔽 Reducimos la altura mínima */
+  background-color: var(--blanco);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   cursor: pointer;
-  /* border: 2px solid #2c9f51; */
   transition: transform 0.2s ease-in-out;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 .product-card:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-
-.product-card img {
-  width: 100%;
+.product-image-container {
+  min-height: 180px; /* 🔽 Menor altura de imagen */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
   border-top-left-radius: 23%;
-    border-top-right-radius: 23%;
-  object-fit: contain;
-  border-bottom: 2px dotted var(--verde);
-  padding: 15px;
+  border-top-right-radius: 23%;
+  overflow: hidden;
+}
 
+.product-image-container img {
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
 }
 
 .product-info {
-  /* background: #f1f1f1 !important; */
-  height: 100%;
-  width: 100%;
-  display: grid;
-  grid-template-rows: auto auto; /* Dos filas: una para el nombre, otra para el precio */
-  justify-items: center;         /* Centra contenido horizontalmente */
-  padding: 8px;
-  text-align: center;
-  gap: 10px;
-  min-height: 70px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-top: 8px;
+  gap: 8px;
+}
+
+.product-divider {
+  margin: 4px auto;
+  width: 80%;
+  border-bottom: 2px solid var(--verde);
 }
 
 .product-details {
-  text-align: left;
+  text-align: center; /* 🔁 CENTRA EL TEXTO */
 }
 
 .product-name {
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 0.95rem;
   margin: 0;
-
+  line-height: 1.2;
   display: -webkit-box;
-  -webkit-line-clamp: 3;            /* Limita a 3 líneas */
+  -webkit-line-clamp: 2; /* 🔽 Limita a 2 líneas para menor altura */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  word-break: break-word;           /* Rompe solo si necesario */
-  overflow-wrap: break-word;        /* Ayuda a evitar letras sueltas */
-
-  text-align: center;
 }
 
 .desktop-nav {

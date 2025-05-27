@@ -1,3 +1,4 @@
+/* Spinner (sin cambios) */
 .spinner {
   width: 48px;
   height: 48px;
@@ -15,10 +16,7 @@
   content: '';
   box-sizing: border-box;
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  left: 0; right: 0; top: 0; bottom: 0;
   margin: auto;
   border: 3px solid;
   border-color: transparent transparent var(--verde) var(--verde);
@@ -32,38 +30,31 @@
 .spinner::before {
   width: 32px;
   height: 32px;
-  border-color: var(--naranja) var(--naranja)transparent transparent;
+  border-color: var(--naranja) var(--naranja) transparent transparent;
   animation: rotation 1.5s linear infinite;
 }
 
 @keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 @keyframes rotationBack {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(-360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); }
 }
 
+/* Layout general */
+.content {
+  background-color: var(--fondogris);
+  min-height: 100vh;
+}
+
+/* Título y nav */
 .menu-title-2 .title-text {
   font-weight: bold;
   margin-left: 8px;
   font-size: 20px;
-}
-
-.menu-title-2 {
-  margin: 20px;
 }
 
 .loading-container {
@@ -73,67 +64,90 @@
   height: 30vh;
 }
 
-/* Cuadrícula subproductos */
+/* Grid para productos */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 30px;
-  padding: 20px;
-  margin: 0 30px 40px 30px;
-  align-items: center;
+  padding: 20px 60px 40px 60px;
+  align-items: start;
+  max-width: 1600px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
-/* Tarjeta subproducto */
+/* Tarjeta producto */
 .product-card {
-  background: var(--blanco);
-  border-radius: 5px;
-  text-align: center;
-  border: 2px solid var(--verde);
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  min-height: 320px;
+  background-color: var(--blanco);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
   transition: transform 0.2s ease-in-out;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 .product-card:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-/* Imagen del producto */
-.product-card img {
-  width: 100%;
-  height: 150px;
-  object-fit: contain;
-  cursor: pointer;
-  border-bottom: 2px dotted var(--verde);
-  padding: 15px;
-}
-
-/* Información */
-.product-info {
-  background: #f1f1f1;
-  width: 100%;
+/* Contenedor imagen */
+.product-image-container {
+  min-height: 180px;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 8px;
-  min-height: 70px;
+  padding: 5px;
+  border-top-left-radius: 23%;
+  border-top-right-radius: 23%;
+  overflow: hidden;
 }
 
+/* Imagen */
+.product-image-container img {
+  max-height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Info del producto */
+.product-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding-top: 8px;
+  gap: 8px;
+}
+
+.product-divider {
+  margin: 4px auto;
+  width: 80%;
+  border-bottom: 2px solid var(--verde);
+}
+
+/* Detalles texto centrado */
 .product-details {
   text-align: center;
 }
 
+/* Nombre producto */
 .product-name {
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 0.95rem;
   margin: 0;
+  line-height: 1.2;
   display: -webkit-box;
+  -webkit-line-clamp: 2; /* limita a 2 líneas */
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  word-break: break-word;
-  overflow-wrap: break-word;
 }
 
+/* Navegación desktop */
 .desktop-nav {
   display: flex;
   flex-wrap: wrap;
@@ -160,20 +174,16 @@
   background-color: var(--naranja);
 }
 
+/* Otros contenedores */
 .wrapper {
-  /* border: 2px solid; */
   border-radius: 5px;
   display: flex;
   flex-wrap: wrap;
 }
 
-.wrapper>div {
+.wrapper > div {
   border: none;
-  /* border-radius: 5px; */
   padding: 1em;
-}
-
-.wrapper>div {
   flex: 1 1 200px;
 }
 
@@ -183,7 +193,10 @@
 
 .subtitle-container:hover {
   transform: scale(1.05);
-  /* Hace que el contenedor crezca ligeramente */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  /* Agrega sombra */
+}
+
+/* Títulos */
+h4 {
+  margin-left: 5vh;
 }
