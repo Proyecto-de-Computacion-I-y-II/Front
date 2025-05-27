@@ -15,6 +15,7 @@
   display: flex;
   align-items: center;
   justify-content: center;     /* por defecto centra el title-container */
+  flex-wrap: wrap;
 }
 
 /* src/styles.scss */

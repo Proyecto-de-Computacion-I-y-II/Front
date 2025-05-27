@@ -258,6 +258,7 @@ html, body{
   display: none;
   flex-direction: column;
   position: fixed;
+  margin-top: 1.4em;
   top: 70px; /* Ajusta según la altura de tu header */
   left: 0;
   width: 100%; /* Asegura que ocupe todo el ancho */
