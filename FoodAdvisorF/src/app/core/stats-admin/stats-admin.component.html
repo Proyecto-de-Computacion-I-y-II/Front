@@ -14,7 +14,7 @@
       <p class="error">{{ error1 }}. Mostrando datos en texto:</p>
       <ul>
         <li *ngFor="let s of supMasPop">
-          {{ s.supermercado }} — {{ s.total_comprado }} productos
+          {{ s.supermercado }} — {{ s.total_comprado }} productos comprados
         </li>
       </ul>
     </div>
@@ -94,7 +94,7 @@
   <section>
     <h2>Supermercados más equilibrados</h2>
     <p class="info">
-      Se muestra desviación respecto a la distribución ideal<br>
+      Se muestra desviación respecto a la distribución ideal. Evalúa en qué supermercados los usuarios hacen compras más saludables.<br>
       <em>(cuanto menor, más equilibrado)</em>
     </p>
     <div *ngIf="loading4" class="section-spinner">
