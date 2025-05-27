@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommunicationService } from '../../shared/services/communicacion/communication.service';
 import { UserService } from '../services/user/user.service';
+import {environment} from '../../../environments/environment';
 
 @Component({
   standalone: false,
@@ -63,11 +64,11 @@ export class ProfileComponent {
 
   loadUserData() {
     const token = localStorage.getItem('token');
-  
+
     if (token) {
       const headers = { Authorization: `Bearer ${token}` };
-      const apiUrl = `http://127.0.0.1:8000/api/usuario`;
-  
+      const apiUrl = environment.apiUrl + `/usuario`;
+
       this.http.get(apiUrl, { headers}).subscribe({
         next: (data: any) => {
           this.userData = data;
@@ -77,15 +78,15 @@ export class ProfileComponent {
       });
     }
   }
-  
-  
+
+
   loadBuyProducts() {
     const token = localStorage.getItem('token');
-  
+
     if (token) {
       const headers = { Authorization: `Bearer ${token}` };
-      const apiUrl = `http://127.0.0.1:8000/api/usuario/productos-totales`;
-  
+      const apiUrl = environment.apiUrl + `/usuario/productos-totales`;
+
       this.http.get(apiUrl, { headers }).subscribe({
         next: (data: any) => {
           this.prodUser = data.total_comprado;
@@ -97,9 +98,9 @@ export class ProfileComponent {
       });
     }
   }
-  
 
-  
-  
-  
+
+
+
+
 }
