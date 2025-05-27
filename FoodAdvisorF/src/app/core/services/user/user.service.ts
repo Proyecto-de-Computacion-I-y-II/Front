@@ -4,6 +4,7 @@ import { catchError, Observable } from 'rxjs';
 import { User } from '../../../security/models/user';
 import { UserDTO } from '../../../security/models/user-dto';
 import { BaseService } from '../../../shared/services/base/base.service';
+import {environment} from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { BaseService } from '../../../shared/services/base/base.service';
 export class UserService extends BaseService<UserDTO>{
   constructor(http: HttpClient) {
     super(http);
-    this.basePath = this.basePath + 'usuario';
+    this.basePath = environment.apiUrl + 'usuario';
   }
 
   logIn(body: User): Observable<UserDTO> {

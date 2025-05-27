@@ -20,7 +20,7 @@ export class ProductService {
 
   filtrarProductos(filtros: any, page: number = 1) {
     console.log("pag:"+page);
-    return this.http.post(`http://127.0.0.1:8000/api/productos/filtrar?page=${page}`, filtros);
+    return this.http.post(environment.apiUrl + `/productos/filtrar?page=${page}`, filtros);
   }
 
 

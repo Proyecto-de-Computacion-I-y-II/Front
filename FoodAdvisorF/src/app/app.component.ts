@@ -28,8 +28,8 @@ export class AppComponent implements OnInit {
   isListening = false;
   private apiUrl = environment.apiUrl;
 
-  
-  
+
+
 
   recognition: any; // Reconocimiento de voz
 
@@ -75,10 +75,10 @@ export class AppComponent implements OnInit {
 
   loadUserData() {
     const token = localStorage.getItem('token');
-  
+
     if (token) {
-      const apiUrl = `http://127.0.0.1:8000/api/usuario`;
-  
+      const apiUrl = environment.apiUrl + `/usuario`;
+
       this.http.get(apiUrl, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -123,7 +123,7 @@ export class AppComponent implements OnInit {
         this.isListening = false;
         this.cdr.detectChanges(); // Para actualizar la vista en angular
       };
-      
+
     }
   }
 
@@ -132,20 +132,20 @@ export class AppComponent implements OnInit {
       alert('Tu navegador no soporta reconocimiento de voz.');
       return;
     }
-  
+
     if (!this.isListening) {
-      this.recognition.start();  
-      this.isListening = true;  
+      this.recognition.start();
+      this.isListening = true;
     } else {
-      this.recognition.stop();   
+      this.recognition.stop();
       console.log();
-  
+
       // Aseguramos que el estado de "escuchando" se desactive correctamente
       // setTimeout(() => {
       //   this.isListening = false;
       // }, 20);  // Tiempo
     }
-  }  
+  }
 
   checkRouteAccess() {
     const token = localStorage.getItem('token');
@@ -199,27 +199,27 @@ export class AppComponent implements OnInit {
 
 toggleSearchBar() {
   this.showSearchBar = !this.showSearchBar;
-  
+
   if (this.showSearchBar) {
     // Forzar repintado completo
     document.documentElement.style.setProperty('--search-bg', '#ffffff');
-    
+
     // Crear un overlay completamente opaco
     const overlay = document.createElement('div');
     overlay.className = 'search-overlay';
     overlay.style.backgroundColor = '#ffffff';
     overlay.addEventListener('click', () => this.closeSearchBar());
     document.body.appendChild(overlay);
-    
+
     this.closeMobileMenu();
-    
+
     // Asegurar que la barra de búsqueda esté por encima del overlay
     setTimeout(() => {
       const searchContainer = document.querySelector('.search-container-mobile');
       if (searchContainer) {
         (searchContainer as HTMLElement).style.zIndex = '9999';
       }
-      
+
       const searchInput = document.querySelector('.search-input') as HTMLInputElement;
       if (searchInput) {
         searchInput.focus();
@@ -234,7 +234,7 @@ toggleSearchBar() {
 closeSearchBar() {
   this.showSearchBar = false;
   document.body.classList.remove('search-active');
-  
+
   // Eliminar overlay
   const overlay = document.querySelector('.search-overlay');
   if (overlay) {

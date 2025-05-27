@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import {API_URL} from '../../configuration/config';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
+import {environment} from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BaseService<T> {
-  basePath: string = API_URL.API;
+  basePath: string = environment.apiUrl;
 
   constructor(public http: HttpClient) {}
 

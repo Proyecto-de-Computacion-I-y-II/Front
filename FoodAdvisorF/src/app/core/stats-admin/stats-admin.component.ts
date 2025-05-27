@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { HttpClient, HttpHeaders }                 from '@angular/common/http';
 import { Chart, registerables }                    from 'chart.js';
+import {environment} from '../../../environments/environment';
 
 Chart.register(...registerables);
 
@@ -16,7 +17,7 @@ interface Equilibrio    { idSupermercado: number; equilibrio: number }
   styleUrls: ['./stats-admin.component.css']
 })
 export class StatsAdminComponent implements OnInit {
-  private base    = 'http://127.0.0.1:8000/api/estadisticas';
+  private base    = environment.apiUrl + '/estadisticas';
   private headers: HttpHeaders;
 
   // 1) Supermercados más populares

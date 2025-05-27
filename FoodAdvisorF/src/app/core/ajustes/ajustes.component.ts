@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, forkJoin } from 'rxjs';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-ajustes',
@@ -24,7 +25,7 @@ readonly allowedProductos: number[] = Array.from(
   v => v % 2 === 0 && v % 3 === 0 && v % 4 === 0 && v % 5 === 0 && v % 6 === 0
 );
 
-  private apiBase = 'http://127.0.0.1:8000/api/configuraciones';
+  private apiBase = environment.apiUrl + '/configuraciones';
   private authHeaders!: HttpHeaders;
 
   constructor(private http: HttpClient) {}
@@ -94,7 +95,7 @@ onProductosChange(valor: number) {
     cfg.valor = valor;
     this.applyProductosCount(valor);
   }
-}  
+}
 
   hasChanges(): boolean {
     if (!this.configData) return false;
