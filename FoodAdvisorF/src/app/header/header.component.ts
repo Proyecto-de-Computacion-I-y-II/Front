@@ -8,7 +8,8 @@ import {
 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-import { ConfiguracionService } from '../services/configuracion.service'; // ✅ IMPORTAR EL SERVICIO
+import { ConfiguracionService } from '../services/configuracion.service';
+import {UserService} from '../core/services/user/user.service'; // ✅ IMPORTAR EL SERVICIO
 
 declare var webkitSpeechRecognition: any;
 
@@ -40,7 +41,8 @@ export class HeaderComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private http: HttpClient,
-    private configuracionService: ConfiguracionService
+    private configuracionService: ConfiguracionService,
+    private userService: UserService,
   ) {
     this.checkIfChrome();
     this.setupSpeechRecognition();
@@ -53,7 +55,9 @@ export class HeaderComponent implements OnInit {
 
     this.checkIfChrome();
     this.checkScreenSize();
-    this.loadUserData();
+    this.userService.sessionChanged$.subscribe(() => {
+      this.loadUserData(); // <-- recarga los datos cuando cambia la sesión
+    });
 
     console.log('¿Es Chrome?', this.isChromeBrowser);
     console.log('Color del header:', this.headerBackgroundColor);

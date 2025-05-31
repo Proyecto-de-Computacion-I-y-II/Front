@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable } from 'rxjs';
+import {BehaviorSubject, catchError, Observable} from 'rxjs';
 import { User } from '../../../security/models/user';
 import { UserDTO } from '../../../security/models/user-dto';
 import { BaseService } from '../../../shared/services/base/base.service';
@@ -36,4 +36,11 @@ export class UserService extends BaseService<UserDTO>{
       catchError(this.handleError)
     );
   }
+  private sessionChanged = new BehaviorSubject<boolean>(false);
+  sessionChanged$ = this.sessionChanged.asObservable();
+
+  notifySessionChange() {
+    this.sessionChanged.next(true);
+  }
+
 }
