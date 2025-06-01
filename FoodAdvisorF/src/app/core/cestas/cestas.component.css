@@ -220,6 +220,7 @@ h1 {
   width: 2em;
   height: 2em;
   text-transform: uppercase;
+  margin-right: 20px;
 }
 
 .btn-crear-cesta:hover {

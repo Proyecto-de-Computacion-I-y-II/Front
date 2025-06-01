@@ -28,13 +28,12 @@
             <input matInput [type]="'password'" [(ngModel)]="passwordValidator">
           </mat-form-field>
           <div class="botones">
-            <button mat-flat-button class="cancelar" [routerLink]="['/login']">
-              Cancelar
-            </button>
             <button mat-flat-button class="confirmar" (click)="register()">
               <mat-icon>shopping_cart</mat-icon>¡Crear y Comprar!
             </button>
-
+                        <button mat-flat-button class="cancelar" [routerLink]="['/login']">
+              Cancelar
+            </button>
           </div>
         </div>
       </div>

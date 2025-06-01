@@ -216,58 +216,65 @@ transform: scale(1.02);
 }
 
 
+
 .spinner {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: inline-block;
-    position: relative;
-    border: 3px solid;
-    border-color: var(--naranja) var(--naranja) transparent transparent;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  border: 3px solid;
+  border-color: var(--naranja) var(--naranja) transparent transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
 }
+
 .spinner::after,
 .spinner::before {
-    content: '';
-    box-sizing: border-box;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    border: 3px solid;
-    border-color: transparent transparent var(--verde vaar(--verde));
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    animation: rotationBack 0.5s linear infinite;
-    transform-origin: center center;
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  border: 3px solid;
+  border-color: transparent transparent var(--verde) var(--verde);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  animation: rotationBack 0.5s linear infinite;
+  transform-origin: center center;
 }
+
 .spinner::before {
-    width: 32px;
-    height: 32px;
-    border-color: var(--naranja) var(--naranja) transparent transparent;
-    animation: rotation 1.5s linear infinite;
+  width: 32px;
+  height: 32px;
+  border-color: var(--naranja) var(--naranja) transparent transparent;
+  animation: rotation 1.5s linear infinite;
 }
 
 @keyframes rotation {
-0% {
+  0% {
     transform: rotate(0deg);
-}
-100% {
+  }
+
+  100% {
     transform: rotate(360deg);
+  }
 }
-} 
+
 @keyframes rotationBack {
-0% {
+  0% {
     transform: rotate(0deg);
-}
-100% {
+  }
+
+  100% {
     transform: rotate(-360deg);
+  }
 }
-}
+
 
 .img-fluid {
     max-width: 100%;

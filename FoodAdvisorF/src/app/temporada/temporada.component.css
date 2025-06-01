@@ -151,11 +151,13 @@ min-height: 100vh;
   text-overflow: ellipsis;
 }
 
+
 .desktop-nav {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5em;
   justify-content: center;
+  margin: 1em;
 }
 
 .desktop-nav a {

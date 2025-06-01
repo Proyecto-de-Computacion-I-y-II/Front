@@ -38,6 +38,7 @@ export class RegisterComponent implements OnInit{
       next: (response: UserDTO) => {
         this.snackBar.dismiss();
         localStorage.setItem('token', response.token);
+        this.userService.notifySessionChange();
         this.router.navigate(['/home']).then();
         },
         error: (e) => {
